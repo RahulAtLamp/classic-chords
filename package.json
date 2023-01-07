@@ -1,0 +1,87 @@
+{
+  "name": "classic-chords",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@iconify/icons-ion": "^1.1.0",
+    "@iconify/react": "^4.0.0",
+    "@livepeer/react": "^1.5.1",
+    "@livepeer/webrtmp-sdk": "^0.2.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@xmtp/xmtp-js": "^7.7.2",
+    "browserify-zlib": "^0.2.0",
+    "butterchurn": "^2.6.7",
+    "butterchurn-presets": "^2.4.7",
+    "chroma-js": "^2.4.2",
+    "constants-browserify": "^1.0.0",
+    "crypto-browserify": "^3.12.0",
+    "dat.gui": "^0.7.9",
+    "emotion": "^10.0.27",
+    "ethers": "^5.7.2",
+    "fs": "^0.0.1-security",
+    "gsap": "^3.11.3",
+    "howler": "^2.2.3",
+    "ipfs-http-client": "^57.0.3",
+    "jquery": "^3.6.1",
+    "less": "^4.1.3",
+    "livepeer-nodejs": "^1.0.3",
+    "midi-sounds-react": "^1.2.54",
+    "nft.storage": "^7.0.0",
+    "observe": "^1.4.1",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "random-seed": "^0.3.0",
+    "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
+    "react-canvas-recorder": "^1.1.1",
+    "react-confetti-explosion": "^1.5.1",
+    "react-countdown-circle-timer": "^3.1.0",
+    "react-date-picker": "^9.1.0",
+    "react-dimensions": "^1.3.1",
+    "react-dom": "^18.2.0",
+    "react-dotenv": "^0.1.3",
+    "react-icons": "^4.4.0",
+    "react-joyride": "^2.5.3",
+    "react-media-recorder": "^1.6.6",
+    "react-parallax-hover": "^2.0.2",
+    "react-piano": "^3.1.3",
+    "react-player": "^2.11.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-tone": "^1.1.1",
+    "sass": "^1.54.3",
+    "simplex-noise": "^2.4.0",
+    "soundfont-player": "^0.12.0",
+    "stream-http": "^3.2.0",
+    "three": "^0.146.0",
+    "wagmi": "^0.10.5",
+    "web-vitals": "^2.1.4",
+    "web3.storage": "^4.4.0"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

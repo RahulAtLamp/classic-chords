@@ -1,0 +1,136 @@
+// .player-main {
+//   width: 90%;
+//   margin: 0 auto;
+//   padding-top:60px;
+
+//   .dg.ac {
+//     display: block !important;
+//   }
+// }
+
+.piano-label {
+  position: absolute;
+  background-color: white;
+  margin-top: -15px;
+  margin-left: 30px;
+  width: 100px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.piano-holder {
+  border: 1px solid #746cfe;
+  border-radius: 20px;
+  min-height: 400px;
+  padding: 30px;
+}
+
+.dg.a {
+  margin-top: 65px;
+  opacity: 1;
+}
+
+.dg .cr.function .property-name {
+  background-color: #1A1a1a;
+  color: #61dbdb;
+  /* border: 1px solid blue; */
+}
+
+/* .dg .cr.function .property-name {
+  color: red;
+} */
+.dg .cr.function {
+  background: none;
+  background-color: #1A1a1a;
+
+}
+
+.dg li.title {
+  background-color: #251843;
+}
+
+.dg .property-name {
+  color: #A886Fb;
+  /* color: black; */
+}
+
+
+/* .dg {
+  background-color: magenta;
+  background-color: #f0f;
+} */
+
+#pianoCanvas {
+  max-width: 100% !important;
+}
+
+.control-holder {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.control-holder .start {
+  padding: 10px;
+  border-radius: 20px;
+  border: 0;
+  margin-right: 10px;
+  font-family: "FontsFree";
+  color: #ffffff;
+  background-color: #251843;
+  cursor: pointer;
+
+  &.active {
+    background-color: red;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: red;
+    }
+  }
+
+  &:hover {
+    background-color: green;
+  }
+}
+
+.control-holder .stop {
+  padding: 10px;
+  border-radius: 20px;
+  border: 0;
+  margin-left: 10px;
+  font-family: "FontsFree";
+  color: #ffffff;
+  background-color: #251843;
+  cursor: pointer;
+
+  &.active {
+    background-color: red;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: red;
+    }
+  }
+
+  &:hover {
+    background-color: #FFFF00;
+  }
+}
+
+.dg.main.a:not(:first-child) {
+  display: none;
+}
+
+.player-main {
+  overflow: hidden;
+
+  .player-counter {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    font-size: 40px;
+    color: white;
+  }
+}

@@ -1,0 +1,27 @@
+.counter-main {
+    position: fixed;
+    width: 100%;
+    z-index: 3;
+    animation-name: faded;
+    animation-duration: 5s;
+    // animation-play-state: paused;
+    animation-timing-function: ease-in;
+    scale: 1;
+    background-color: rgba(0, 0, 0, 0.355);
+
+    @keyframes faded {
+        from {
+            scale: 2;
+        }
+
+        to {
+            scale: 1;
+        }
+    }
+
+    .counter-middle {
+        width: 400px;
+        padding: 20% 37%;
+        text-align: center;
+    }
+}

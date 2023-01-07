@@ -1,0 +1,151 @@
+.nfts-main {
+    background: linear-gradient(130deg, #251b43 55%, #746cfe);
+    min-height: 250vh;
+    font-family: "FontsFree";
+    font-size: large;
+    color: #ffffff;
+    z-index: 100;
+
+    // .dg.ac {
+    //     display: none;
+    // }
+
+    .nfts-header {
+        font-size: xx-large;
+        text-align: center;
+        font-family: "FontsFree";
+        padding-top: 100px;
+        color: #ffffff;
+        padding-top: 100px;
+        text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff,
+            0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    }
+
+    .artist-creations-list-container {
+
+        max-width: 1440px;
+        margin: 0 auto;
+
+        .artist-creations-list {
+            position: relative;
+            /* display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 3fr)); */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            padding: 30px;
+
+            .artist-collection-pa {
+                cursor: pointer;
+
+                .exp-bg {
+                    width: 300px;
+                    height: 350px;
+                    max-height: 100%;
+                    /* background: rgb(116, 108, 254); */
+                    background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+                    border-radius: 20px;
+                    align-items: center;
+                    margin: 0 auto;
+                    flex: 0 0 20%;
+                    flex-direction: column;
+                    box-shadow: rgba(0, 0, 0, 0.3) 5px 8px 12px;
+                    padding: 5px 0;
+                    overflow: hidden;
+
+                    .exp-img {
+                        width: 260px;
+                        height: 200px;
+                        margin: 10px auto auto auto;
+                        display: flex;
+                        align-items: center;
+                        align-content: center;
+                        overflow: hidden;
+                        background-color: rgba(255, 255, 255, 0.6);
+                        border-radius: 10px;
+                        box-shadow: 0px 0px 20px #ffffff;
+
+                        .exp-nft {
+                            height: fit-content;
+                            max-width: 260px;
+                            width: fit-content;
+                            margin: 0 auto;
+                            border-radius: 10px;
+                        }
+                    }
+
+                    .exp-name {
+                        margin-top: 20px;
+                        padding: 0 20px;
+                        color: #fefcff;
+                        font-size: 15px;
+                        font-family: "FontsFree";
+                        font-weight: 700;
+                        white-space: nowrap;
+                        width: 80%;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    .exp-album {
+                        padding: 0 20px;
+                        margin-top: 20px;
+                        color: #fefcff;
+                        font-size: 20px;
+                        font-family: "Gilmer-Light";
+                        font-weight: 500;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                    }
+
+                    .exp-description {
+                        margin-top: 10px;
+                        padding: 0 20px;
+                        color: #fefcff;
+                        font-size: 15px;
+                        font-family: "Gilmer-Light";
+                        font-weight: 500;
+                        height: 96px;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 5;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+
+                    .buy-button-holder {
+                        display: inline-flex;
+                        width: 100%;
+                        align-items: center;
+                        align-content: center;
+                        margin-top: 10px;
+
+                        .buy-button {
+                            width: 90%;
+                            margin: 0 auto;
+                            padding: 10px;
+                            border-radius: 10px;
+                            border: 0;
+                            font-family: "FontsFree";
+                            cursor: pointer;
+                            background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+                            pointer-events: auto;
+                            display: flex;
+                            align-items: center;
+                            align-content: center;
+
+                            .buy-button-tag {
+                                flex-grow: 1;
+                                width: '80px';
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.stream-single-main {
+    background: linear-gradient(130deg, #251b43 55%, #746cfe);
+    min-height: 250vh;
+
+    .stream-single-heading {
+        font-size: xx-large;
+        text-align: center;
+        font-family: "FontsFree";
+        padding-top: 100px;
+        color: #ffffff;
+        padding-top: 100px;
+        text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff,
+            0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    }
+
+    .stream-holder {
+        width: 560px;
+        margin: 0 auto;
+        overflow: hidden;
+        padding-top: 70px;
+        border-radius: 20px;
+    }
+}

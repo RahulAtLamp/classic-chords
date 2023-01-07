@@ -1,0 +1,200 @@
+.collection-main {
+    min-height: 250vh;
+    background: linear-gradient(130deg, #251b43 55%, #746cfe);
+
+    .collection-name {
+        font-size: xx-large;
+        text-align: center;
+        font-family: "FontsFree";
+        padding-top: 100px;
+        color: #ffffff;
+        margin: 0;
+        text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff,
+            0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    }
+
+    .collection-detail-holder {
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        padding-top: 100px;
+        flex-direction: column;
+        gap: 30px;
+
+        .collection-image-holder {
+            width: 400px;
+            overflow: hidden;
+            height: 400px;
+            padding: 30px;
+            // background-color: rgba(255, 255, 255, 0.6);
+            background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            align-content: center;
+            border-radius: 20px;
+
+
+            .collection-image {
+                max-width: 100%;
+                max-height: fit-content;
+            }
+        }
+
+        .collection-sub {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            width: 900px;
+            flex-direction: column;
+            height: fit-content;
+            color: #ffffff;
+            font-family: "Gilmer-Light";
+            background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+            padding: 30px 10px;
+            border-radius: 30px;
+
+            p {
+                &.collection-description {
+                    font-size: 20px;
+                    text-align: center;
+                    width: 600px;
+                }
+
+                &.total-minted {
+                    background-color: #251b43;
+                    display: inline-flex;
+                    font-size: 25px;
+                    margin-top: 20px;
+                    padding: 10px 20px;
+                    border-radius: 10px;
+                }
+            }
+
+            .total-qty {
+                width: 200px;
+                font-size: 20px;
+                border-radius: 10px;
+                padding: 5px;
+                border: 1px solid transparent;
+                margin-top: 20px;
+            }
+
+            .total-price {
+                width: 200px;
+                font-size: 20px;
+                border-radius: 10px;
+                padding: 5px;
+                border: 1px solid transparent;
+                margin-top: 20px;
+            }
+
+            .sell-options {
+                width: 200px;
+                font-size: 20px;
+                border-radius: 10px;
+                padding: 5px;
+                border: 1px solid transparent;
+                margin-top: 20px;
+                font-family: "Gilmer-Light";
+            }
+
+            .date-picker-title {
+                // background-color: #251b43;
+                color: #ffffff;
+                font-family: "Gilmer-Light";
+                font-size: 20px;
+                font-weight: 800;
+            }
+
+            .sell-date-picker {
+                background-color: #251b43;
+                margin-top: 20px;
+                color: #ffffff;
+                font-size: 20px;
+                width: 200px;
+                border-radius: 10px;
+                border: 0px !important;
+                padding: 10px;
+
+                // .react-date-picker__wrapper{
+                //     border: 0;
+                //     padding: 10px;
+                // }
+
+                // .react-date-picker__inputGroup {
+                //     color: #ffffff !important;
+                //     text-overflow: ellipsis;
+
+                //     .react-date-picker__inputGroup__input.react-date-picker__inputGroup__day {
+                //         color: #ffffff !important;
+                //     }
+
+                //     .react-date-picker__inputGroup__input.react-date-picker__inputGroup__month {
+                //         color: #ffffff !important;
+                //     }
+
+                //     .react-date-picker__inputGroup__input.react-date-picker__inputGroup__year {
+                //         color: #ffffff;
+                //     }
+                // }
+
+            }
+
+            .sell-buy-button {
+                width: 200px;
+                margin: 0 auto;
+                padding: 10px;
+                border-radius: 10px;
+                border: 0;
+                font-family: "FontsFree";
+                cursor: pointer;
+                pointer-events: auto;
+                margin-top: 30px;
+                animation-name: change-color;
+                animation-duration: 20s;
+                animation-iteration-count: infinite;
+                text-align: center;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+    }
+
+    .loading-main {
+        position: fixed;
+        height: 100vh;
+        top: 0px;
+        background: #ffffff20 !important;
+    }
+}
+
+
+@keyframes change-color {
+    0% {
+        background-color: #ffffff;
+    }
+
+    25% {
+        background-color: #a886fb;
+        color: #ffffff;
+    }
+
+    50% {
+        background-color: #251b43;
+        color: #ffffff;
+    }
+
+    75% {
+        background-color: #a886fb;
+        color: #ffffff;
+    }
+
+    100% {
+        background-color: #ffffff;
+    }
+}

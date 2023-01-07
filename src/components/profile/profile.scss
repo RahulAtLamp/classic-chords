@@ -1,0 +1,384 @@
+.profile-main {
+    min-height: 250vh;
+    background: linear-gradient(130deg, #251b43 55%, #746cfe);
+    // background-image: url("/public/images/default-background.jpg");
+
+    .profile-images {
+        width: 100%;
+        height: 400px;
+        flex-direction: column;
+
+        .profile-background-holder {
+            height: 400px;
+            // background-color: rgba(255, 255, 255, 0.9);
+            background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+            width: 100%;
+
+            .profile-background {
+                width: 100%;
+                object-fit: fill;
+                height: 400px;
+            }
+        }
+
+        .profile-pic-move-up {
+            margin-top: -60px;
+
+            .profile-pic-holder {
+                height: 120px;
+                width: 120px;
+                margin: 0 auto;
+                background-color: #251b43;
+                border-radius: 50px;
+
+                .profile-pic {
+                    max-width: 100%;
+                    border-radius: 50px;
+                    
+
+                    &::before {
+                        content: "";
+                        animation: profile-loader 3s linear 1s 10 slidein fill-mode;
+                    }
+                }
+            }
+        }
+    }
+
+    .edit-profile {
+        width: 100%;
+        text-align: right;
+
+        .edit-profile-button {
+            width: 30px;
+            height: 30px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .profile-user-details {
+        text-align: center;
+
+        .profile-details-holder {
+            .profile-username {
+                font-family: "FontsFree";
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .profile-address {
+                font-family: "FontsFree";
+                font-size: 12px;
+                color: #ffffff;
+            }
+
+            .profile-bio-holder {
+                width: 100%;
+                margin-top: 30px;
+
+                .profile-bio {
+                    text-align: center;
+                    font-family: "Gilmer-Light";
+                    font-size: 16px;
+                    color: #ffffff;
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+
+    .nfts-minted-holder {
+        margin-top: 100px;
+
+        .nfts-minted-header {
+            font-size: 40px;
+            font-family: "FontsFree";
+            color: #ffffff;
+            width: 495px;
+            margin: 0 auto;
+            white-space: nowrap;
+        }
+
+        .nfts-minted-container {
+            max-width: 1080px;
+            margin: 0 auto;
+
+            .nfts-creations-list {
+                position: relative;
+                /* display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(400px, 3fr)); */
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 50px;
+                margin-top: 50px;
+                padding: 30px;
+
+                .nfts-collection-pa {
+                    cursor: pointer;
+
+                    .nfts-bg {
+                        width: 300px;
+                        height: 410px;
+                        max-height: 100%;
+                        /* background: rgb(116, 108, 254); */
+                        background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+                        border-radius: 20px;
+                        align-items: center;
+                        margin: 0 auto;
+                        flex: 0 0 20%;
+                        flex-direction: column;
+                        box-shadow: rgba(0, 0, 0, 0.3) 5px 8px 12px;
+                        padding: 5px 0;
+                        overflow: hidden;
+
+                        .nfts-img {
+                            width: 260px;
+                            height: 200px;
+                            margin: 10px auto auto auto;
+                            display: flex;
+                            align-items: center;
+                            align-content: center;
+                            overflow: hidden;
+                            background-color: rgba(255, 255, 255, 0.6);
+                            border-radius: 10px;
+                            box-shadow: 0px 0px 20px #ffffff;
+
+                            .nfts-nft {
+                                height: fit-content;
+                                max-width: 260px;
+                                width: fit-content;
+                                margin: 0 auto;
+                                border-radius: 10px;
+                            }
+                        }
+
+                        .nfts-name {
+                            margin-top: 20px;
+                            padding: 0 20px;
+                            color: #fefcff;
+                            font-size: 15px;
+                            font-family: "FontsFree";
+                            font-weight: 700;
+                            white-space: nowrap;
+                            width: 80%;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+
+                        .nfts-album {
+                            padding: 0 20px;
+                            margin-top: 20px;
+                            color: #fefcff;
+                            font-size: 20px;
+                            font-family: "Gilmer-Light";
+                            font-weight: 500;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                        }
+
+                        .nfts-description {
+                            margin-top: 10px;
+                            padding: 0 20px;
+                            color: #fefcff;
+                            font-size: 15px;
+                            font-family: "Gilmer-Light";
+                            font-weight: 500;
+                            height: 96px;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 5;
+                            -webkit-box-orient: vertical;
+                            overflow: hidden;
+                        }
+
+                        .buy-button-holder {
+                            display: inline-flex;
+                            width: 100%;
+                            align-items: center;
+                            align-content: center;
+                            margin-top: 10px;
+
+                            .buy-button {
+                                width: 90%;
+                                margin: 0 auto;
+                                padding: 10px;
+                                border-radius: 10px;
+                                border: 0;
+                                font-family: "FontsFree";
+                                cursor: pointer;
+                                background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+                                pointer-events: auto;
+                                display: flex;
+                                align-items: center;
+                                align-content: center;
+
+                                .buy-button-tag {
+                                    flex-grow: 1;
+                                    width: '80px';
+                                    text-align: left;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .edit-user-popup-main {
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        background-color: rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        align-content: center;
+
+
+        .edit-user-popup {
+            height: 500px;
+            width: 100%;
+            max-width: 500px;
+            background-color: black;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+
+            .edit-user-p-header {
+                font-family: "FontsFree";
+                color: #ffffff;
+                text-align: center;
+                padding: 10px;
+                font-size: 20px;
+            }
+
+            .profile-information {
+                text-align: center;
+
+                .update-profile-pic {
+                    width: 120px;
+                    height: 120px;
+                    margin: 0 auto;
+                    overflow: hidden;
+                    margin-top: 30px;
+                    cursor: pointer;
+                    overflow: hidden;
+                    border: 1px solid #251b43;
+                    border-radius: 70px;
+                    display: flex;
+                    align-items: center;
+                    align-content: center;
+
+                    .profile-pic-preview {
+                        width: 100%;
+                    }
+                }
+
+                .profile-username {
+                    font-size: 20px;
+                    margin-top: 20px;
+                    max-width: 400px;
+                    width: 100%;
+                    font-family: "Gilmer-Light";
+                    border-radius: 10px;
+
+                    &::placeholder {
+                        font-size: 20px;
+                    }
+                }
+
+                .profile-bio {
+                    font-size: 20px;
+                    margin-top: 20px;
+                    max-width: 400px;
+                    width: 100%;
+                    height: 150px;
+                    font-family: "Gilmer-Light";
+                    resize: none;
+                    border-radius: 10px;
+
+                    &::placeholder {
+                        font-size: 20px;
+                    }
+                }
+
+                .user-update-btn {
+                    margin-top: 30px;
+                    font-size: 20px;
+                    font-family: "FontsFree";
+                    border-radius: 20px;
+                    padding: 0 10px;
+                    background-color: #251b43;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+
+    .add-chain-main {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 60px;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        align-content: center;
+
+        .add-chain-box {
+            width: 400px;
+            margin: 0 auto;
+            text-align: center;
+            height: 180px;
+            background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            padding: 20px;
+            border-radius: 20px;
+
+            .add-chain-message {
+                padding: 10px;
+                flex-grow: 1;
+                font-family: "Gilmer-Light";
+                font-weight: 700;
+                color: #ffffff;
+                font-size: 20px;
+                overflow: hidden;
+                height: 300px;
+            }
+
+            .add-chain-btn {
+                padding-top: 5px;
+                width: 200px;
+                font-family: "FontsFree";
+                background: #251b43;
+                color: #ffffff;
+                border: 1px solid transparent;
+                border-radius: 20px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.profile-title {
+    text-align: center;
+    font-size: medium;
+    font-family: "FontsFree";
+    padding-top: 100px;
+    color: #ffffff;
+    padding-top: 100px;
+}
+
+@keyframes profile-loader {
+    0%{
+        // background-color: #ffffff;
+    }
+}

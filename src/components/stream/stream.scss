@@ -1,0 +1,144 @@
+$gradient-color: linear-gradient(90deg,
+  #242132, #746cfe, #ae8cfe);
+
+.cs-main {
+  background: linear-gradient(130deg, #251b43 55%, #746cfe);
+  min-height: 120vh;
+  display: block;
+
+  .stream-header {
+    margin-top: 0;
+    text-align: center;
+    font-size: xx-large;
+    font-family: "FontsFree";
+    color: #ffffff;
+    padding-top: 100px;
+    text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff,
+      0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+  }
+
+  .communication {
+    padding-bottom: 30px;
+  }
+
+  .cs {
+    margin: auto;
+    min-height: 80vh;
+    width: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    //   padding: 30px;
+
+    .cs-left-container {
+      max-width: 1080px;
+      width: 100%;
+      padding-top: 30px;
+      margin: 0 auto;
+      text-align: center;
+
+      video.cs-video {
+        width: 95%;
+        max-width: 1080px;
+        height: 400px;
+        border-radius: 20px;
+      }
+
+      button.cs-button {
+        margin: 0.7rem 0.5rem;
+        background: $gradient-color;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        background-size: 600% 200%;
+        animation: gradient 4s linear infinite;
+        animation-direction: alternate;
+      }
+
+      button.cs-button:hover {
+        cursor: pointer;
+      }
+    }
+
+    .cs-right-container {
+      padding: 30px;
+      text-align: left;
+      width: calc(100% - 1080px);
+
+      .space-to-upload-image {
+        width: 100%;
+        height: auto;
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+
+        svg {
+          fill: #746cfe;
+          height: 2rem;
+          width: 3rem;
+        }
+      }
+
+      input.cs-input {
+        width: 100%;
+        background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+        outline: none;
+        border: 0;
+        border-radius: 10px;
+        padding: 4% 20px;
+        color: #ffffff;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 15px;
+
+        &::placeholder {
+          color: #ffffff;
+        }
+      }
+
+      textarea.cs-textarea {
+        width: 100%;
+        background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+        outline: none;
+        border: 0;
+        border-radius: 10px;
+        padding: 4% 20px;
+        color: #ffffff;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        font-size: 15px;
+        min-height: 250px;
+        height: 100%;
+        resize: none;
+
+        &::placeholder {
+          color: #ffffff;
+        }
+      }
+
+      .cs-label {
+        padding-bottom: 4%;
+        font-size: 1rem;
+      }
+
+      input[type="radio"]:checked {
+        background-color: red;
+        border: 2px solid red;
+      }
+
+      img.cs-uploaded-image {
+        height: 10rem;
+        width: 20rem;
+      }
+
+      .premium-label {
+        color: #ffffff;
+        font-size: 15px;
+      }
+    }
+  }
+}

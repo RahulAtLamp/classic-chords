@@ -1,0 +1,50 @@
+.data-loading {
+    width: 100%;
+    height: 95vh;
+    // background: linear-gradient(130deg, #251b43 80%, #746cfe);
+    background-color: transparent;
+    // overflow: hidden;
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    .loading-inner {
+        display: block;
+        width: 300px;
+        height: 200px;
+        margin: 0 auto;
+
+        #Capa_1 {
+            margin: 0 auto;
+            animation-name: bounce;
+            animation-duration: 5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease;
+            width: 300px;
+            height: 200px;
+        }
+
+        .message {
+            margin-top: 40px;
+            font-family: "FontsFree";
+            color: #ffffff;
+            font-size: 20px;
+            text-align: center;
+        }
+    }
+}
+
+@keyframes bounce {
+    0% {
+        transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+
+    50% {
+        transform: matrix(1, 0, 0, 1, 0, 20);
+    }
+
+    100% {
+        transform: matrix(1, 0, 0, 1, 0, 0);
+    }
+
+}

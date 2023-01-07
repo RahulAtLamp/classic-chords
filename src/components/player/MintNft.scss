@@ -1,0 +1,115 @@
+.mint-nft-main {
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.3);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    font-family: "FontsFree";
+    display: flex;
+    align-items: center;
+    align-content: center;
+
+    .mint-nft-container {
+        background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+        height: 100%;
+        max-height: 650px;
+        text-align: center;
+        border-radius: 20px;
+        overflow: hidden;
+
+        .mint-nft-header {
+            color: #ffffff;
+
+            .mint-nft-h2 {
+                padding: 5px 20px;
+            }
+        }
+
+        .mint-nft-data {
+            .mint-nft-video {
+                .mint-nft-v {
+                    width: 400px;
+                    height: 200px;
+                    background-color: #ffffff;
+                    border-width: 0px;
+                    border-radius: 20px;
+                }
+            }
+
+            .mint-nft-name {
+                .mint-nft-n {
+                    width: 70%;
+                    font-size: 20px;
+                    border: 1px solid transparent;
+                    font-family: "Gilmer-Light";
+                    font-weight: 600;
+                    margin-top: 20px;
+                    border-radius: 10px;
+
+                    // &:active{
+                    //     border: 1px solid #a886fb !important;
+                    // }
+                }
+            }
+
+            .mint-nft-description {
+                .mint-nft-d {
+                    width: 70%;
+                    font-size: 20px;
+                    border: 1px solid transparent;
+                    font-family: "Gilmer-Light";
+                    font-weight: 600;
+                    margin-top: 20px;
+                    border-radius: 10px;
+                    height: 100px;
+                    resize: none;
+                }
+            }
+
+            .mint-nft-qty {
+                .mint-nft-num {
+                    width: 70%;
+                    font-size: 20px;
+                    border: 1px solid transparent;
+                    font-family: "Gilmer-Light";
+                    font-weight: 600;
+                    margin-top: 20px;
+                    border-radius: 10px;
+                }
+            }
+
+            .mint-nft-price {
+                .mint-nft-p {
+                    width: 70%;
+                    font-size: 20px;
+                    border: 1px solid transparent;
+                    font-family: "Gilmer-Light";
+                    font-weight: 600;
+                    margin-top: 20px;
+                    border-radius: 10px;
+                }
+            }
+
+            .mint-nft-btn {
+                .mint-nft-b {
+                    font-family: "FontsFree";
+                    border: 1px solid transparent;
+                    font-weight: 600;
+                    margin-top: 12px;
+                    background-color: #251b43;
+                    color: #ffffff;
+                    border-radius: 20px;
+                    padding: 5px 20px;
+                    cursor: pointer;
+                }
+
+                .disabled {
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
