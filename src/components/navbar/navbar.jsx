@@ -6,8 +6,9 @@ import MenuIcon from "./MenuIcon";
 import "./navbar.scss";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import * as PushAPI from "@pushprotocol/restapi";
 
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useAccount, useConnect, useDisconnect, useSigner } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 
@@ -15,6 +16,7 @@ const Navbar = () => {
   // const [error, setError] = useState();
   let navigate = useNavigate();
   const { address, isConnected } = useAccount();
+  const signer = useSigner();
   const { connect } = useConnect({
     connector: new InjectedConnector()
   });
@@ -34,6 +36,8 @@ const Navbar = () => {
   const [showExploreMenu, setShowExploreMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [chain, setChainStatus] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
 
   const connectMeta = () => {
     connect();
@@ -133,6 +137,81 @@ const Navbar = () => {
       }
     }
   }, []);
+
+  const optIn = async () => {
+    const PK =
+      "c3e56e73612a930801c3a54b9f2056670e44b76e81aab1c883570b396c204958";
+    const Pkey = `0x${PK}`;
+    const signer = new ethers.Wallet(Pkey);
+
+    await PushAPI.channels.subscribe({
+      signer: signer,
+      channelAddress: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // channel address in CAIP
+      userAddress: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      onSuccess: () => {
+        console.log("opt in success");
+      },
+      onError: () => {
+        console.error("opt in error");
+      },
+      env: "staging",
+    });
+  };
+  const optOut = async () => {
+    const PK =
+      "c3e56e73612a930801c3a54b9f2056670e44b76e81aab1c883570b396c204958";
+    const Pkey = `0x${PK}`;
+    const signer = new ethers.Wallet(Pkey);
+    await PushAPI.channels.unsubscribe({
+      signer: signer,
+      channelAddress: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // channel address in CAIP
+      userAddress: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      onSuccess: () => {
+        console.log("opt out success");
+      },
+      onError: () => {
+        console.error("opt out error");
+      },
+      env: "staging",
+    });
+  };
+
+  const sendNotification = async () => {
+    try {
+      const apiResponse = await PushAPI.payloads.sendNotification({
+        signer: signer,
+        type: 3, // target
+        identityType: 2, // direct payload
+        notification: {
+          title: `hello EthIndia `,
+          body: `congratulation `,
+        },
+        payload: {
+          title: `hello ethIndia `,
+          body: `Congratulation`,
+          cta: "",
+          img: "",
+        },
+        recipients: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // recipient address
+        channel: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // your channel address
+        env: "staging",
+      });
+
+      // apiResponse?.status === 204, if sent successfully!
+      console.log("API repsonse: ", apiResponse);
+    } catch (err) {
+      console.error("Error: ", err);
+    }
+  };
+
+  const fatchNotification = async () => {
+    const notifications = await PushAPI.user.getFeeds({
+      user: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      env: "staging",
+    });
+    setNotifications(notifications);
+  };
+
 
   useEffect(() => {
     /**
