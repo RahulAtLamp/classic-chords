@@ -27,14 +27,14 @@ const ConversationRight = ({ allMessages, activeAddress, sendMessage, singleMess
         return (
             <>
                 <div className="message__right">
-                    <div className="header">
+                    {/* <div className="header">
                         <div className="image-header">
                             <img src="https://images.unsplash.com/photo-1662377088248-6cf24d3791d8?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwzNjE5NjR8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjI1NDQyNDE\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200" alt="icon" className="bitmap-img" />
                         </div>
                         <div className="name">
                             {activeAddress}
                         </div>
-                    </div>
+                    </div> */}
                     <div className="conversation" id="conversation_selector">
                         {
                             allMessages.map((m, i) => {

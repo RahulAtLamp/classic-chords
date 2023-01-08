@@ -21,7 +21,8 @@ function Streaming({ account }) {
   const [session, setSession] = useState("");
   const [url, setUrl] = useState("");
   const [showChat, setShowChat] = useState(false);
-  const livepeerObject = new Livepeer("fbf20223-008c-4d6f-8bdb-5d6caec8eb29");
+  // const livepeerObject = new Livepeer("fbf20223-008c-4d6f-8bdb-5d6caec8eb29");
+  const livepeerObject = new Livepeer(process.env.REACT_APP_LIVEPEER_TOKEN);
   
   // const getStreams = async () => {
   //   const streams = await livepeerObject.Stream.getAll({ isActive: false });
@@ -52,10 +53,10 @@ function Streaming({ account }) {
         const { chainId } = await provider.getNetwork();
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
-          const contract = new ethers.Contract(process.env.REACT_USER_ADDRESS, user, signer);
+          const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, signer);
           return contract
         } else {
-          alert("Please connect to the bitTorent Network!");
+          alert("Please connect to the MUMBAI matic Network!");
         }
       }
     } catch (error) {
@@ -106,6 +107,7 @@ function Streaming({ account }) {
     console.log(stream_);
     console.log(stream_.streamKey);
     const contract = await getContract();
+    console.log(contract);
     console.log(premium,
       title,
       des);
@@ -254,12 +256,12 @@ function Streaming({ account }) {
             </form>
           </div>
         </div>
-        <button onClick={() => { console.log(ethers.Wallet.createRandom()); }}>dummy Address</button>
+        {/* <button onClick={() => { console.log(ethers.Wallet.createRandom()); }}>dummy Address</button> */}
         {
           showChat
             ?
             <div className="communication">
-              <Communication />
+              <Communication groupAddress={null} />
             </div>
             :
             null

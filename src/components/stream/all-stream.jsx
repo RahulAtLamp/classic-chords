@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./all-stream.scss";
-import { Artists } from '../explore/artist-dummy';
+// import { Artists } from '../explore/artist-dummy';
 import { Link } from 'react-router-dom';
 import Livepeer from "livepeer-nodejs";
 import ReactPlayer from 'react-player';
@@ -50,7 +50,7 @@ function AllStream() {
         const { chainId } = await provider.getNetwork();
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
-          const contract = new ethers.Contract(process.env.REACT_USER_ADDRESS, user, signer);
+          const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, signer);
           return contract
         } else {
           alert("Please connect to the bitTorent Network!");

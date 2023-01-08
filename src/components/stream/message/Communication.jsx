@@ -5,7 +5,7 @@ import {
 } from "wagmi";
 import { Client } from "@xmtp/xmtp-js";
 import "./communication.css";
-import ConversationLeft from "./ConversationLeft";
+// import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
