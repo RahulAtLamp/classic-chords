@@ -23,9 +23,9 @@ const SingleStream = () => {
         }
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(playerSource);
-    },[playerSource])
+    }, [playerSource])
 
     return (
         <div className="stream-single-main">
@@ -34,9 +34,10 @@ const SingleStream = () => {
                 {/* <video className="stream-player" ref={playerRef} controls>
                     <source src={playerSource} type="application/x-mpegURL" />
                 </video> */}
-                <ReactPlayer 
+                <ReactPlayer
                     url={playerSource}
                     controls={true}
+                    style={{ width: "100%" }}
                 />
             </div>
             <div className="chats">

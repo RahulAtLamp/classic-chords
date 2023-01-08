@@ -33,11 +33,10 @@ const OldStream = () => {
                 {/* <video className="stream-player" ref={playerRef} controls>
                     <source src={playerSource} type="application/x-mpegURL" />
                 </video> */}
-                <ReactPlayer 
-                    className="stream-player"
+                <ReactPlayer
                     url={playerSource}
                     controls={true}
-                    width="100%"
+                    style={{ width: "fit-content" }}
                 />
             </div>
             <div className="chats">

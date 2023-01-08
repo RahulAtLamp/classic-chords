@@ -8,7 +8,7 @@ import user from "../../contract/artifacts/userStream.json"
 import { ethers } from "ethers";
 import Loading3 from '../../loading3';
 
-const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
+// const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
 function AllStream() {
   // const livepeerObject = new Livepeer("88cf2aad-9fb8-4260-8189-f223b226e5b2");
@@ -25,17 +25,27 @@ function AllStream() {
     const contract = await getContract();
     // console.log(streams[0].playbackId);
     for (let i = 0; i < streams.length; i++) {
-      console.log(await contract.streamCodeToStream(streams[i].playbackId));
+      const streamData = await contract.streamCodeToStream(streams[i].playbackId);
+      console.log(streamData);
     }
+
     setStreams(streams)
     const allRecordedStreams = await livepeerObject.Session.getAll(true);
     console.log(allRecordedStreams);
+    console.log(allRecordedStreams.length);
     const contract1 = await getContract();
-    // for (let i = 0; i < allRecordedStreams.length; i++) {
-    //   console.log(await contract1.streamCodeToStream(allRecordedStreams[i].playbackId));
-    // }
+    let counter = 0;
+    for (let i = 0; i < allRecordedStreams.length; i++) {
+      console.log(allRecordedStreams[i].id);
+      const recStreamData = await contract1.streamCodeToStream(allRecordedStreams[i].id);
+      console.log(recStreamData);
+      counter++;
+    }
+
+    // if(counter === allRecordedStreams.length){
     setRecordedStreams(allRecordedStreams);
     setLoading(false);
+    // }
   };
 
   const getContract = async () => {
@@ -76,7 +86,7 @@ function AllStream() {
             {Streams.length > 0
               ?
               Streams.map((stream, i) => (
-                <Link to={`/stream/${stream.playbackId}`}>
+                <Link to={`/stream/${stream.playbackId}`} key={stream.playbackId}>
                   {/* <a key={i} href={`https://lvpr.tv/?v=` + stream.playbackId} target="_blank"> */}
                   <div className="exp-pa">
                     <div className="exp-bg stream">
@@ -110,7 +120,7 @@ function AllStream() {
             {recordedStreams.length > 0
               ?
               recordedStreams.map((stream, i) => (
-                <div>
+                <div key={stream.id}>
                   {/* <a key={i} href={`https://livepeercdn.studio/recordings/` + stream.id + "/index.m3u8"} target="_blank"> */}
                   <Link to={`/old-stream/${stream.id}`}>
 

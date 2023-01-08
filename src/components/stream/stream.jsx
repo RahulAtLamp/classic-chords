@@ -66,6 +66,16 @@ function Streaming({ account }) {
 
   const StartStream = async () => {
 
+    if(!title){
+      alert("Please provide a title for the stream...");
+      return;
+    }
+
+    if(!des){
+      alert("Please provide a description for the stream...");
+      return;
+    }
+
     (async () => {
       videoEl.current.volume = 0;
 
@@ -162,8 +172,8 @@ function Streaming({ account }) {
   };
 
   const closeStream = async () => {
-    session.close();
     window.location.reload();
+    // session.close();
   };
 
   useEffect(() => {

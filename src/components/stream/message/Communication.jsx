@@ -37,7 +37,8 @@ const Communication = () => {
         setClient(xmtp);
         const allConvs = await xmtp.conversations.list();
         console.log(allConvs);
-        setActiveAddress(allConvs[0].peerAddress)
+        setActiveAddress("0x1c8E4C749754c6EB8Ab0629AfE41Bd5527C33e9E");
+        // setActiveAddress(allConvs[0].peerAddress)
         setAllConversations(allConvs);
     };
 
@@ -94,6 +95,12 @@ const Communication = () => {
             getConversations();
         }
     }, [activeAddress])
+
+    useEffect(()=>{
+        if(allMessages.length === 0){
+            sendMessage();
+        }
+    },[allMessages])
 
     useEffect(()=>{
         if(activeAddress){
