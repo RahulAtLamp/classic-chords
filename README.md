@@ -39,7 +39,7 @@ npm start
 
 4.  Click on Start Recording in order to start recording the notes you play.
 
-5.  Once you have finished the not you were playing click on Stop Recording.
+5.  Once you have finished recording the note you were playing click on Stop Recording.
 
 6.  As soon as you click on Stop Recording you will get a popup to mint the art with a generative art video.
 
