@@ -1,5 +1,5 @@
 # Classic Chords
-
+## Unleash The Artist In You & Make Your Own Web3 Music
 ## Link
 https://classic-chords.vercel.app
 
