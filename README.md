@@ -1,11 +1,32 @@
 # Classic Chords
 
+## Link
+https://classic-chords.vercel.app
+
+
 ## About
-Our project is solely based on music for all the artists who want to showcase their skills and trade their own NFTs.
+An interactive and rewarding platform for music and art lovers. Play your music and mint NFTs - taking generative art to the next level!
+
+Classic Chords provides a means of generating NFTs from the music you play from the instruments. The algorithm generates the art based on the keys pressed, the duration of the music and various other interesting factors.
+
+The generated art can be stored as an NFT, along with the music played as background.
+
+You can mint these NFTs for your fans and followers as an artist. Similarly, live streams can strengthen the musicians’ community at Classic Chords. Those with the NFTs gain access to premium live streams the artist can host.
+
+The NFT will have some useful features,
+
+(1) An artist can create a stream for their community (users who hold that artist’s NFT) or create a general stream for everyone on the platform. Those with the NFTs from the artist can access the community streams too.
+
+(2) A user can give away their NFTs for rent. So the user who is either holding their NFT or who has rented the NFT can participate in the premium stream of the artist.
 
 ### Setup
 ```
 npm install
+```
+
+### Start
+```
+npm start
 ```
 
 ### Instructions
