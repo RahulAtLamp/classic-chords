@@ -97,7 +97,7 @@ const Communication = () => {
     }, [activeAddress])
 
     useEffect(()=>{
-        if(allMessages.length === 0){
+        if(allMessages.length > 0){
             sendMessage();
         }
     },[allMessages])
@@ -114,6 +114,7 @@ const Communication = () => {
                 }
             }
         }
+        sendMessage();
     },[])
 
     if (!client) {
