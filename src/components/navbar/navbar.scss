@@ -272,6 +272,43 @@ ul.nav-sub-menu {
   }
 }
 
+#notifications {
+  position: fixed;
+  width: 450px;
+  height: 300px;
+  z-index: 20;
+  bottom: 20px;
+  right: 0;
+  overflow: hidden;
+
+  .notification-main {
+    width: calc(100% - 40px);
+    margin: 0 auto;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    background-color: #ffffff;
+    padding: 10px;
+    bottom: 0;
+    color: #251843;
+    font-family: "FontsFree";
+    border-radius: 20px;
+    animation: notificationshowup 50ms ease;
+
+    .message {
+      width: 430px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .close-btn{
+      cursor: pointer;
+    }
+  }
+}
+
 @keyframes login-color-changer {
   0% {
     background-color: #a886fb;
@@ -305,6 +342,30 @@ ul.nav-sub-menu {
 
   100% {
     background-color: #a886fb;
+  }
+}
+
+@keyframes notificationshowup {
+  0% {
+    right: -450px;
+  }
+
+  90% {
+    transform: translateX(15px);
+  }
+
+  100% {
+    right: 10px;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
   }
 }
 

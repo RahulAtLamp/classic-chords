@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import user from "../../contract/artifacts/userStream.json"
 import { ethers } from "ethers";
+import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
 import "./stream.scss";
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
@@ -23,23 +24,17 @@ function Streaming({ account }) {
   const [showChat, setShowChat] = useState(false);
   // const livepeerObject = new Livepeer("fbf20223-008c-4d6f-8bdb-5d6caec8eb29");
   const livepeerObject = new Livepeer(process.env.REACT_APP_LIVEPEER_TOKEN);
-  
+
   // const getStreams = async () => {
   //   const streams = await livepeerObject.Stream.getAll({ isActive: false });
   //   console.log(streams);
   // };
-  
+
   const [title, setTitle] = useState("");
   const [des, setDes] = useState("");
   // const [add, setAdd] = useState("");
   const [record, setRecord] = useState("");
   const [premium, setPremium] = useState("");
-
-  useEffect(() => {
-    if (!isConnected) {
-      navigate("/");
-    }
-  }, [isConnected]);
 
   const getContract = async () => {
     try {
@@ -66,12 +61,12 @@ function Streaming({ account }) {
 
   const StartStream = async () => {
 
-    if(!title){
+    if (!title) {
       alert("Please provide a title for the stream...");
       return;
     }
 
-    if(!des){
+    if (!des) {
       alert("Please provide a description for the stream...");
       return;
     }
@@ -118,11 +113,14 @@ function Streaming({ account }) {
     console.log(stream_.streamKey);
     const contract = await getContract();
     console.log(contract);
+
+    const encData = testEncrypt(stream_.id);
     console.log(premium,
       title,
-      des);
+      des,
+      encData);
     const tx = await contract.createStream(
-      stream_.id,
+      encData,
       premium,
       title,
       des
@@ -176,11 +174,40 @@ function Streaming({ account }) {
     // session.close();
   };
 
+
+
+  const testEncrypt = (stream_id) => {
+    // const key = "35873FDFD99E4FA33F15B59924ACC";
+    // const text = "9a935bb4-6ff3-4704-9c07-10de5750ffc1"
+
+    const data = CryptoJS.AES.encrypt(
+      JSON.stringify(stream_id),
+      process.env.REACT_APP_CRYPT_KEY
+    ).toString();
+
+    return data
+  };
+
+  const testDecrypt = () => {
+    const data = "U2FsdGVkX1/svP3xEHYKUiOUlXWBm6Lr0TFKw8lgIUYajpAVLrvgB1KbRWdKllnL3yg1/9hDJrNJ+Lb0+9a5wA==";
+    // const key = "35873FDFD99E4FA33F15B59924ACC";
+
+    const bytes = CryptoJS.AES.decrypt(data, process.env.REACT_APP_CRYPT_KEY);
+    const dec = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    console.log(dec);
+  };
+
   useEffect(() => {
     if (!mounted) {
       closeStream();
     }
   }, [mounted])
+
+  useEffect(() => {
+    if (!isConnected) {
+      navigate("/");
+    }
+  }, [isConnected]);
 
   return (
     <>
@@ -266,7 +293,9 @@ function Streaming({ account }) {
             </form>
           </div>
         </div>
-        {/* <button onClick={() => { console.log(ethers.Wallet.createRandom()); }}>dummy Address</button> */}
+
+        {/* <button onClick={() => { testEncrypt() }}>Encrypt Data</button>
+        <button onClick={() => { testDecrypt() }}>Decrypt Data</button> */}
         {
           showChat
             ?

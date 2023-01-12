@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ensdomains/ensjs": "^3.0.0-alpha.39",
     "@iconify/icons-ion": "^1.1.0",
     "@iconify/react": "^4.0.0",
     "@livepeer/react": "^1.5.1",

@@ -7,6 +7,7 @@ import "./navbar.scss";
 import { useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
 import * as PushAPI from "@pushprotocol/restapi";
+// import { NotificationItem, chainNameType } from "@pushprotocol/uiweb";
 
 import { useAccount, useConnect, useDisconnect, useSigner } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -37,6 +38,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [chain, setChainStatus] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [toggleNotification, setToggleNotification] = useState(false);
 
 
   const connectMeta = () => {
@@ -84,7 +86,7 @@ const Navbar = () => {
           //     symbol: "BTT",
           //     decimals: 18
           // },
-          blockExplorerUrls: ["https://polygonscan.com/"]
+          blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
         }]
       })
       setChainStatus(false);
@@ -113,7 +115,7 @@ const Navbar = () => {
   }
 
   useEffect(() => {
-    console.log(isConnected);
+    // console.log(isConnected);
     if (isConnected) {
       setConnection(true);
     } else {
@@ -140,32 +142,33 @@ const Navbar = () => {
 
   const optIn = async () => {
     const PK =
-      "c3e56e73612a930801c3a54b9f2056670e44b76e81aab1c883570b396c204958";
+      "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
     const Pkey = `0x${PK}`;
     const signer = new ethers.Wallet(Pkey);
 
     await PushAPI.channels.subscribe({
       signer: signer,
-      channelAddress: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // channel address in CAIP
-      userAddress: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
+      userAddress: `eip155:5:${address}`, // user address in CAIP
       onSuccess: () => {
         console.log("opt in success");
       },
-      onError: () => {
-        console.error("opt in error");
+      onError: (err) => {
+        // console.error(err);
+        console.error("opt in error", err);
       },
       env: "staging",
     });
   };
   const optOut = async () => {
     const PK =
-      "c3e56e73612a930801c3a54b9f2056670e44b76e81aab1c883570b396c204958";
+      "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
     const Pkey = `0x${PK}`;
     const signer = new ethers.Wallet(Pkey);
     await PushAPI.channels.unsubscribe({
       signer: signer,
-      channelAddress: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // channel address in CAIP
-      userAddress: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
+      userAddress: `eip155:5:${address}`, // user address in CAIP
       onSuccess: () => {
         console.log("opt out success");
       },
@@ -192,7 +195,7 @@ const Navbar = () => {
           cta: "",
           img: "",
         },
-        recipients: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // recipient address
+        recipients: `eip155:5:${address}`, // recipient address
         channel: "eip155:5:0x737175340d1D1CaB2792bcf83Cff6bE7583694c7", // your channel address
         env: "staging",
       });
@@ -204,9 +207,9 @@ const Navbar = () => {
     }
   };
 
-  const fatchNotification = async () => {
+  const fetchNotification = async () => {
     const notifications = await PushAPI.user.getFeeds({
-      user: "eip155:5:0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce", // user address in CAIP
+      user: `eip155:5:${address}`, // user address in CAIP
       env: "staging",
     });
     setNotifications(notifications);
@@ -262,7 +265,15 @@ const Navbar = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [exploreMenuRef])
+  }, [exploreMenuRef]);
+
+  useEffect(() => {
+    if (address) {
+      optIn();
+    } else {
+      optOut();
+    }
+  }, [address])
 
   // useEffect(() => {
   //   if (!window.tronWeb.defaultAddress) {
@@ -442,6 +453,23 @@ const Navbar = () => {
           :
           null
       }
+
+
+      <div id="notifications">
+        {
+          toggleNotification
+            ?
+            <>
+              <div className="notification-main" title="Manga Artist is live now">
+                <div className="message">Manga Artist is live now</div>
+                <div><img className="close-btn" src="/images/cancel.svg" onClick={() => { setToggleNotification(false) }} height="30px" width="30px" /></div>
+              </div>
+            </>
+            :
+            null
+        }
+      </div>
+
     </>
   );
 };

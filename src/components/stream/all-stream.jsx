@@ -25,7 +25,7 @@ function AllStream() {
     const contract = await getContract();
     // console.log(streams[0].playbackId);
     for (let i = 0; i < streams.length; i++) {
-      const streamData = await contract.streamCodeToStream(streams[i].playbackId);
+      const streamData = await contract.streamCodeToStream(streams[i].id);
       console.log(streamData);
     }
 

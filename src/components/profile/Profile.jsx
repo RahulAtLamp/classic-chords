@@ -9,6 +9,7 @@ import classicChords from "../../contract/artifacts/classicChords.json"
 import market from "../../contract/artifacts/market.json"
 import user from "../../contract/artifacts/userStream.json"
 import { Web3Storage } from 'web3.storage'
+import { ENS } from "@ensdomains/ensjs";
 import axios from "axios";
 import Loading3 from "../../loading3";
 // import Loading from "../../loading";
@@ -19,6 +20,7 @@ const Profile = () => {
     const fileRef = useRef(null);
     const editUserPopup = useRef(null);
     const navigate = useNavigate();
+    const ensInstance = new ENS();
     const [userDefault, setUserDefault] = useState({ name: null, bio: null, profile_pic: null, userId: null })
     const [userData, setUserData] = useState({ name: "", bio: "", profile_pic: null })
     const [chain, setChainStatus] = useState(false);
@@ -110,6 +112,7 @@ const Profile = () => {
 
             // console.log(tx);
             setUserDefault({ name: tx.name, bio: tx.description, profile_pic: tx.profileImage, userId: tx.userId });
+            setUserData({ name: tx.name, bio: tx.description, profile_pic: tx.profileImage })
             setIsLoading(true)
             setProfileLoading(false);
             // } else {
@@ -124,6 +127,18 @@ const Profile = () => {
         }
     }
 
+
+
+    const profile = useEnsName('0x084c145f98C975a71a2fD5d3E5eAB84c0FC52fDf',0 ,5);
+
+    console.log(profile);
+
+    const checkENS = async () => {
+        // const profile = await ensInstance.getName("0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce");
+        // const profile = await ensInstance.getProfile("rahulrajan.eth");
+        // console.log(profile);
+    };
+
     const addChain = () => {
         if (window.ethereum) {
             window.ethereum.request({
@@ -137,7 +152,7 @@ const Profile = () => {
                     //     symbol: "BTT",
                     //     decimals: 18
                     // },
-                    blockExplorerUrls: ["https://polygonscan.com/"]
+                    blockExplorerUrls: ["https://mumbai.polygonscan.com/"]
                 }]
             })
             setChainStatus(false);
@@ -214,16 +229,16 @@ const Profile = () => {
         }
     }
 
-    const { data:ensName } = useEnsName({
-        address: address,
-        chainId: 5,
-        // onSuccess(ensName) {
-        //     setENSName(ensName)
-        //     console.log("ensName", ensName);
-        // }
-    });
+    // const { data: ensName } = useEnsName({
+    //     address: address,
+    //     chainId: 5,
+    //     // onSuccess(ensName) {
+    //     //     setENSName(ensName)
+    //     //     console.log("ensName", ensName);
+    //     // }
+    // });
 
-    console.log(ensName?.data);
+    // console.log(ensName?.data);
 
     // const { data, isError, isLoading } = useEnsName({
     //     address: address
@@ -250,6 +265,7 @@ const Profile = () => {
         checkChain();
         setProfileLoading(true);
         getProfile();
+        checkENS();
     }, []);
 
     useEffect(() => {
@@ -436,10 +452,10 @@ const Profile = () => {
                                                 <div className="profile-information">
                                                     <input type="file" ref={fileRef} onChange={(e) => { setprofileImage(e.target.files[0]); }} hidden />
                                                     <div className="update-profile-pic" onClick={() => { fileRef.current.click() }}>
-                                                        <img src={userData.profile_pic ? userData.profile_pic : "images/man.png"} alt="profile pic preview" className="profile-pic-preview" />
+                                                        <img src={userDefault.profile_pic ? `https://ipfs.io/ipfs/` + userDefault.profile_pic : "images/man.png"} alt="profile pic preview" className="profile-pic-preview" />
                                                     </div>
-                                                    <input className="profile-username" type="text" placeholder="Username" onChange={(e) => { setUserData({ ...userData, name: e.target.value }) }} />
-                                                    <textarea className="profile-bio" placeholder="Add your bio here..." onChange={(e) => { setUserData({ ...userData, bio: e.target.value }) }} />
+                                                    <input className="profile-username" type="text" defaultValue={userDefault.name ? userDefault.name : null} placeholder="Username" onChange={(e) => { setUserData({ ...userData, name: e.target.value }) }} />
+                                                    <textarea className="profile-bio" placeholder="Add your bio here..." defaultValue={userDefault.bio ? userDefault.bio : null} onChange={(e) => { setUserData({ ...userData, bio: e.target.value }) }} />
                                                     <button className="user-update-btn" onClick={() => { addUserData() }}>Update Details</button>
                                                 </div>
                                             </div>
