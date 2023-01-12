@@ -65,7 +65,7 @@ function SellCollectionSingle() {
                 console.log();
                 setIsLoading(true)
             } else {
-                alert("Please connect to the bitTorent Network!");
+                alert("Please connect to the Mumbai Testnet Network!");
                 // setChainStatus(true);
             }
 

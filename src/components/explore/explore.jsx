@@ -43,7 +43,7 @@ const Explore = ({ temp }) => {
       //     const contract = new ethers.Contract(market_address, market, signer);
       //     return contract
       //   } else {
-      //     alert("Please connect to the bitTorent Network!");
+      //     alert("Please connect to the Mumbai Testnet Network!");
       //   }
       // }
 

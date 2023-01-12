@@ -115,7 +115,7 @@ function MintNft(props) {
                         window.location.reload();
                     }, 3000);
                 } else {
-                    alert("Please connect to the bitTorent Network!");
+                    alert("Please connect to the Mumbai Testnet Network!");
                 }
             }
         } catch (error) {

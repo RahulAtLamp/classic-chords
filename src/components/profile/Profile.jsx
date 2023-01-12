@@ -116,7 +116,7 @@ const Profile = () => {
             setIsLoading(true)
             setProfileLoading(false);
             // } else {
-            //     // alert("Please connect to the bitTorent Network!");
+            //     // alert("Please connect to the Mumbai Testnet Network!");
             //     setChainStatus(true);
             //     setProfileLoading(false);
             // }
@@ -194,7 +194,7 @@ const Profile = () => {
                     const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, signer);
                     return contract
                 } else {
-                    alert("Please connect to the bitTorent Network!");
+                    alert("Please connect to the Mumbai Testnet Network!");
                 }
             }
         } catch (error) {

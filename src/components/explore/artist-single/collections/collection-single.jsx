@@ -77,7 +77,7 @@ function CollectionSingle() {
     //             // console.log();
     //             // setIsLoading(true)
     //         } else {
-    //             alert("Please connect to the bitTorent Network!");
+    //             alert("Please connect to the Mumbai Testnet Network!");
     //             // setChainStatus(true);
     //         }
 
@@ -170,7 +170,7 @@ function CollectionSingle() {
                 // console.log();
 
             } else {
-                alert("Please connect to the bitTorent Network!");
+                alert("Please connect to the Mumbai Testnet Network!");
                 // setChainStatus(true);
                 setIsLoading(false);
             }

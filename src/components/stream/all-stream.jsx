@@ -21,39 +21,49 @@ function AllStream() {
 
   const getStreams = async () => {
     setLoading(true);
-    const streams = await livepeerObject.Stream.getAll(1, true, true);
+    const fetchStreams = await livepeerObject.Stream.getAll(1, true, true);
     const contract = await getContract();
-    // console.log(streams[0].playbackId);
-    for (let i = 0; i < streams.length; i++) {
-      const streamData = await contract.streamCodeToStream(streams[i].id);
+    // console.log(fetchStreams[0].playbackId);
+    let counter = 0;
+    const streams = [];
+    for (let i = 0; i < fetchStreams.length; i++) {
+      let data = {};
+      data.id = fetchStreams[i].playbackId;
+      console.log(fetchStreams[i].playbackId);
+      const allStr = fetchStreams[i].id.replace(/-/g, "");
+      console.log(allStr);
+      const streamData = await contract.streamCodeToStream(allStr);
+      // streamData.wait();
       console.log(streamData);
+      data.meta = streamData;
+      streams.push(data);
+      counter++;
     }
 
-    setStreams(streams)
+    setStreams(streams);
     const allRecordedFetchedStreams = await livepeerObject.Session.getAll(true);
     console.log(allRecordedFetchedStreams);
-    console.log(allRecordedFetchedStreams.length);
+    // console.log(allRecordedFetchedStreams.length);
     const contract1 = await getContract();
-    let counter = 0;
+
     const allRecordedStreams = []
     for (let i = 0; i < allRecordedFetchedStreams.length; i++) {
       let data = {};
       data.id = allRecordedFetchedStreams[i].id;
       const allRec = allRecordedFetchedStreams[i].id.replace(/-/g, "");
-      console.log(allRec);
       const recStreamData = await contract1.streamCodeToStream(allRec);
+      // recStreamData.wait();
       // console.log(recStreamData);
       data.meta = recStreamData;
-      counter++;
       allRecordedStreams.push(data);
+      counter++;
     }
-
-    console.log(allRecordedStreams);
-
-    // if(counter === allRecordedFetchedStreams.length){
     setRecordedStreams(allRecordedStreams);
-    setLoading(false);
-    // }
+    console.log(allRecordedStreams);
+    const total = allRecordedFetchedStreams.length + fetchStreams.length;
+    if (counter === total) {
+      setLoading(false);
+    }
   };
 
   const getContract = async () => {
@@ -71,7 +81,7 @@ function AllStream() {
           const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, signer);
           return contract
         } else {
-          alert("Please connect to the bitTorent Network!");
+          alert("Please connect to the Mumbai Testnet Network!");
         }
       }
     } catch (error) {
@@ -94,7 +104,7 @@ function AllStream() {
             {Streams.length > 0
               ?
               Streams.map((stream, i) => (
-                <Link to={`/stream/${stream.playbackId}`} key={stream.playbackId}>
+                <Link to={`/stream/${stream.id}`} key={stream.id}>
                   {/* <a key={i} href={`https://lvpr.tv/?v=` + stream.playbackId} target="_blank"> */}
                   <div className="exp-pa">
                     <div className="exp-bg stream">
@@ -110,8 +120,8 @@ function AllStream() {
                           style={{ width: "100%" }}
                         />
                       </div>
-                      {/* <div className="exp-name" title={artist.name}>{artist.name}</div>
-                              <p className="exp-description">{artist.description}</p> */}
+                      <div className="exp-name" title={stream.meta.title}>{stream.meta.title}</div>
+                      <p className="exp-description">{stream.meta.description}</p>
                     </div>
                   </div>
                   {/* </a> */}
@@ -148,7 +158,7 @@ function AllStream() {
                           />
                         </div>
                         <div className="exp-name" title={stream.meta.title}>{stream.meta.title}</div>
-                              <p className="exp-description">{stream.meta.description}</p>
+                        <p className="exp-description">{stream.meta.description}</p>
                       </div>
                     </div>
                   </Link>

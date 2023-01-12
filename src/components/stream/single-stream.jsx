@@ -40,9 +40,9 @@ const SingleStream = () => {
                     style={{ width: "100%" }}
                 />
             </div>
-            <div className="chats">
+            {/* <div className="chats">
                 <Communication />
-            </div>
+            </div> */}
         </div>
     )
 }

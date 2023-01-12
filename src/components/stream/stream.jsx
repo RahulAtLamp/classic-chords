@@ -161,10 +161,19 @@ function Streaming({ account }) {
       const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, RPC_provider);
       const tx = await contract.userMapping(address);
 
+      const allArtists = await contract.getAllArtists();
+      const allUsers = [];
+      for(let i=0; i<allArtists.length; i++){
+        const formatting = `eip155:5:${allArtists[i].userAddress}`;
+        allUsers.push(formatting);
+      };
+      // console.log(allUsers);
+
       try {
-        const { ethereum } = window;
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
+        const PK =
+          "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
+        const Pkey = `0x${PK}`;
+        const signer = new ethers.Wallet(Pkey);
         const apiResponse = await PushAPI.payloads.sendNotification({
           signer: signer,
           type: 3, // target
@@ -179,7 +188,7 @@ function Streaming({ account }) {
             cta: "",
             img: "",
           },
-          recipients: `eip155:5:${address}`, // recipient address
+          recipients: allUsers, // recipient address
           channel: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // your channel address
           env: "staging",
         });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 // import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.png";
@@ -39,7 +39,7 @@ const Navbar = () => {
   const [chain, setChainStatus] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [toggleNotification, setToggleNotification] = useState(false);
-
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const connectMeta = () => {
     connect();
@@ -127,6 +127,8 @@ const Navbar = () => {
     if (isConnected) {
       checkChain();
       setConnection(true);
+      fetchNotification();
+      allNotification();
     } else {
       setConnection(false);
     }
@@ -140,11 +142,23 @@ const Navbar = () => {
     }
   }, []);
 
+  const allNotification = useCallback(() => {
+    for (let i = 0; i < notifications; i++) {
+      console.log(notifications[i]);
+      setToggleNotification(true);
+      setNotificationMessage(notifications[i].message)
+      setTimeout(() => {
+        setToggleNotification(false)
+      }, 3000);
+    }
+  }, [notifications]);
+
   const optIn = async () => {
     try {
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const PK =
+        "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
+      const Pkey = `0x${PK}`;
+      const signer = new ethers.Wallet(Pkey);
 
       await PushAPI.channels.subscribe({
         signer: signer,
@@ -164,14 +178,11 @@ const Navbar = () => {
     }
   };
   const optOut = async () => {
-    // const PK =
-    //   "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
-    // const Pkey = `0x${PK}`;
-    // const signer = new ethers.Wallet(Pkey);
     try {
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const signer = provider.getSigner();
+      const PK =
+        "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
+      const Pkey = `0x${PK}`;
+      const signer = new ethers.Wallet(Pkey);
       await PushAPI.channels.unsubscribe({
         signer: signer,
         channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
@@ -218,12 +229,14 @@ const Navbar = () => {
   };
 
   const fetchNotification = async () => {
-    const notifications = await PushAPI.user.getFeeds({
+    const notification = await PushAPI.user.getFeeds({
       user: `eip155:5:${address}`, // user address in CAIP
       env: "staging",
     });
-    setNotifications(notifications);
+    console.log(notification);
+    setNotifications(notification);
   };
+
 
 
   useEffect(() => {
@@ -280,8 +293,15 @@ const Navbar = () => {
   useEffect(() => {
     if (address) {
       optIn();
+      fetchNotification();
     }
   }, [address])
+
+  useEffect(() => {
+    if (notifications) {
+      allNotification();
+    }
+  }, [notifications])
 
   // useEffect(() => {
   //   if (!window.tronWeb.defaultAddress) {
@@ -469,7 +489,7 @@ const Navbar = () => {
             ?
             <>
               <div className="notification-main" title="Manga Artist is live now">
-                <div className="message">Manga Artist is live now</div>
+                <div className="message">{notificationMessage}</div>
                 <div><img className="close-btn" src="/images/cancel.svg" onClick={() => { setToggleNotification(false) }} height="30px" width="30px" /></div>
               </div>
             </>
