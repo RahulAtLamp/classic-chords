@@ -141,42 +141,52 @@ const Navbar = () => {
   }, []);
 
   const optIn = async () => {
-    const PK =
-      "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
-    const Pkey = `0x${PK}`;
-    const signer = new ethers.Wallet(Pkey);
+    try {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
 
-    await PushAPI.channels.subscribe({
-      signer: signer,
-      channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
-      userAddress: `eip155:5:${address}`, // user address in CAIP
-      onSuccess: () => {
-        console.log("opt in success");
-      },
-      onError: (err) => {
-        // console.error(err);
-        console.error("opt in error", err);
-      },
-      env: "staging",
-    });
+      await PushAPI.channels.subscribe({
+        signer: signer,
+        channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
+        userAddress: `eip155:5:${address}`, // user address in CAIP
+        onSuccess: () => {
+          console.log("opt in success");
+        },
+        onError: (err) => {
+          // console.error(err);
+          console.error("opt in error", err);
+        },
+        env: "staging",
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
   const optOut = async () => {
-    const PK =
-      "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
-    const Pkey = `0x${PK}`;
-    const signer = new ethers.Wallet(Pkey);
-    await PushAPI.channels.unsubscribe({
-      signer: signer,
-      channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
-      userAddress: `eip155:5:${address}`, // user address in CAIP
-      onSuccess: () => {
-        console.log("opt out success");
-      },
-      onError: () => {
-        console.error("opt out error");
-      },
-      env: "staging",
-    });
+    // const PK =
+    //   "aafda643b6b90977cde35f1cb28d880b5fdded8ae621490a0d3f56af41d59c65";
+    // const Pkey = `0x${PK}`;
+    // const signer = new ethers.Wallet(Pkey);
+    try {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      await PushAPI.channels.unsubscribe({
+        signer: signer,
+        channelAddress: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // channel address in CAIP
+        userAddress: `eip155:5:${address}`, // user address in CAIP
+        onSuccess: () => {
+          console.log("opt out success");
+        },
+        onError: () => {
+          console.error("opt out error");
+        },
+        env: "staging",
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const sendNotification = async () => {
@@ -270,8 +280,6 @@ const Navbar = () => {
   useEffect(() => {
     if (address) {
       optIn();
-    } else {
-      optOut();
     }
   }, [address])
 

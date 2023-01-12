@@ -30,19 +30,27 @@ function AllStream() {
     }
 
     setStreams(streams)
-    const allRecordedStreams = await livepeerObject.Session.getAll(true);
-    console.log(allRecordedStreams);
-    console.log(allRecordedStreams.length);
+    const allRecordedFetchedStreams = await livepeerObject.Session.getAll(true);
+    console.log(allRecordedFetchedStreams);
+    console.log(allRecordedFetchedStreams.length);
     const contract1 = await getContract();
     let counter = 0;
-    for (let i = 0; i < allRecordedStreams.length; i++) {
-      console.log(allRecordedStreams[i].id);
-      const recStreamData = await contract1.streamCodeToStream(allRecordedStreams[i].id);
-      console.log(recStreamData);
+    const allRecordedStreams = []
+    for (let i = 0; i < allRecordedFetchedStreams.length; i++) {
+      let data = {};
+      data.id = allRecordedFetchedStreams[i].id;
+      const allRec = allRecordedFetchedStreams[i].id.replace(/-/g, "");
+      console.log(allRec);
+      const recStreamData = await contract1.streamCodeToStream(allRec);
+      // console.log(recStreamData);
+      data.meta = recStreamData;
       counter++;
+      allRecordedStreams.push(data);
     }
 
-    // if(counter === allRecordedStreams.length){
+    console.log(allRecordedStreams);
+
+    // if(counter === allRecordedFetchedStreams.length){
     setRecordedStreams(allRecordedStreams);
     setLoading(false);
     // }
@@ -139,8 +147,8 @@ function AllStream() {
                             style={{ width: "100%" }}
                           />
                         </div>
-                        {/* <div className="exp-name" title={artist.name}>{artist.name}</div>
-                              <p className="exp-description">{artist.description}</p> */}
+                        <div className="exp-name" title={stream.meta.title}>{stream.meta.title}</div>
+                              <p className="exp-description">{stream.meta.description}</p>
                       </div>
                     </div>
                   </Link>

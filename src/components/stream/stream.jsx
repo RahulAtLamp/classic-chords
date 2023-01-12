@@ -5,6 +5,7 @@ import Livepeer from "livepeer-nodejs";
 import { create, CID } from "ipfs-http-client";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
+import * as PushAPI from "@pushprotocol/restapi";
 import user from "../../contract/artifacts/userStream.json"
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
@@ -12,8 +13,9 @@ import Communication from "./message/Communication";
 import "./stream.scss";
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
+
 function Streaming({ account }) {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const navigate = useNavigate();
 
   const videoEl = useRef(null);
@@ -114,7 +116,9 @@ function Streaming({ account }) {
     const contract = await getContract();
     console.log(contract);
 
-    const encData = testEncrypt(stream_.id);
+    // const encData = testEncrypt(stream_.id);
+    const StreamId = stream_.id;
+    const encData = StreamId.replace(/-/g, "");
     console.log(premium,
       title,
       des,
@@ -149,10 +153,43 @@ function Streaming({ account }) {
 
     const session = client.cast(stream.current, streamKey);
 
-    session.on("open", () => {
+    session.on("open", async () => {
       console.log("Stream started.");
       alert("Stream started; visit Livepeer Dashboard.");
-      setShowChat(true);
+      const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/"
+      const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, RPC_provider);
+      const tx = await contract.userMapping(address);
+
+      try {
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const apiResponse = await PushAPI.payloads.sendNotification({
+          signer: signer,
+          type: 3, // target
+          identityType: 2, // direct payload
+          notification: {
+            title: `${tx.name} is live`,
+            body: `${tx.name} is live`,
+          },
+          payload: {
+            title: `${tx.name} is live`,
+            body: `${tx.name} is live`,
+            cta: "",
+            img: "",
+          },
+          recipients: `eip155:5:${address}`, // recipient address
+          channel: "eip155:5:0x4466B37DF22A4fb3c8e79c0272652508C6Ba3c11", // your channel address
+          env: "staging",
+        });
+
+        // apiResponse?.status === 204, if sent successfully!
+        console.log("API repsonse: ", apiResponse);
+      } catch (err) {
+        console.error("Error: ", err);
+      }
+      // setShowChat(true);
     });
 
     session.on("close", () => {
