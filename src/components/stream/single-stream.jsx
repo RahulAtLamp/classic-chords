@@ -115,7 +115,7 @@ const SingleStream = () => {
                 />
             </div>
             <div className="chats">
-                <Communication streamId={params.id} />
+                <Communication streamId={params.id.replace(/-/g,"")} />
             </div>
         </div>
     )
