@@ -112,7 +112,7 @@ function Streaming({ account }) {
       ],
     });
     console.log(stream_);
-    console.log(stream_.streamKey);
+    // console.log(stream_.streamKey);
     const contract = await getContract();
     console.log(contract);
 

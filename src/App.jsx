@@ -18,6 +18,7 @@ import SellCollectionSingle from "./components/player/sell/sell-collection-singl
 import AllStream from "./components/stream/all-stream";
 import SingleStream from "./components/stream/single-stream";
 import OldStream from "./components/stream/old-stream";
+import StreamEnded from "./components/stream/stream-ended";
 
 const client = createClient({
   autoConnect: true,
@@ -47,6 +48,7 @@ const App = () => {
                 <Route path="/streaming" element={<Streaming />} />
                 <Route path="/stream/:id" element={<SingleStream />} />
                 <Route path="/old-stream/:id" element={<OldStream />} />
+                <Route path="/stream-ended" element={<StreamEnded />} />
                 <Route path="/*" element={<Error404 />} />
                 {/* <Route path="/test" element={<Loading3 />} /> */}
               </Routes>

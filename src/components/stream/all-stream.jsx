@@ -23,13 +23,13 @@ function AllStream() {
     setLoading(true);
     const fetchStreams = await livepeerObject.Stream.getAll(1, true, true);
     const contract = await getContract();
-    // console.log(fetchStreams[0].playbackId);
+    console.log(fetchStreams[0]);
     let counter = 0;
     const streams = [];
     for (let i = 0; i < fetchStreams.length; i++) {
       let data = {};
-      data.id = fetchStreams[i].playbackId;
-      console.log(fetchStreams[i].playbackId);
+      data.id = fetchStreams[i].id;
+      console.log(fetchStreams[i].id);
       const allStr = fetchStreams[i].id.replace(/-/g, "");
       console.log(allStr);
       const streamData = await contract.streamCodeToStream(allStr);
@@ -50,7 +50,7 @@ function AllStream() {
     for (let i = 0; i < allRecordedFetchedStreams.length; i++) {
       let data = {};
       data.id = allRecordedFetchedStreams[i].id;
-      const allRec = allRecordedFetchedStreams[i].id.replace(/-/g, "");
+      const allRec = allRecordedFetchedStreams[i].parentId.replace(/-/g, "");
       const recStreamData = await contract1.streamCodeToStream(allRec);
       // recStreamData.wait();
       // console.log(recStreamData);
@@ -59,7 +59,7 @@ function AllStream() {
       counter++;
     }
     setRecordedStreams(allRecordedStreams);
-    console.log(allRecordedStreams);
+    // console.log(allRecordedStreams);
     const total = allRecordedFetchedStreams.length + fetchStreams.length;
     if (counter === total) {
       setLoading(false);
@@ -112,9 +112,8 @@ function AllStream() {
                         {/* <img src="https://picsum.photos/200" alt="" /> */}
                         <ReactPlayer
                           url={
-                            "https://livepeercdn.com/hls/" +
-                            stream.playbackId +
-                            "/index.m3u8"
+                            "https://lvpr.tv/?v=" +
+                            stream.id
                           }
                           controls={true}
                           style={{ width: "100%" }}
