@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAccount } from "wagmi";
 import { useParams, useNavigate } from "react-router-dom";
 import { ethers } from "ethers";
+import axios from "axios";
 import ReactPlayer from 'react-player';
 import Loading3 from "../../loading3";
 import user from "../../contract/artifacts/userStream.json"
@@ -13,8 +14,8 @@ const OldStream = () => {
     const navigate = useNavigate();
     const params = useParams();
     const [playbackId, setPlaybackId] = useState(null);
-    const [playerSource, setPlayerSource] = useState(null);
     const [streamData, setStreamData] = useState(true);
+    const [parentId, setParentId] = useState(null);
     const [loading, setLoading] = useState(true);
 
     const getContract = async () => {
@@ -38,11 +39,31 @@ const OldStream = () => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const fetchPlaybackId = async () => {
+        const headers = { authorization: `Bearer ${process.env.REACT_APP_LIVEPEER_TOKEN}` };
+        try {
+            axios.get(`https://livepeer.studio/api/stream/${params.id}`, { headers: headers })
+                .then((res) => {
+                    console.log(res);
+                    // const playbackId = res.data.playbackId;
+                    setPlaybackId(res.data.playbackId);
+                    setParentId(res.data.parentId);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    navigate("/no-data");
+                })
+        } catch (e) {
+            console.log("I am the error...");
+        }
+
     }
 
     const fetchUserData = async () => {
         const contract = await getContract();
-        const streamId = params.id.replace(/-/g, "");
+        const streamId = parentId.replace(/-/g, "");
         const streamData = await contract.streamCodeToStream(streamId);
         console.log(streamData);
         console.log(streamData.title);
@@ -57,21 +78,21 @@ const OldStream = () => {
         if (!isConnected) {
             navigate("/");
         } else {
-            console.log(params.id);
-            setPlaybackId(params.id);
-            setPlayerSource(`https://livepeercdn.studio/recordings/${params.id}/index.m3u8`)
-
+            fetchPlaybackId();
         }
     }, [])
 
-    useEffect(()=>{
-        console.log(playerSource);
-    },[playerSource])
+    useEffect(() => {
+        if (parentId) {
+            console.log("I am ready to fetch contract data...");
+            fetchUserData();
+        }
+    }, [parentId])
 
-    if(loading){
-        return(
+    if (loading) {
+        return (
             <div className="stream-single-main">
-                <Loading3/>
+                <Loading3 />
             </div>
         )
     }
@@ -84,7 +105,7 @@ const OldStream = () => {
                     <source src={playerSource} type="application/x-mpegURL" />
                 </video> */}
                 <ReactPlayer
-                    url={playerSource}
+                    url={`https://livepeercdn.studio/recordings/${params.id}/index.m3u8`}
                     controls={true}
                     style={{ width: "fit-content" }}
                 />

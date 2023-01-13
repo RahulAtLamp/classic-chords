@@ -60,7 +60,6 @@ const SingleStream = () => {
         } catch (e) {
             console.log("I am the error...");
         }
-
     }
 
     const fetchUserData = async () => {
