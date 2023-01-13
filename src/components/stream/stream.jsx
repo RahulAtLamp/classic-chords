@@ -23,6 +23,7 @@ function Streaming({ account }) {
   const mounted = useRef(false);
   const [session, setSession] = useState("");
   const [url, setUrl] = useState("");
+  const [streamId, setStreamId] = useState("");
   const [showChat, setShowChat] = useState(false);
   // const livepeerObject = new Livepeer("fbf20223-008c-4d6f-8bdb-5d6caec8eb29");
   const livepeerObject = new Livepeer(process.env.REACT_APP_LIVEPEER_TOKEN);
@@ -112,6 +113,8 @@ function Streaming({ account }) {
       ],
     });
     console.log(stream_);
+    const withoutDash = stream_.id.replace(/-/g,"");
+    setStreamId(withoutDash);
     // console.log(stream_.streamKey);
     const contract = await getContract();
     console.log(contract);
@@ -163,7 +166,7 @@ function Streaming({ account }) {
 
       const allArtists = await contract.getAllArtists();
       const allUsers = [];
-      for(let i=0; i<allArtists.length; i++){
+      for (let i = 0; i < allArtists.length; i++) {
         const formatting = `eip155:5:${allArtists[i].userAddress}`;
         allUsers.push(formatting);
       };
@@ -198,7 +201,7 @@ function Streaming({ account }) {
       } catch (err) {
         console.error("Error: ", err);
       }
-      // setShowChat(true);
+      setShowChat(true);
     });
 
     session.on("close", () => {
@@ -346,7 +349,7 @@ function Streaming({ account }) {
           showChat
             ?
             <div className="communication">
-              <Communication groupAddress={null} />
+              <Communication streamId={streamId} />
             </div>
             :
             null

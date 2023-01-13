@@ -15,6 +15,7 @@ const SingleStream = () => {
     const navigate = useNavigate();
     const params = useParams();
     const [playbackId, setPlaybackId] = useState(null);
+    // const [streamId, setStreamId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [streamData, setStreamData] = useState(true);
 
@@ -48,10 +49,12 @@ const SingleStream = () => {
                 .then((res) => {
                     console.log(res);
                     // const playbackId = res.data.playbackId;
-                    if(res.data.isActive === false){
+                    if (res.data.isActive === false) {
                         navigate("/stream-ended");
                     }
-                    setPlaybackId(res.data.playbackId)
+                    setPlaybackId(res.data.playbackId);
+
+                    // setStreamId(res.data.parentId);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -111,9 +114,9 @@ const SingleStream = () => {
                     style={{ width: "100%" }}
                 />
             </div>
-            {/* <div className="chats">
-                <Communication />
-            </div> */}
+            <div className="chats">
+                <Communication streamId={params.id} />
+            </div>
         </div>
     )
 }
