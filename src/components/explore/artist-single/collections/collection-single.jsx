@@ -93,12 +93,12 @@ function CollectionSingle() {
             const marketContract = new ethers.Contract(process.env.REACT_APP_MARKET_ADDRESS, market, provider);
             let result = {
             }
-
+ 
             try {
                 const market_item = await marketContract.marketItemsMapping(params.id);
                 console.log(market_item);
-                setTokenId(params.id);
-                const uri = await tokenContract.tokenUriMapping(params.id);
+                setTokenId(market_item.tokenId.toNumber());
+                const uri = await tokenContract.tokenUriMapping(market_item.tokenId.toNumber());
 
                 console.log(uri);
                 await axios.get("https://ipfs.io/ipfs/" + uri.split("//")[1]).then((response) => {

@@ -45,7 +45,7 @@ function AllNfts() {
             const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
             const contract = new ethers.Contract(process.env.REACT_APP_MARKET_ADDRESS, market, provider);
             return contract
-        } catch (error) {
+        } catch (error) { 
             console.log(error);
         }
     }
@@ -67,7 +67,7 @@ function AllNfts() {
                 await axios.get("https://ipfs.io/ipfs/" + uri.split("//")[1]).then((response) => {
                     let data = response.data
                     data.image = "https://ipfs.io/ipfs/" + data.image.split("//")[1]
-                    response.data.id = tokenId;
+                    response.data.id = artists[i].itemId.toNumber();
                     tempNFT.push(response.data);
                     // console.log(response.data);
                 });
