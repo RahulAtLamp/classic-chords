@@ -12,8 +12,8 @@ import classicChords from "../../../contract/artifacts/classicChords.json"
 import market from "../../../contract/artifacts/market.json"
 import Loading3 from '../../../loading3';
 
-const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
-const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
+// const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
+// const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
 function SellCollectionSingle() {
     const { isConnected, address } = useAccount();

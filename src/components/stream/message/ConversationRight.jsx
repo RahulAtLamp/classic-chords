@@ -40,15 +40,15 @@ const ConversationRight = ({ allMessages, activeAddress, sendMessage, singleMess
                         allMessages.map((m, i) => {
                             if (m.context.metadata.sender === activeAddress) {
                                 return (
-                                    <div className="left" key={i}>
-                                        <div>{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
+                                    <div className="right" key={i}>
+                                        <div className="grow"></div>
+                                        <div className="msg">{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
                                     </div>
                                 )
                             } else {
                                 return (
-                                    <div className="right" key={i}>
-                                        <div className="grow"></div>
-                                        <div className="msg">{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
+                                    <div className="left" key={i}>
+                                        <div>{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
                                     </div>
                                 )
                             }
