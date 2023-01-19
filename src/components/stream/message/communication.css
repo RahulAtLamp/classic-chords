@@ -170,6 +170,7 @@
   background-color: #fafffd;
   /* background-color: gray; */
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .message__right .header {
@@ -200,8 +201,9 @@
 } */
 
 .message__right .conversation {
-  height: calc(100vh - 120px) !important;
+  height: calc(100vh - 130px) !important;
   overflow: auto !important;
+  margin-bottom: 15px;
 }
 
 .message__right .conversation .left {
@@ -314,7 +316,7 @@
 
 .inactive_client_message {
   height: 110px;
-  background-color: #134e6f;
+  background-color: #793ad8;
   color: #eff0ee;
   display: flex;
   align-items: center;
@@ -329,12 +331,13 @@
 }
 
 .inactive_client_btn {
-  background-color: #ff6150;
+  background-color: #793ad8;
   font-size: 17px;
   padding: 3px 10px;
   border-radius: 5px;
   color: #eff0ee;
   border: 1px solid #eff0ee;
+  font-family: "FontsFree";
   box-shadow: 1px 1px 10px #eff0ee;
   cursor: pointer;
 }
@@ -344,8 +347,8 @@
   font-size: 17px;
   padding: 3px 10px;
   border-radius: 5px;
-  color: #ff6150;
-  border: 1px solid #ff6150;
+  color: #8359be;
+  border: 1px solid #8359be;
   cursor: pointer;
 }
 .searchbar-xmtp {

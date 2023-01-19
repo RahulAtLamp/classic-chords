@@ -113,7 +113,7 @@ function Streaming({ account }) {
       ],
     });
     console.log(stream_);
-    const withoutDash = stream_.id.replace(/-/g,"");
+    const withoutDash = stream_.id.replace(/-/g, "");
     setStreamId(withoutDash);
     // console.log(stream_.streamKey);
     const contract = await getContract();
@@ -354,6 +354,7 @@ function Streaming({ account }) {
             :
             null
         }
+        
       </section>
     </>
   );

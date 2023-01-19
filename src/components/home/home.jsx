@@ -159,13 +159,31 @@ const Home = () => {
                 </div>
               </div>
               <div className="footer-img-bg">
-                    <div className="footer-img-i">
-                      <img className="live-img" src={LivePeer} />
-                    </div>
-                  </div>
+                <div className="footer-img-i">
+                  <img className="live-img" src={LivePeer} />
+                </div>
+              </div>
               <div className="footer-img-bg">
                 <div className="footer-img-i">
                   <img className="nfts-img" src={NftStorage} />
+                </div>
+              </div>
+            </div>
+            <div className="imgseperator-top1">
+              <div className="footer-img-bg">
+                <div className="footer-img-i">
+                  <img className="nfts-img" src="/images/XMTP.svg" />
+                </div>
+              </div>
+              <div className="footer-img-bg">
+                <div className="footer-img-i">
+                  <img className="nfts-img" src="/images/PUSH.svg" />
+                </div>
+              </div>
+              <div className="footer-img-bg">
+                <div className="footer-img-i">
+                  <img className="nfts-img" src="/images/ENS1.svg" />
+                  <img className="nfts-img" src="/images/ENS.svg" />
                 </div>
               </div>
             </div>

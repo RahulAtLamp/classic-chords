@@ -483,20 +483,21 @@ const Navbar = () => {
       }
 
 
-      <div id="notifications">
-        {
-          toggleNotification
-            ?
-            <>
+
+      {
+        toggleNotification
+          ?
+          <>
+            <div id="notifications">
               <div className="notification-main" title="Manga Artist is live now">
                 <div className="message">{notificationMessage}</div>
                 <div><img className="close-btn" src="/images/cancel.svg" onClick={() => { setToggleNotification(false) }} height="30px" width="30px" /></div>
               </div>
-            </>
-            :
-            null
-        }
-      </div>
+            </div>
+          </>
+          :
+          null
+      }
 
     </>
   );

@@ -288,7 +288,7 @@
 }
 
 .footer {
-  height: 90vh;
+  height: 141vh;
   display: flex;
   flex-direction: column;
   padding-bottom: 20px;
@@ -326,7 +326,19 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  cursor: pointer;
+  /* cursor: pointer; */
+}
+
+.imgseperator-top1 {
+  position: relative;
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 3fr)); */
+  margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  /* cursor: pointer; */
 }
 
 .imgseperator-down {
@@ -382,12 +394,13 @@
   text-align: center;
   margin: 0 auto;
   height: 100%;
-  width: 100%;
+  display: flex;
+  width: 90%;
 }
 
 .footer-img-bg {
   height: 300px;
-  width: 300px;
+  width: 150px;
   background: rgb(116, 108, 254);
   background: linear-gradient(180deg,
       rgba(116, 108, 254, 1) 0%,

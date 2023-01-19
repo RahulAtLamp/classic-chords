@@ -47,7 +47,8 @@ const ConversationRight = ({ allMessages, activeAddress, sendMessage, singleMess
                             } else {
                                 return (
                                     <div className="right" key={i}>
-                                        <div className="grow"></div><div className="msg">{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
+                                        <div className="grow"></div>
+                                        <div className="msg">{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
                                     </div>
                                 )
                             }
