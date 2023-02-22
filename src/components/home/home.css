@@ -334,10 +334,11 @@
   /* display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 3fr)); */
   margin-top: 100px;
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 10px;
+  align-items: center;
+  /* gap: 10px; */
   /* cursor: pointer; */
 }
 
@@ -399,6 +400,20 @@
 }
 
 .footer-img-bg {
+  height: 300px;
+  width: 150px;
+  background: rgb(116, 108, 254);
+  background: linear-gradient(180deg,
+      rgba(116, 108, 254, 1) 0%,
+      rgba(174, 140, 254, 1) 50%);
+  border-radius: 20px;
+  align-items: center;
+  margin: 0 auto;
+  flex: 0 0 25%;
+  box-shadow: rgba(0, 0, 0, 0.3) 5px 8px 12px;
+}
+
+.footer-img-bg1 {
   height: 300px;
   width: 150px;
   background: rgb(116, 108, 254);
