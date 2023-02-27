@@ -1,5 +1,4 @@
-$gradient-color: linear-gradient(90deg,
-  #242132, #746cfe, #ae8cfe);
+$gradient-color: linear-gradient(90deg, #242132, #746cfe, #ae8cfe);
 
 .cs-main {
   background: linear-gradient(130deg, #251b43 55%, #746cfe);
@@ -13,8 +12,8 @@ $gradient-color: linear-gradient(90deg,
     font-family: "FontsFree";
     color: #ffffff;
     padding-top: 100px;
-    text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff,
-      0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 10px #a886fb,
+      0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
   }
 
   .communication {
@@ -24,6 +23,7 @@ $gradient-color: linear-gradient(90deg,
   .cs {
     margin: auto;
     min-height: 80vh;
+    // width: 100%;
     width: 100%;
     display: inline-flex;
     flex-direction: row;
@@ -33,7 +33,7 @@ $gradient-color: linear-gradient(90deg,
 
     .cs-left-container {
       max-width: 1080px;
-      width: 100%;
+      width: 300%;
       padding-top: 30px;
       margin: 0 auto;
       text-align: center;
@@ -67,7 +67,8 @@ $gradient-color: linear-gradient(90deg,
     .cs-right-container {
       padding: 30px;
       text-align: left;
-      width: calc(100% - 1080px);
+      // width: calc(100% - 1080px);
+      width: 100%;
 
       .space-to-upload-image {
         width: 100%;
@@ -140,5 +141,44 @@ $gradient-color: linear-gradient(90deg,
         font-size: 15px;
       }
     }
+  }
+}
+
+@media screen and (max-width: 1024px) and (max-width: 1440px) {
+  .cs {
+    flex-direction: row !important;
+    overflow: hidden;
+  }
+  // .cs-left-container {
+  //   width: 100% !important;
+  // }
+  // .cs-right-container {
+  //   padding: 0 !important;
+  // }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .cs {
+    flex-direction: column !important;
+    overflow: hidden;
+  }
+  .cs-left-container {
+    width: 100% !important;
+  }
+  .cs-right-container {
+    padding: 0 !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs {
+    flex-direction: column !important;
+    overflow: hidden;
+  }
+  .cs-left-container {
+    width: 100% !important;
+  }
+  .cs-right-container {
+    padding: 0 !important;
   }
 }

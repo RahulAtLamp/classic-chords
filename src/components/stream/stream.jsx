@@ -6,13 +6,12 @@ import { create, CID } from "ipfs-http-client";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import * as PushAPI from "@pushprotocol/restapi";
-import user from "../../contract/artifacts/userStream.json"
+import user from "../../contract/artifacts/userStream.json";
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
 import "./stream.scss";
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
-
 
 function Streaming({ account }) {
   const { isConnected, address } = useAccount();
@@ -25,6 +24,7 @@ function Streaming({ account }) {
   const [url, setUrl] = useState("");
   const [streamId, setStreamId] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
   // const livepeerObject = new Livepeer("fbf20223-008c-4d6f-8bdb-5d6caec8eb29");
   const livepeerObject = new Livepeer(process.env.REACT_APP_LIVEPEER_TOKEN);
 
@@ -51,8 +51,12 @@ function Streaming({ account }) {
         const { chainId } = await provider.getNetwork();
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
-          const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, signer);
-          return contract
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS,
+            user,
+            signer
+          );
+          return contract;
         } else {
           alert("Please connect to the MUMBAI matic Network!");
         }
@@ -60,10 +64,9 @@ function Streaming({ account }) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const StartStream = async () => {
-
     if (!title) {
       alert("Please provide a title for the stream...");
       return;
@@ -122,16 +125,8 @@ function Streaming({ account }) {
     // const encData = testEncrypt(stream_.id);
     const StreamId = stream_.id;
     const encData = StreamId.replace(/-/g, "");
-    console.log(premium,
-      title,
-      des,
-      encData);
-    const tx = await contract.createStream(
-      encData,
-      premium,
-      title,
-      des
-    );
+    console.log(premium, title, des, encData);
+    const tx = await contract.createStream(encData, premium, title, des);
     tx.wait();
     stream_.setRecord(true);
     const current_stream = await livepeerObject.Stream.get(stream_.id);
@@ -159,9 +154,13 @@ function Streaming({ account }) {
     session.on("open", async () => {
       console.log("Stream started.");
       alert("Stream started; visit Livepeer Dashboard.");
-      const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/"
+      const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
       const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, user, RPC_provider);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_USER_ADDRESS,
+        user,
+        RPC_provider
+      );
       const tx = await contract.userMapping(address);
 
       const allArtists = await contract.getAllArtists();
@@ -169,7 +168,7 @@ function Streaming({ account }) {
       for (let i = 0; i < allArtists.length; i++) {
         const formatting = `eip155:5:${allArtists[i].userAddress}`;
         allUsers.push(formatting);
-      };
+      }
       // console.log(allUsers);
 
       try {
@@ -202,6 +201,7 @@ function Streaming({ account }) {
         console.error("Error: ", err);
       }
       setShowChat(true);
+      setShowInfo(false);
     });
 
     session.on("close", () => {
@@ -223,8 +223,6 @@ function Streaming({ account }) {
     // session.close();
   };
 
-
-
   const testEncrypt = (stream_id) => {
     // const key = "35873FDFD99E4FA33F15B59924ACC";
     // const text = "9a935bb4-6ff3-4704-9c07-10de5750ffc1"
@@ -234,11 +232,12 @@ function Streaming({ account }) {
       process.env.REACT_APP_CRYPT_KEY
     ).toString();
 
-    return data
+    return data;
   };
 
   const testDecrypt = () => {
-    const data = "U2FsdGVkX1/svP3xEHYKUiOUlXWBm6Lr0TFKw8lgIUYajpAVLrvgB1KbRWdKllnL3yg1/9hDJrNJ+Lb0+9a5wA==";
+    const data =
+      "U2FsdGVkX1/svP3xEHYKUiOUlXWBm6Lr0TFKw8lgIUYajpAVLrvgB1KbRWdKllnL3yg1/9hDJrNJ+Lb0+9a5wA==";
     // const key = "35873FDFD99E4FA33F15B59924ACC";
 
     const bytes = CryptoJS.AES.decrypt(data, process.env.REACT_APP_CRYPT_KEY);
@@ -250,7 +249,7 @@ function Streaming({ account }) {
     if (!mounted) {
       closeStream();
     }
-  }, [mounted])
+  }, [mounted]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -274,87 +273,94 @@ function Streaming({ account }) {
               </button>
             </div>
           </div>
+
           <div className="cs-right-container">
-            <form>
-              <input
-                className="cs-input"
-                type="text"
-                placeholder="Stream Title"
-                onChange={(event) => setTitle(event.target.value)}
-                required
-              />
-              <textarea
-                className="cs-textarea"
-                type="text"
-                placeholder="Stream Description"
-                rows="6"
-                cols="50"
-                onChange={(event) => setDes(event.target.value)}
-              />
-              <div>
-                <label className="premium-label">Do you want to make strem premium?</label>
+            {showInfo ? (
+              <form>
+                <input
+                  className="cs-input"
+                  type="text"
+                  placeholder="Stream Title"
+                  onChange={(event) => setTitle(event.target.value)}
+                  required
+                />
+                <textarea
+                  className="cs-textarea"
+                  type="text"
+                  placeholder="Stream Description"
+                  rows="6"
+                  cols="50"
+                  onChange={(event) => setDes(event.target.value)}
+                />
+                <div>
+                  <label className="premium-label">
+                    Do you want to make strem premium?
+                  </label>
+                </div>
+                <label>
+                  <input
+                    className="cs-input-radio"
+                    type="radio"
+                    name="streamSelector"
+                    onChange={(event) => setPremium(event.target.value)}
+                    value="true"
+                    checked
+                  ></input>
+                  Yes
+                </label>
+                <label>
+                  <input
+                    className="cs-input-radio"
+                    type="radio"
+                    name="streamSelector"
+                    onChange={(event) => setPremium(event.target.value)}
+                    value="false"
+                  ></input>
+                  No
+                </label>
+                <div>
+                  <label className="premium-label">
+                    Do you want to save this Stream?
+                  </label>
+                </div>
+                <label>
+                  <input
+                    className="cs-input-radio"
+                    type="radio"
+                    name="radiobutton"
+                    value="true"
+                    onChange={(event) => setRecord(event.target.value)}
+                    checked
+                  ></input>
+                  Yes
+                </label>
+                <label>
+                  <input
+                    className="cs-input-radio"
+                    type="radio"
+                    name="radiobutton"
+                    value="false"
+                    onChange={(event) => setRecord(event.target.value)}
+                  ></input>
+                  No
+                </label>
+              </form>
+            ) : null}
+            {showChat ? (
+              <div className="communication">
+                <Communication streamId={streamId} />
               </div>
-              <label>
-                <input
-                  className="cs-input-radio"
-                  type="radio"
-                  name="streamSelector"
-                  onChange={(event) => setPremium(event.target.value)}
-                  value="true"
-                  checked
-                ></input>
-                Yes
-              </label>
-              <label>
-                <input
-                  className="cs-input-radio"
-                  type="radio"
-                  name="streamSelector"
-                  onChange={(event) => setPremium(event.target.value)}
-                  value="false"
-                ></input>
-                No
-              </label>
-              <div>
-                <label className="premium-label">Do you want to save this Stream?</label>
-              </div>
-              <label>
-                <input
-                  className="cs-input-radio"
-                  type="radio"
-                  name="radiobutton"
-                  value="true"
-                  onChange={(event) => setRecord(event.target.value)}
-                  checked
-                ></input>
-                Yes
-              </label>
-              <label>
-                <input
-                  className="cs-input-radio"
-                  type="radio"
-                  name="radiobutton"
-                  value="false"
-                  onChange={(event) => setRecord(event.target.value)}
-                ></input>
-                No
-              </label>
-            </form>
+            ) : null}
           </div>
         </div>
 
         {/* <button onClick={() => { testEncrypt() }}>Encrypt Data</button>
         <button onClick={() => { testDecrypt() }}>Decrypt Data</button> */}
-        {
-          showChat
-            ?
-            <div className="communication">
-              <Communication streamId={streamId} />
-            </div>
-            :
-            null
-        }
-        
+        {/* {showChat ? (
+          <div className="communication">
+            <Communication streamId={streamId} />
+          </div>
+        ) : null} */}
       </section>
     </>
   );

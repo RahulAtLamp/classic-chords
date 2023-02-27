@@ -165,12 +165,13 @@
   width: 95%;
   /* position: absolute; */
   /* left: 405px; */
-  height: 90vh;
+  height: 55vh;
   margin: 0 auto;
   background-color: #fafffd;
   /* background-color: gray; */
   border-radius: 10px;
   overflow: hidden;
+  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
 }
 
 .message__right .header {
@@ -201,9 +202,11 @@
 } */
 
 .message__right .conversation {
-  height: calc(100vh - 130px) !important;
+  height: calc(65vh - 130px) !important;
   overflow: auto !important;
   margin-bottom: 15px;
+  /* background: linear-gradient(130deg, #251b43 55%, #746cfe); */
+  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
 }
 
 .message__right .conversation .left {
@@ -255,7 +258,8 @@
 }
 
 .message__right .conversation .right .msg {
-  background-color: #eff0ee;
+  background-color: #746cfe;
+  color: white;
   max-width: 40%;
   padding: 20px 20px 20px 20px;
   margin: 10px 10px 0 0;
@@ -304,7 +308,9 @@
 
 .inactive_client_inner {
   position: absolute;
-  top: 25%;
+  /* top: 25%; */
+  top: 35%;
+  left: 0%;
   width: 300px;
   height: 150px;
   background-color: #eff0ee;
