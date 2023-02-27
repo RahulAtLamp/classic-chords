@@ -143,8 +143,16 @@ $gradient-color: linear-gradient(90deg, #242132, #746cfe, #ae8cfe);
     }
   }
 }
+@media screen and (min-width: 1600px) and (max-width: 2560px) {
+  .cs-main .cs .cs-left-container {
+    max-width: none;
+  }
+}
 
-@media screen and (max-width: 1024px) and (max-width: 1440px) {
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
   .cs {
     flex-direction: row !important;
     overflow: hidden;
