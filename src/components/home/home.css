@@ -473,8 +473,9 @@
     text-align: center;
   }
   .home-img {
-    height: 40vh;
-    width: 25vw;
+    height: 600px;
+    width: 550px;
+    /* margin-right: 50px; */
   }
   .home-button {
     font-size: 40px;
@@ -510,14 +511,17 @@
     max-width: 500px;
   }
   .zora-img {
+    margin-top: -5vh;
     height: 350px;
     width: 350px;
   }
   .live-img {
+    margin-top: -5vh;
     height: 350px;
     width: 350px;
   }
   .nfts-img {
+    margin-top: -2vh;
     height: 250px;
     width: 300px;
   }
@@ -533,9 +537,81 @@
 }
 
 @media screen and (min-width: 1600px) and (max-width: 1999px) {
+  .footer {
+    height: 80vh;
+    margin-top: 100px;
+  }
+  .footer-img-bg {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .zora-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .live-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .nfts-img {
+    margin-top: -2vh;
+    height: 150px;
+    width: 200px;
+  }
+  .footer-img-bg1 {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    /* margin-top: 50px; */
+  }
 }
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
+  .footer {
+    height: 80vh;
+    margin-top: 100px;
+  }
+  .footer-img-bg {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .zora-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .live-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .nfts-img {
+    margin-top: -2vh;
+    height: 150px;
+    width: 200px;
+  }
+  .footer-img-bg1 {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    /* margin-top: 50px; */
+  }
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
@@ -546,8 +622,8 @@
     margin-top: 50px;
   }
   .home-img {
-    height: 50vh;
-    width: 35vw;
+    height: 400px;
+    width: 350px;
     margin-right: 50px;
   }
   .home-left-inner {
@@ -562,6 +638,42 @@
   }
   .inst-bg {
     margin-bottom: 50px;
+  }
+  .footer {
+    height: 100vh;
+    margin-top: 100px;
+  }
+  .footer-img-bg {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .zora-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .live-img {
+    margin-top: -5vh;
+    height: 250px;
+    width: 250px;
+  }
+  .nfts-img {
+    margin-top: -2vh;
+    height: 150px;
+    width: 200px;
+  }
+  .footer-img-bg1 {
+    height: 300px;
+    width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    /* margin-top: 50px; */
   }
 }
 
@@ -585,8 +697,8 @@
     margin-top: 50px;
   }
   .home-img {
-    height: 50vh;
-    width: 35vw;
+    height: 300px;
+    width: 250px;
   }
   .inst-bg {
     margin-bottom: 50px;
@@ -610,14 +722,17 @@
   .zora-img {
     height: 150px;
     width: 150px;
+    margin-top: -3vh;
   }
   .live-img {
     height: 150px;
     width: 150px;
+    margin-top: -3vh;
   }
   .nfts-img {
     height: 100px;
     width: 150px;
+    margin-top: -1vh;
   }
   .footer-img-bg1 {
     height: 200px;
@@ -652,8 +767,8 @@
     text-align: center;
   }
   .home-img {
-    height: 35vh;
-    width: 45vw;
+    height: 300px;
+    width: 250px;
     /* display: none; */
   }
   .muzieknootjes {
@@ -667,7 +782,7 @@
   }
   .inst-bg {
     width: 90vw;
-    height: fit-content;
+    height: 80vh;
     margin-bottom: 50px;
     padding: 50px 0px 50px 0px;
   }
@@ -690,14 +805,17 @@
   .zora-img {
     height: 150px;
     width: 150px;
+    margin-top: -4vh;
   }
   .live-img {
     height: 150px;
     width: 150px;
+    margin-top: -4vh;
   }
   .nfts-img {
     height: 100px;
     width: 150px;
+    margin-top: -2vh;
   }
   .imgseperator-top1 {
     margin-top: 10px;
