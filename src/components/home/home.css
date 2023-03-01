@@ -166,6 +166,7 @@
 .inst-main {
   position: relative;
   display: grid;
+  max-width: 2560px;
   grid-template-columns: repeat(auto-fit, minmax(400px, 3fr));
   height: inherit;
   /* width: 100%; */
@@ -174,7 +175,7 @@
   justify-content: center;
   /* flex: 0 0 20%; */
   gap: 0;
-  margin-top: 100px;
+  margin: 100px auto 0 auto;
 }
 
 @keyframes glow {
@@ -499,7 +500,8 @@
     font-size: 50px;
   }
   .footer {
-    height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
     margin-top: 100px;
   }
   .footer-img-bg {
@@ -538,7 +540,8 @@
 
 @media screen and (min-width: 1600px) and (max-width: 1999px) {
   .footer {
-    height: 80vh;
+    height: fit-content;
+    padding-bottom: 100px;
     margin-top: 100px;
   }
   .footer-img-bg {
@@ -577,26 +580,27 @@
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
   .footer {
-    height: 80vh;
+    height: fit-content;
+    padding-bottom: 100px;
     margin-top: 100px;
   }
   .footer-img-bg {
-    height: 300px;
-    width: 300px;
-    min-height: 300px;
-    max-height: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    height: 250px;
+    width: 250px;
+    min-height: 250px;
+    max-height: 250px;
+    min-width: 250px;
+    max-width: 250px;
   }
   .zora-img {
     margin-top: -5vh;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
   }
   .live-img {
     margin-top: -5vh;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
   }
   .nfts-img {
     margin-top: -2vh;
@@ -604,12 +608,12 @@
     width: 200px;
   }
   .footer-img-bg1 {
-    height: 300px;
-    width: 300px;
-    min-height: 300px;
-    max-height: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    height: 250px;
+    width: 250px;
+    min-height: 250px;
+    max-height: 250px;
+    min-width: 250px;
+    max-width: 250px;
     /* margin-top: 50px; */
   }
 }
@@ -640,39 +644,40 @@
     margin-bottom: 50px;
   }
   .footer {
-    height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
     margin-top: 100px;
   }
   .footer-img-bg {
-    height: 300px;
-    width: 300px;
-    min-height: 300px;
-    max-height: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    height: 200px;
+    width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    min-width: 200px;
+    max-width: 200px;
   }
   .zora-img {
     margin-top: -5vh;
-    height: 250px;
-    width: 250px;
+    height: 150px;
+    width: 150px;
   }
   .live-img {
     margin-top: -5vh;
-    height: 250px;
-    width: 250px;
+    height: 150px;
+    width: 150px;
   }
   .nfts-img {
     margin-top: -2vh;
-    height: 150px;
-    width: 200px;
+    height: 100px;
+    width: 150px;
   }
   .footer-img-bg1 {
-    height: 300px;
-    width: 300px;
-    min-height: 300px;
-    max-height: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    height: 200px;
+    width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    min-width: 200px;
+    max-width: 200px;
     /* margin-top: 50px; */
   }
 }
@@ -700,15 +705,24 @@
     height: 300px;
     width: 250px;
   }
+  .inst-main {
+    display: flex;
+    flex-direction: column;
+  }
   .inst-bg {
+    width: 80vw;
     margin-bottom: 50px;
+  }
+  .inst-list {
+    margin: 20px 20px 50px 20px;
   }
   /* .imgseperator-top {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(400px, 3fr));
   } */
   .footer {
-    height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
     margin-top: 100px;
   }
   .footer-img-bg {
@@ -748,7 +762,7 @@
 
 @media screen and (max-width: 767px) {
   .innerbg {
-    flex-direction: column;
+    flex-direction: column-reverse;
     height: auto;
     width: auto;
   }
@@ -769,6 +783,7 @@
   .home-img {
     height: 300px;
     width: 250px;
+    margin-bottom: 50px;
     /* display: none; */
   }
   .muzieknootjes {
@@ -782,9 +797,16 @@
   }
   .inst-bg {
     width: 90vw;
-    height: 80vh;
+    height: 650px;
     margin-bottom: 50px;
     padding: 50px 0px 50px 0px;
+  }
+  .inst-list {
+    margin: 0px 20px 0px 20px;
+  }
+  .footer {
+    height: fit-content;
+    padding-bottom: 100px;
   }
   .footer-header {
     font-size: 20px;
