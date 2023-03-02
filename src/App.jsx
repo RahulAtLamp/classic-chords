@@ -9,7 +9,6 @@ import AllNfts from "./components/explore/allNfts";
 import Explore from "./components/explore/explore";
 import Streaming from "./components/stream/stream";
 import Profile from "./components/profile/Profile";
-import { Chain } from "wagmi/chains";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { getDefaultProvider } from "ethers";
 import ArtistSingle from "./components/explore/artist-single/artist-single";
@@ -21,7 +20,11 @@ import AllStream from "./components/stream/all-stream";
 import SingleStream from "./components/stream/single-stream";
 import OldStream from "./components/stream/old-stream";
 import StreamEnded from "./components/stream/stream-ended";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { mainnet, polygon, polygonMumbai } from "wagmi/chains";
@@ -88,7 +91,16 @@ const App = () => {
     <div>
       <>
         <WagmiConfig client={client}>
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider
+            chains={chains}
+            theme={darkTheme({
+              accentColor: "#7b3fe4",
+              accentColorForeground: "white",
+              borderRadius: "medium",
+              fontStack: "system",
+              overlayBlur: "small",
+            })}
+          >
             <Router>
               <NavBar />
               <div className="pages">
