@@ -18,7 +18,7 @@ var CanvasRecorder = function CanvasRecorder() {
   async function startRecording() {
     var types = ['video/webm', 'video/webm,codecs=vp9', 'video/vp8', 'video/webm;codecs=vp8', 'video/webm;codecs=daala', 'video/webm;codecs=h264', 'video/mpeg'];
 
-    mic_track = await navigator.mediaDevices.getUserMedia({audio: true, video: false})
+    mic_track = await navigator.mediaDevices.getDisplayMedia({audio: { mediaSource: 'audio' }, video: true})
     .then((mediaStream) => {
       document.querySelector('video').srcObject = mediaStream;
         const tracks = mediaStream.getAudioTracks()
