@@ -165,12 +165,13 @@
   width: 95%;
   /* position: absolute; */
   /* left: 405px; */
-  height: 90vh;
+  height: 55vh;
   margin: 0 auto;
   background-color: #fafffd;
   /* background-color: gray; */
   border-radius: 10px;
   overflow: hidden;
+  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
 }
 
 .message__right .header {
@@ -201,9 +202,11 @@
 } */
 
 .message__right .conversation {
-  height: calc(100vh - 130px) !important;
+  height: calc(65vh - 150px) !important;
   overflow: auto !important;
   margin-bottom: 15px;
+  /* background: linear-gradient(130deg, #251b43 55%, #746cfe); */
+  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
 }
 
 .message__right .conversation .left {
@@ -240,7 +243,7 @@
   font-size: x-small;
   margin-bottom: -15px;
   margin-right: -5px;
-  margin-left: 30px;
+  margin-left: -40px;
   white-space: nowrap;
 }
 
@@ -255,7 +258,8 @@
 }
 
 .message__right .conversation .right .msg {
-  background-color: #eff0ee;
+  background-color: #746cfe;
+  color: white;
   max-width: 40%;
   padding: 20px 20px 20px 20px;
   margin: 10px 10px 0 0;
@@ -291,27 +295,29 @@
 }
 
 .inactive_client_main {
-  top: 10%;
+  align-items: center;
+  /* background-color: #28213346; */
   display: flex;
   flex-direction: column;
-  position: fixed;
-  width: 100%;
   height: 100vh;
+  position: fixed;
   text-align: center;
-  align-items: center;
-  align-content: center;
+  top: 10%;
+  width: 100vw;
+  /* background-color: #282133c4; */
 }
 
 .inactive_client_inner {
-  position: absolute;
-  top: 25%;
-  width: 300px;
-  height: 150px;
   background-color: #eff0ee;
+  border-radius: 10px;
+  box-shadow: inset 1px 1px 10px #134e6f;
+  height: 150px;
+  left: 0;
   margin: 0 auto;
   overflow: hidden;
-  box-shadow: inset 1px 1px 10px #134e6f;
-  border-radius: 10px;
+  position: absolute;
+  top: 35%;
+  width: 300px;
 }
 
 .inactive_client_message {
@@ -359,4 +365,16 @@
 .xmtp-logo-msg {
   width: 70px;
   padding-left: 10px;
+}
+
+@media screen and (min-width: 1600px) and (max-width: 2560px) {
+  .message__right .conversation {
+    height: calc(65vh - 180px) !important;
+  }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+  .message__right .conversation {
+    height: calc(65vh - 150px) !important;
+  }
 }

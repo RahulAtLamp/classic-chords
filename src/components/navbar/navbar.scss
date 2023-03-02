@@ -117,7 +117,6 @@ ul.nav-links {
       }
     }
   }
-
 }
 
 .navtextstyle {
@@ -158,7 +157,7 @@ ul.nav-links {
   width: 145px;
   border-radius: 10px;
   padding: 3px;
-  font-family: 'FontsFree';
+  font-family: "FontsFree";
   cursor: pointer;
   color: #ffffff;
   border: 0px;
@@ -173,7 +172,7 @@ ul.nav-links {
   width: 180px;
   border-radius: 10px;
   padding: 3px;
-  font-family: 'FontsFree';
+  font-family: "FontsFree";
   cursor: pointer;
   color: #000;
   border: 0px;
@@ -213,7 +212,7 @@ ul.nav-links {
         text-align: center;
 
         h2 {
-          font-family: 'FontsFree';
+          font-family: "FontsFree";
           font-size: 11px;
         }
       }
@@ -303,7 +302,7 @@ ul.nav-sub-menu {
       text-overflow: ellipsis;
     }
 
-    .close-btn{
+    .close-btn {
       cursor: pointer;
     }
   }
@@ -411,14 +410,49 @@ ul.nav-sub-menu {
   }
 }
 
-@media(max-width: 850px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .navbar {
+    display: block;
+  }
+
+  .nav-logo {
+    display: block;
+  }
+
   .nav-links {
-    grid-gap: 10px;
+    display: none !important;
+  }
+
+  .nav-ham-menu {
+    display: block !important;
+    top: 20px;
+    right: 30px;
+    position: absolute;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    top: 0px;
+    padding: 30px;
+    z-index: 3000;
+  }
+
+  .mobile-menu ul {
+    font-size: 50px;
+    list-style: none;
+    background-color: #ffffff;
+    margin-top: 20px;
+    z-index: 200;
+    padding: 0 !important;
+    font-family: "FontsFree";
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 }
 
-@media(max-width: 800px) {
-
+@media screen and (max-width: 767px) {
   .navbar {
     display: block;
   }

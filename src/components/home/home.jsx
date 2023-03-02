@@ -5,14 +5,13 @@ import { ParallaxHover } from "react-parallax-hover";
 import { useNavigate } from "react-router-dom";
 import HomeImg from "../../images/homeimg.png";
 import Zora from "../../images/zora.svg";
-import Polygon from "../../images/polygon.svg";
-import NftStorage from "../../images/nftstorage.svg";
-import LivePeer from "../../images/livepeer.svg";
+import Polygon from "../../images/polygon1.svg";
+import NftStorage from "../../images/nftstorage1.svg";
+import LivePeer from "../../images/livepeer1.svg";
 import Navbar from "../navbar/navbar";
 // import Lit from "../../images/lit.svg";
 
 const Home = () => {
-
   // useEffect (() =>{
   //   try{
   //     document.getElementById("gui").outerHTML = "";
@@ -23,7 +22,7 @@ const Home = () => {
 
   const navigate = new useNavigate();
   const takeToPlayer = () => {
-    navigate("/player")
+    navigate("/player");
   };
   return (
     <>
@@ -172,7 +171,7 @@ const Home = () => {
             <div className="imgseperator-top1">
               <div className="footer-img-bg1">
                 <div className="footer-img-i">
-                  <img className="nfts-img" src="/images/XMTP.svg" />
+                  <img className="nfts-img" src="/images/XMTP1.svg" />
                 </div>
               </div>
               {/* <div className="footer-img-bg">
@@ -182,7 +181,7 @@ const Home = () => {
               </div> */}
               <div className="footer-img-bg1">
                 <div className="footer-img-i">
-                  <img className="nfts-img" src="/images/btt.svg" />
+                  <img className="nfts-img" src="/images/btt1.svg" />
                   {/* <img className="nfts-img" src="/images/ENS.svg" /> */}
                 </div>
               </div>
