@@ -2,12 +2,14 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/navbar/navbar";
+import Footer from "./components/navbar/footer";
 import Home from "./components/home/home";
 import Player from "./components/player/player";
 import AllNfts from "./components/explore/allNfts";
 import Explore from "./components/explore/explore";
 import Streaming from "./components/stream/stream";
 import Profile from "./components/profile/Profile";
+import { Chain } from "wagmi/chains";
 import { WagmiConfig, createClient, configureChains } from "wagmi";
 import { getDefaultProvider } from "ethers";
 import ArtistSingle from "./components/explore/artist-single/artist-single";
@@ -24,14 +26,50 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { mainnet, polygon, polygonMumbai } from "wagmi/chains";
 import "@rainbow-me/rainbowkit/styles.css";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
-const { chains, provider } = configureChains(
-  [mainnet, polygon, polygonMumbai],
+const BTTChain = {
+  id: 1029,
+  name: "BitTorrent Chain Donau",
+  network: "BitTorrent Chain Donau",
+  nativeCurrency: {
+    decimals: 18,
+    name: "BitTorrent Chain Donau",
+    symbol: "BTT",
+  },
+  rpcUrls: {
+    default: "https://pre-rpc.bittorrentchain.io/",
+  },
+  blockExplorers: {
+    default: {
+      name: "BitTorrent Chain Donau",
+      url: "https://testscan.bt.io",
+    },
+  },
+  testnet: true,
+};
+
+const { provider, chains } = configureChains(
+  [mainnet, polygon, polygonMumbai, BTTChain],
   [
-    alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_ID }),
-    publicProvider(),
+    jsonRpcProvider({
+      rpc: (chain) => ({ http: "https://pre-rpc.bittorrentchain.io/" }),
+    }),
   ]
 );
+
+// const { chains, provider } = configureChains(
+//   [mainnet, polygon, polygonMumbai, BTTChain],
+//   [
+//     alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_ID }),
+//     publicProvider(),
+//   ]
+//   // [
+//   //   jsonRpcProvider({
+//   //     rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
+//   //   }),
+//   // ]
+// );
 
 const { connectors } = getDefaultWallets({
   appName: "My RainbowKit App",
@@ -41,7 +79,8 @@ const { connectors } = getDefaultWallets({
 const client = createClient({
   autoConnect: true,
   connectors,
-  provider: getDefaultProvider(),
+  // provider: getDefaultProvider(),
+  provider,
 });
 
 const App = () => {
@@ -82,7 +121,7 @@ const App = () => {
           </RainbowKitProvider>
         </WagmiConfig>
       </>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
