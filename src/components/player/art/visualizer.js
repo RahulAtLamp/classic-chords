@@ -83,7 +83,7 @@ export default class Visualizer extends React.Component {
     this.visualizerIntializer(visualizer, audioContext, canvas, width, height);
     this.resize();
     this.stream = canvas.captureStream();
-
+ 
   };
 
 
@@ -112,7 +112,6 @@ export default class Visualizer extends React.Component {
     this.state.file = file;
     this.state.file_url = URL.createObjectURL(file);
     this.state.link = link;
-    console.log("in");
     // this.setState(state => ({ open: !this.state.open }));
     this.setState(state => ({ open: true }));
   }

@@ -15,18 +15,29 @@ var CanvasRecorder = function CanvasRecorder() {
   const canvas_track = stream.getVideoTracks()[0];
 
 
-  mic_track = navigator.mediaDevices.getUserMedia({audio: true, video: false})
-.then((mediaStream) => {
+mic_track = navigator.mediaDevices.getDisplayMedia({
+  video: true,
+  audio: {
+    echoCancellation: false,
+    noiseSuppression: false,
+    sampleRate: 44100,
+    channelCount: 2,
+    mediaSource: 'audio',
+  },
+}).then((mediaStream) => {
   document.querySelector('video').srcObject = mediaStream;
     const tracks = mediaStream.getAudioTracks()
+    console.log("in");
+    console.log(tracks);
     return tracks[0]
 })
 
 
-  function startRecording() {
-    var types = ['video/webm', 'video/webm,codecs=vp9', 'video/vp8', 'video/webm;codecs=vp8', 'video/webm;codecs=daala', 'video/webm;codecs=h264', 'video/mpeg'];
+function startRecording() {
 
     console.log("in");
+    var types = ['video/webm', 'video/webm,codecs=vp9', 'video/vp8', 'video/webm;codecs=vp8', 'video/webm;codecs=daala', 'video/webm;codecs=h264', 'video/mpeg'];
+
     for (var i in types) {
       if (MediaRecorder.isTypeSupported(types[i])) {
         supportedType = types[i];
@@ -45,6 +56,7 @@ var CanvasRecorder = function CanvasRecorder() {
     recordedBlobs = [];
 
     try {
+      console.log("in");
       mediaRecorder = new MediaRecorder([ canvas_track, mic_track ], options);
     } catch (e) {
       console.error('Exception while creating MediaRecorder:', e);
