@@ -32,7 +32,7 @@
     height: 400px;
     border-radius: 20px;
     margin: 10px;
-    margin-right: 50px;
+    // margin-right: 50px;
     padding-left: 8vw;
 
     div {
@@ -49,7 +49,7 @@
   .chats-pre {
     width: 100%;
     position: inherit;
-    margin: 0px 30px 0px -150px;
+    margin: 0px 50px 0px 0px;
     background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
     color: #fff;
     font-size: 1.5vw;
@@ -87,7 +87,7 @@
   .chats-no {
     width: 100%;
     position: inherit;
-    margin: 0px 30px 0px -150px;
+    margin: 0px 30px 0px 0px;
     background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
     color: #fff;
     font-size: 1.5vw;
@@ -106,7 +106,7 @@
     display: flex;
     width: 100%;
     position: inherit;
-    margin: 0px 30px 0px -150px;
+    margin: 0px 30px 0px 0px;
   }
 }
 
@@ -116,23 +116,35 @@
   }
 }
 
-@media screen and (max-width: 1024px) and (max-width: 1440px) {
-  .stream-holder {
-    flex-direction: row !important;
-    overflow: hidden;
-  }
-  // .cs-left-container {
-  //   width: 100% !important;
-  // }
-  // .cs-right-container {
-  //   padding: 0 !important;
-  // }
-}
+// @media screen and (max-width: 1440px) and (max-width: 1599px) {
+//   .stream-holder {
+//     flex-direction: row !important;
+//     overflow: hidden;
+//   }
+//   .
+//   // .cs-left-container {
+//   //   width: 100% !important;
+//   // }
+//   // .cs-right-container {
+//   //   padding: 0 !important;
+//   // }
+// }
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
   .stream-holder {
     flex-direction: row !important;
     overflow: hidden;
+  }
+  .stream-single-main .stream-vid {
+    width: 250%;
+    padding-left: 1%;
+    margin: 10px 10px 50px 10px;
+  }
+  .stream-single-main .chats-pre {
+    margin: 0px 30px 0px 0px;
+  }
+  .stream-single-main .chats-no {
+    margin: 0px 30px 0px 0px;
   }
   // .cs-left-container {
   //   width: 100% !important;
@@ -147,25 +159,68 @@
     flex-direction: column !important;
     overflow: hidden;
   }
-  .stream-vid {
-    width: 100% !important;
+  .stream-single-main .stream-vid {
+    width: 100%;
+    padding-left: 1%;
+    margin: 10px 10px 50px 10px;
   }
   .chats {
     padding: 0 !important;
     margin: 10px 10px 10px 0px !important;
   }
+  .stream-single-main .stream-single-heading {
+    font-size: x-large;
+  }
+  .stream-single-main .chats-pre {
+    width: auto;
+    margin: 0 auto;
+    font-size: 20px;
+  }
+  .stream-single-main .chats-no {
+    width: auto;
+    margin: 0 auto;
+    font-size: 20px;
+    padding: 0px 20px 0px 20px;
+  }
+  .inactive_client_inner {
+    left: 0;
+    right: 0;
+  }
 }
 
 @media screen and (max-width: 767px) {
+  .exp-header {
+    font-size: x-large;
+  }
+
   .stream-holder {
     flex-direction: column !important;
     overflow: hidden;
   }
   .stream-vid {
     width: 100% !important;
+    margin: 0 auto;
+    padding-left: 0 !important;
   }
   .chats {
     padding: 0 !important;
     margin: 10px 10px 10px 0px !important;
+  }
+  .stream-single-main .stream-single-heading {
+    font-size: x-large;
+  }
+  .stream-single-main .chats-pre {
+    width: 94%;
+    margin: 0px 10px 0px 10px;
+    font-size: 20px;
+  }
+  .stream-single-main .chats-no {
+    width: 94%;
+    margin: 0px 10px 0px 10px;
+    font-size: 20px;
+  }
+  .inactive_client_inner {
+    left: 0;
+    right: 0;
   }
 }

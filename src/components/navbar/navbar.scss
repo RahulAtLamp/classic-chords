@@ -155,6 +155,25 @@ ul.nav-links {
 
 .mobile-menu-btn {
   margin: 0 auto;
+  div {
+    button {
+      width: fit-content;
+      border-radius: 10px;
+      padding: 3px;
+      font-family: "FontsFree" !important;
+      cursor: pointer;
+      color: #ffffff;
+      border: 0px;
+      font-weight: 800;
+      animation: login-color-changer 10s ease infinite;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      background-color: #a886fb;
+      font-size: small !important;
+      white-space: nowrap;
+    }
+  }
 }
 
 .nav-button {

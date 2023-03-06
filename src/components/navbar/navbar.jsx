@@ -459,7 +459,7 @@ const Navbar = () => {
                 } */}
             </>
           ) : (
-            <li className="nav-item">
+            <li className="nav-item-btn">
               {/* <button
                 className="nav-button"
                 onClick={() => {
@@ -551,7 +551,9 @@ const Navbar = () => {
                 // >
                 //   Connect
                 // </button>
-                <ConnectButton />
+                <li className="mobile-menu-btn">
+                  <ConnectButton />
+                </li>
               )}
             </ul>
           </div>
