@@ -18,6 +18,8 @@ const SingleStream = () => {
   // const [streamId, setStreamId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [streamData, setStreamData] = useState(true);
+  const [showChat, setShowChat] = useState(false);
+  const [displayChat, setDisplayChat] = useState(false);
 
   const getContract = async () => {
     try {
@@ -124,9 +126,42 @@ const SingleStream = () => {
             style={{ width: "100%" }}
           />
         </div>
-        <div className="chats">
+        {/* <div className="chats"> <div>Thank you. Please enjoy the stream!</div>
           <Communication streamId={params.id.replace(/-/g, "")} />
-        </div>
+        </div> */}
+        {!showChat && !displayChat ? (
+          <div className="chats-pre">
+            <div className="chats-pre-txt">
+              This is a Premium Chat. Do you want to Proceed?
+            </div>
+
+            <div className="chats-pre-btns">
+              <button
+                className="chats-btn"
+                onClick={() => setShowChat(!showChat)}
+              >
+                Yes
+              </button>
+              <button
+                className="chats-btn"
+                onClick={() => setDisplayChat(!displayChat)}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        ) : null}
+        {showChat ? (
+          <div className="chats">
+            <Communication />
+          </div>
+        ) : displayChat ? (
+          <div className="chats-no">
+            <div className="chats-no-txt">
+              Thank you. Please enjoy the stream!
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

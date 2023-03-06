@@ -429,7 +429,7 @@ const Navbar = () => {
                   <div className="navtextstyle">Profile</div>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item-ctbtn">
                 {/* <button
                   className="nav-disconnect"
                   onClick={() => {
@@ -459,7 +459,7 @@ const Navbar = () => {
                 } */}
             </>
           ) : (
-            <li className="nav-item-btn">
+            <li className="nav-item">
               {/* <button
                 className="nav-button"
                 onClick={() => {
@@ -530,64 +530,66 @@ const Navbar = () => {
                       Profile
                     </span>
                   </li>
-                  <button
+                  <li className="mobile-menu-btn">
+                    <ConnectButton />
+                  </li>
+                  {/* <button
                     className="nav-button"
                     onClick={() => {
                       disconnectTron();
                     }}
                   >
                     Disconnect
-                  </button>
+                  </button> */}
                 </>
               ) : (
-                <button
-                  className="nav-button"
-                  onClick={() => {
-                    setShowOptions(true);
-                  }}
-                >
-                  Connect
-                </button>
+                // <button
+                //   className="nav-button"
+                //   onClick={() => {
+                //     setShowOptions(true);
+                //   }}
+                // >
+                //   Connect
+                // </button>
+                <ConnectButton />
               )}
             </ul>
           </div>
         ) : null}
       </nav>
-      {/* {showOptions ? (
-        // <div className="connection-options-container">
-        //   <div className="connection-options">
-
-        //     <div className="options-holder" ref={walletOptions}>
-        //       <div className="options-heading">
-        //         <h2>Please connect with wallets provided</h2>
-        //       </div>
-        //       <div className="options-container">
-        //         <span className="wallets">
-        //           <img
-        //             className="wallet-image"
-        //             onClick={() => {
-        //               connectMeta();
-        //             }}
-        //             src="images/mm.png"
-        //             alt="Connect to Metamask"
-        //           />
-        //         </span>
-        //         <span className="wallets">
-        //           <img
-        //             className="wallet-image"
-        //             onClick={() => {
-        //               connectTron();
-        //             }}
-        //             src="images/tl.svg"
-        //             alt="Connect to TronLink"
-        //           />
-        //         </span>
-        //       </div>
-        //     </div>
-        //   </div>
-        // </div>
-        <ConnectButton />
-      ) : null} */}
+      {showOptions ? (
+        <div className="connection-options-container">
+          <div className="connection-options">
+            <div className="options-holder" ref={walletOptions}>
+              <div className="options-heading">
+                <h2>Please connect with wallets provided</h2>
+              </div>
+              <div className="options-container">
+                <span className="wallets">
+                  <img
+                    className="wallet-image"
+                    onClick={() => {
+                      connectMeta();
+                    }}
+                    src="images/mm.png"
+                    alt="Connect to Metamask"
+                  />
+                </span>
+                <span className="wallets">
+                  <img
+                    className="wallet-image"
+                    onClick={() => {
+                      connectTron();
+                    }}
+                    src="images/tl.svg"
+                    alt="Connect to TronLink"
+                  />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {toggleNotification ? (
         <>

@@ -91,7 +91,7 @@
 
 .home-content {
   height: 150px;
-  width: 600px;
+  width: 400px;
   color: #ae8cfe;
   font-size: 40px;
   font-family: "Gilmer-Light";
@@ -99,6 +99,7 @@
   margin-top: 50px;
   font-weight: 900;
   text-align: left;
+  margin-bottom: 50px;
 }
 
 .home-button-div {
@@ -861,6 +862,7 @@
   .home-content {
     font-size: 25px;
     width: auto;
+    text-align: center;
   }
   .home-button-div {
     text-align: center;

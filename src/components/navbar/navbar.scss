@@ -153,6 +153,10 @@ ul.nav-links {
   display: none;
 }
 
+.mobile-menu-btn {
+  margin: 0 auto;
+}
+
 .nav-button {
   width: 145px;
   border-radius: 10px;
@@ -491,9 +495,22 @@ ul.nav-sub-menu {
   }
 }
 
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .navtextstyle {
+    font-size: 1.2vw;
+  }
+  .nav-item-ctbtn {
+    font-size: 1.2vw;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .navbar {
     display: block;
+  }
+
+  .nav-links {
+    display: none !important;
   }
 
   .nav-logo {
