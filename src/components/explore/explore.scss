@@ -1,6 +1,8 @@
 .exp {
   background: linear-gradient(130deg, #251b43 55%, #746cfe);
-  min-height: 250vh;
+  min-height: 100vh;
+  height: fit-content;
+  padding-bottom: 100px;
 
   .dg.ac {
     display: none;
@@ -129,22 +131,57 @@
 }
 
 @media screen and (min-width: 2561px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (min-width: 2000px) and (max-width: 2560px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (min-width: 1600px) and (max-width: 1999px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
 
 @media screen and (max-width: 767px) {
+  .exp {
+    min-height: 100vh;
+    height: fit-content;
+    padding-bottom: 100px;
+  }
 }
