@@ -7,7 +7,7 @@ import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
-function Communication(streamId, { showSuper }) {
+function Communication({ setShowSuper, streamId }) {
   const { data } = useSigner();
   const { address } = useAccount();
   const [activeAddress, setActiveAddress] = useState("");
@@ -20,7 +20,7 @@ function Communication(streamId, { showSuper }) {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
-  console.log(showSuper);
+
   const getXmtp = async (wallet) => {
     if (!data) {
       connect();
@@ -39,6 +39,7 @@ function Communication(streamId, { showSuper }) {
     setActiveAddress(address);
     // setActiveAddress(allConvs[0].peerAddress)
     setAllConversations(allConvs);
+    setShowSuper(true);
   };
 
   // const getConversations = async () => {
@@ -84,7 +85,7 @@ function Communication(streamId, { showSuper }) {
     const myAppConversations = conversations.filter(
       (convo) =>
         convo.context?.conversationId &&
-        convo.context.conversationId.startsWith(streamId.streamId)
+        convo.context.conversationId.startsWith(streamId)
     );
     // console.log(myAppConversations);
     setAllMessages(myAppConversations);
@@ -103,7 +104,7 @@ function Communication(streamId, { showSuper }) {
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
-        conversationId: streamId.streamId,
+        conversationId: streamId,
         metadata: {
           title: "Test Convo",
           msg: singleMessage,

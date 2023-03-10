@@ -156,24 +156,28 @@ function SingleStream() {
         ) : null} */}
         {/* {showChat ? ( */}
         <div className="chats">
-          <Communication showSuper={showSuper} />
-          <div className="chats-super-main">
-            <div className="chats-super-headermain">
-              <input type={"checkbox"} className="chats-super-check" />
-              <div className="chats-super-header">Superchat</div>
-            </div>
-            {/* <div className="chats-super-confirm">
+          <Communication setShowSuper={setShowSuper} />
+          {showSuper ? (
+            <div className="chats-super-main">
+              <div className="chats-super-headermain">
+                <input type={"checkbox"} className="chats-super-check" />
+                <div className="chats-super-header">Superchat</div>
+              </div>
+              {/* <div className="chats-super-confirm">
                 Please Specify the amount
               </div> */}
-            <div className="chats-super-lowermain">
-              <input
-                type={"number"}
-                className="chats-super-lowernum"
-                placeholder=" Please Specify the amount"
-              />
-              <button className="chats-super-lowerbtn">Send</button>
+              <div className="chats-super-lowermain">
+                <input
+                  type={"number"}
+                  className="chats-super-lowernum"
+                  placeholder=" Please Specify the amount"
+                />
+                <button className="chats-super-lowerbtn">Send</button>
+              </div>
             </div>
-          </div>
+          ) : (
+            ""
+          )}
         </div>
         {/* ) : displayChat ? (
          <div className="chats-no">
