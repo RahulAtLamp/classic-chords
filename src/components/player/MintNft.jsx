@@ -139,77 +139,77 @@ function MintNft(props) {
           <div className="mint-nft-header">
             <h2 className="mint-nft-h2">Mint the ART</h2>
           </div>
-          {onLoading ? (
+          {/* {onLoading ? (
             <Loading3 />
-          ) : (
-            <div className="mint-nft-data">
-              <div className="mint-nft-video">
-                <video className="mint-nft-v" controls>
-                  <source src={props.file_url} type="video/webm" />
-                </video>
-              </div>
-              <div className="mint-nft-name">
-                <input
-                  type="text"
-                  ref={inputRef}
-                  placeholder="Name"
-                  className="mint-nft-n"
-                  id="name"
-                />
-              </div>
-              <div className="mint-nft-description">
-                <textarea
-                  className="mint-nft-d"
-                  placeholder="Description"
-                  id="description"
-                ></textarea>
-              </div>
-              <div className="mint-nft-qty">
-                <input
-                  type="number"
-                  placeholder="No. of NFTs"
-                  className="mint-nft-num"
-                  id="num_token"
-                />
-              </div>
-              {/* <div className="mint-nft-price">
+          ) : ( */}
+          <div className="mint-nft-data">
+            <div className="mint-nft-video">
+              <video className="mint-nft-v" controls>
+                <source src={props.file_url} type="video/webm" />
+              </video>
+            </div>
+            <div className="mint-nft-name">
+              <input
+                type="text"
+                ref={inputRef}
+                placeholder="Name"
+                className="mint-nft-n"
+                id="name"
+              />
+            </div>
+            <div className="mint-nft-description">
+              <textarea
+                className="mint-nft-d"
+                placeholder="Description"
+                id="description"
+              ></textarea>
+            </div>
+            <div className="mint-nft-qty">
+              <input
+                type="number"
+                placeholder="No. of NFTs"
+                className="mint-nft-num"
+                id="num_token"
+              />
+            </div>
+            {/* <div className="mint-nft-price">
                         <input type="number" placeholder='Price in TRX' className='mint-nft-p' />
                     </div> */}
-              <div className="mint-nft-btn">
-                {onMint ? (
-                  <button
-                    className="mint-nft-b disabled"
-                    disabled="disabled"
-                    onClick={() => {
-                      mint();
-                    }}
-                  >
-                    <span>Minting</span>
-                    <span className="dot1">.</span>
-                    <span className="dot2">.</span>
-                    <span className="dot3">.</span>
-                    {/* <Loading3 /> */}
-                  </button>
-                ) : (
-                  <button
-                    className="mint-nft-b"
-                    onClick={() => {
-                      mint();
-                    }}
-                  >
-                    Mint
-                    {isExploding ? (
-                      <ConfettiExplosion
-                        particleCount={300}
-                        height={1080}
-                        width={1080}
-                      />
-                    ) : null}
-                  </button>
-                )}
-              </div>
+            <div className="mint-nft-btn">
+              {onMint ? (
+                <button
+                  className="mint-nft-b disabled"
+                  disabled="disabled"
+                  onClick={() => {
+                    mint();
+                  }}
+                >
+                  <span>Minting</span>
+                  <span className="dot1">.</span>
+                  <span className="dot2">.</span>
+                  <span className="dot3">.</span>
+                  {/* <Loading3 /> */}
+                </button>
+              ) : (
+                <button
+                  className="mint-nft-b"
+                  onClick={() => {
+                    mint();
+                  }}
+                >
+                  Mint
+                  {isExploding ? (
+                    <ConfettiExplosion
+                      particleCount={300}
+                      height={1080}
+                      width={1080}
+                    />
+                  ) : null}
+                </button>
+              )}
             </div>
-          )}
+          </div>
+          {/* )} */}
         </div>
       </div>
     </div>

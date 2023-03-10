@@ -162,6 +162,52 @@
     height: fit-content;
     padding-bottom: 100px;
   }
+  .nfts-main .nfts-header {
+    font-size: 40px;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg {
+    height: 50vh;
+    width: 20vw;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img {
+    width: 20vw;
+    height: 20vh;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img
+    .exp-nft {
+    max-width: 20vw;
+    height: 18vh;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-name {
+    font-size: 1.2vw;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-description {
+    font-size: 1.1vw;
+  }
 }
 
 @media screen and (min-width: 2000px) and (max-width: 2560px) {
@@ -169,6 +215,52 @@
     min-height: 100vh;
     height: fit-content;
     padding-bottom: 100px;
+  }
+  .nfts-main .nfts-header {
+    font-size: 40px;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg {
+    height: 50vh;
+    width: 20vw;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img {
+    width: 20vw;
+    height: 20vh;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img
+    .exp-nft {
+    max-width: 20vw;
+    height: 18vh;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-name {
+    font-size: 1.2vw;
+  }
+  .nfts-main
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-description {
+    font-size: 1.1vw;
   }
 }
 

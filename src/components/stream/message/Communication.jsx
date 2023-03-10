@@ -7,7 +7,7 @@ import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
-const Communication = (streamId) => {
+function Communication(streamId, { showSuper }) {
   const { data } = useSigner();
   const { address } = useAccount();
   const [activeAddress, setActiveAddress] = useState("");
@@ -20,7 +20,7 @@ const Communication = (streamId) => {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   });
-
+  console.log(showSuper);
   const getXmtp = async (wallet) => {
     if (!data) {
       connect();
@@ -49,7 +49,7 @@ const Communication = (streamId) => {
   //         //     // Only show messages from last 24 hours
   //         //     startTime: new Date(new Date().setDate(new Date().getDate() - 1)),
   //         //     endTime: new Date(),
-  //         // };
+  //         // };false
   //         if (conversation.peerAddress === activeAddress) {"0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce"
 
   //             setConversation(conversation)
@@ -80,13 +80,13 @@ const Communication = (streamId) => {
 
     const ccClient = await Client.create(signer);
     const conversations = await ccClient.conversations.list();
-    console.log(conversations);
+    // console.log(conversations);
     const myAppConversations = conversations.filter(
       (convo) =>
         convo.context?.conversationId &&
         convo.context.conversationId.startsWith(streamId.streamId)
     );
-    console.log(myAppConversations);
+    // console.log(myAppConversations);
     setAllMessages(myAppConversations);
 
     // for (const conversation of myAppConversations) {
@@ -155,7 +155,7 @@ const Communication = (streamId) => {
   //         const checkStream = async () => {
   //             if (client) {
   //                 const stream = await client.conversations.stream();
-  //                 for await (const conv of stream) {
+  //                 for await (setShowSuperconst conv of stream) {
   //                     console.log("inside stream")
   //                     console.log("Newly added code" + conv.peerAddress);
   //                 }
@@ -178,6 +178,7 @@ const Communication = (streamId) => {
               <button
                 onClick={() => {
                   getXmtp();
+                  // setShowSuper(true);
                 }}
                 className="inactive_client_btn"
               >
@@ -206,6 +207,6 @@ const Communication = (streamId) => {
       </>
     );
   }
-};
+}
 
 export default Communication;

@@ -9,7 +9,7 @@ import "./single-stream.scss";
 import Loading3 from "../../loading3";
 import Communication from "./message/Communication";
 
-const SingleStream = () => {
+function SingleStream() {
   const { isConnected } = useAccount();
   const playerRef = useRef(null);
   const navigate = useNavigate();
@@ -18,9 +18,12 @@ const SingleStream = () => {
   // const [streamId, setStreamId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [streamData, setStreamData] = useState(true);
-  const [showChat, setShowChat] = useState(false);
-  const [displayChat, setDisplayChat] = useState(false);
-
+  // const [showChat, setShowChat] = useState(false);
+  // const [displayChat, setDisplayChat] = useState(false);
+  const [showSuper, setShowSuper] = useState(false);
+  useEffect(() => {
+    console.log(showSuper);
+  }, [showSuper]);
   const getContract = async () => {
     try {
       const { ethereum } = window;
@@ -129,7 +132,7 @@ const SingleStream = () => {
         {/* <div className="chats"> <div>Thank you. Please enjoy the stream!</div>
           <Communication streamId={params.id.replace(/-/g, "")} />
         </div> */}
-        {!showChat && !displayChat ? (
+        {/* {!showChat && !displayChat ? (
           <div className="chats-pre">
             <div className="chats-pre-txt">
               This is a Premium Chat. Do you want to Proceed?
@@ -150,21 +153,38 @@ const SingleStream = () => {
               </button>
             </div>
           </div>
-        ) : null}
-        {showChat ? (
-          <div className="chats">
-            <Communication />
-          </div>
-        ) : displayChat ? (
-          <div className="chats-no">
-            <div className="chats-no-txt">
-              Thank you. Please enjoy the stream!
+        ) : null} */}
+        {/* {showChat ? ( */}
+        <div className="chats">
+          <Communication showSuper={showSuper} />
+          <div className="chats-super-main">
+            <div className="chats-super-headermain">
+              <input type={"checkbox"} className="chats-super-check" />
+              <div className="chats-super-header">Superchat</div>
+            </div>
+            {/* <div className="chats-super-confirm">
+                Please Specify the amount
+              </div> */}
+            <div className="chats-super-lowermain">
+              <input
+                type={"number"}
+                className="chats-super-lowernum"
+                placeholder=" Please Specify the amount"
+              />
+              <button className="chats-super-lowerbtn">Send</button>
             </div>
           </div>
-        ) : null}
+        </div>
+        {/* ) : displayChat ? (
+         <div className="chats-no">
+          <div className="chats-no-txt">
+               Thank you. Please enjoy the stream!
+             </div>
+           </div>
+         ) : null} */}
       </div>
     </div>
   );
-};
+}
 
 export default SingleStream;
