@@ -66,7 +66,7 @@ function MintNft(props) {
       if (mintBox.current && !mintBox.current.contains(event.target)) {
         setOpen(false);
         props.changeOpen();
-        window.location.reload();
+        // window.location.reload();
       }
     }
     // Bind the event listener
