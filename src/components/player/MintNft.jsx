@@ -184,11 +184,15 @@ function MintNft(props) {
                     mint();
                   }}
                 >
-                  <span>Minting</span>
+                  <span className="mint-loader">
+                    <Loading3 />
+                  </span>
+                  {/* <span>Minting</span>
                   <span className="dot1">.</span>
                   <span className="dot2">.</span>
-                  <span className="dot3">.</span>
-                  {/* <Loading3 /> */}
+                  <span className="dot3">.</span> */}
+
+                  {/* <Loading3/> */}
                 </button>
               ) : (
                 <button

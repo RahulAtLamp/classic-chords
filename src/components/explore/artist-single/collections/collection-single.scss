@@ -1,5 +1,7 @@
 .collection-main {
-  min-height: 250vh;
+  min-height: 100vh;
+  height: fit-content;
+  padding-bottom: 100px;
   background: linear-gradient(130deg, #251b43 55%, #746cfe);
 
   .collection-name {
