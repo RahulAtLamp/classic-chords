@@ -504,53 +504,92 @@ const Navbar = () => {
               <li>
                 <span
                   onClick={() => {
-                    navigate("/all-artists");
+                    setShowExploreMenu(!showMenu);
                   }}
                 >
-                  Explore
+                  <div>Explore</div>
                 </span>
+                {/* <span>
+              <Link className="navtextstyle" to="/all-artists">Explore</Link>
+            </span> */}
+                {showExploreMenu ? (
+                  <div className="nav-sub-menu" ref={exploreMenuRef}>
+                    <ul className="nav-sub-menu">
+                      <li>
+                        <Link
+                          to="/all-nfts"
+                          onClick={() => {
+                            setShowExploreMenu(false);
+                          }}
+                          className="nav-sub-menu-link"
+                        >
+                          All NFTs
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/all-artists"
+                          onClick={() => {
+                            setShowExploreMenu(false);
+                          }}
+                          className="nav-sub-menu-link"
+                        >
+                          All Artists
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                ) : null}
               </li>
-              {connected ? (
+              {connected || isConnected ? (
                 <>
                   <li>
                     <span
                       onClick={() => {
-                        navigate("/streaming");
+                        setShowMenu(!showMenu);
                       }}
                     >
-                      Stream
+                      <div>Stream</div>
                     </span>
+                    {showMenu ? (
+                      <div className="nav-sub-menu" ref={menuRef}>
+                        <ul className="nav-sub-menu">
+                          <li>
+                            <Link
+                              to="/streaming"
+                              onClick={() => {
+                                setShowMenu(false);
+                              }}
+                              className="nav-sub-menu-link"
+                            >
+                              Go Live
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              to="/all-stream"
+                              onClick={() => {
+                                setShowMenu(false);
+                              }}
+                              className="nav-sub-menu-link"
+                            >
+                              All Streams
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    ) : null}
                   </li>
                   <li>
-                    <span
-                      onClick={() => {
-                        navigate("/profile");
-                      }}
-                    >
-                      Profile
-                    </span>
+                    <Link to="/profile">
+                      <div className="nav-sub-menu-profile">Profile</div>
+                    </Link>
                   </li>
-                  <li className="mobile-menu-btn">
+                  <li className="nav-item-ctbtn">
                     <ConnectButton />
                   </li>
-                  {/* <button
-                    className="nav-button"
-                    onClick={() => {
-                      disconnectTron();
-                    }}
-                  >
-                    Disconnect
-                  </button> */}
                 </>
               ) : (
-                // <button
-                //   className="nav-button"
-                //   onClick={() => {
-                //     setShowOptions(true);
-                //   }}
-                // >
-                //   Connect
-                // </button>
                 <li className="mobile-menu-btn">
                   <ConnectButton />
                 </li>

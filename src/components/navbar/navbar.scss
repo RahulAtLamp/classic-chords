@@ -287,11 +287,16 @@ ul.nav-sub-menu {
     background-color: #793ad8;
     font-weight: 700;
     margin: 10px 10px;
+    border-radius: 10px;
 
     a {
       color: #ffffff;
     }
   }
+}
+
+.nav-sub-menu-profile {
+  color: #ffffff;
 }
 
 #notifications {
@@ -591,6 +596,10 @@ ul.nav-sub-menu {
     border-radius: 10px;
   }
 
+  .nav-sub-menu {
+    margin: -10px;
+  }
+
   .nav-button {
     width: auto;
     margin: 0 auto;
@@ -645,6 +654,10 @@ ul.nav-sub-menu {
     text-align: center;
     color: #ffffff;
     border-radius: 10px;
+  }
+
+  .nav-sub-menu {
+    margin: -10px;
   }
 
   .nav-button {
