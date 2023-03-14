@@ -492,7 +492,7 @@ const Navbar = () => {
                   Home
                 </span>
               </li>
-              <li>
+              <li className="nav-sub-menu-player">
                 <span
                   onClick={() => {
                     navigate("/player");
