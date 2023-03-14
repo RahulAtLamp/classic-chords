@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from "react";
 
-import { GUI } from 'dat.gui';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
-import Counter from '../Counter';
+import { GUI } from "dat.gui";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import Counter from "../Counter";
 
-import SceneInit from './lib/SceneInit';
-import Piano from './lib/Piano';
-import MIDISounds from 'midi-sounds-react';
-import { useState, useRef } from 'react';
+import SceneInit from "./lib/SceneInit";
+import Piano from "./lib/Piano";
+import MIDISounds from "midi-sounds-react";
 import Visualizer from "./art/visualizer";
-import './player.scss'
+import "./player.scss";
 
 function Player() {
   const [selectedInstrument, setSelectedInstrument] = useState(31);
@@ -17,6 +16,7 @@ function Player() {
   const gui = new GUI();
   const [recordingStatus, setRecordingStatus] = useState(null);
   const [timeControl, setTimeControl] = useState(false);
+  const [counter, setCounter] = useState(1);
 
   let items = null;
   const midiSounds = useRef(null);
@@ -25,44 +25,43 @@ function Player() {
     setRecordingStatus(true);
     setTimeControl(true);
     setTimeout(() => {
-      document.getElementById('startR').click();
-      setTimeControl(false)
+      document.getElementById("startR").click();
+      setTimeControl(false);
     }, 5000);
   };
 
   const StopRecording = () => {
-    document.getElementById('stopR').click();
+    document.getElementById("stopR").click();
     setRecordingStatus(null);
   };
 
   useEffect(() => {
-    const test = new SceneInit('pianoHolder', 'pianoCanvas');
+    const test = new SceneInit("pianoHolder", "pianoCanvas");
     test.initScene();
     test.animate();
     // midiSounds.cacheInstrument(selectedInstrument);
-    gui.domElement.id = 'gui';
+    gui.domElement.id = "gui";
 
     test.scene.add(p.getPianoGroup());
 
     const fontLoader = new FontLoader();
-    fontLoader.load('./fonts/Helvetica-Bold.typeface.json', (font) => {
+    fontLoader.load("./fonts/Helvetica-Bold.typeface.json", (font) => {
       p.renderText(font);
     });
-
 
     test.camera.position.z = 226;
     test.camera.position.x = -40;
     test.camera.position.y = 30;
 
-    const cameraFolder = gui.addFolder('Camera');
-    cameraFolder.add(test.camera.position, 'z', 100, 250);
+    const cameraFolder = gui.addFolder("Camera");
+    cameraFolder.add(test.camera.position, "z", 100, 250);
 
     // NOTE: UI bug caused by importing tailwind css.
-    const pianoFolder = gui.addFolder('Piano');
-    pianoFolder.addColor(p, 'highlightColor').name('Highlight Color');
+    const pianoFolder = gui.addFolder("Piano");
+    pianoFolder.addColor(p, "highlightColor").name("Highlight Color");
     pianoFolder
-      .add(p, 'displayText')
-      .name('Display Text')
+      .add(p, "displayText")
+      .name("Display Text")
       .onChange((value) => {
         if (value) {
           p.renderText();
@@ -79,27 +78,30 @@ function Player() {
 
     // pianoFolder.add(obj_2, 'Stop_Recording').name("Stop Recording");
 
-
     const createSelectItems = () => {
       if (midiSounds) {
-        if (!(items)) {
+        if (!items) {
           let items = {};
-          for (let i = 0; i < midiSounds.current.player.loader.instrumentKeys().length; i++) {
+          for (
+            let i = 0;
+            i < midiSounds.current.player.loader.instrumentKeys().length;
+            i++
+          ) {
             items[midiSounds.current.player.loader.instrumentInfo(i).title] = i;
           }
           return items;
         }
       }
-    }
+    };
 
     // console.log(createSelectItems());
 
-
     var config = {
-      'Select Instrument': selectedInstrument,
+      "Select Instrument": selectedInstrument,
     };
 
-    pianoFolder.add(config, 'Select Instrument', createSelectItems())
+    pianoFolder
+      .add(config, "Select Instrument", createSelectItems())
       .onChange((value) => {
         console.log(value);
         if (value) {
@@ -111,7 +113,7 @@ function Player() {
     pianoFolder.open();
 
     const onKeyDown = (event) => {
-      if (event.key === 'h' || event.key === 'H') {
+      if (event.key === "h" || event.key === "H") {
         gui.__proto__.constructor.toggleHide();
       }
       if (event.repeat) {
@@ -124,25 +126,23 @@ function Player() {
       p.maybeStopPlayingNote(event.key);
     };
 
-    window.addEventListener('keyup', onKeyUp);
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener("keyup", onKeyUp);
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      window.removeEventListener('keyup', onKeyUp);
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener("keyup", onKeyUp);
+      window.removeEventListener("keydown", onKeyDown);
       // pianoFolder.destroy();
       gui.removeFolder(pianoFolder);
       gui.removeFolder(cameraFolder);
       gui.destroy();
     };
-
-
-  }, []);
+  }, [selectedInstrument]);
 
   useEffect(() => {
     // document.getElementById("gui").outerHTML = "";
     // console.log(first)
-    const test = new SceneInit('pianoHolder', 'pianoCanvas');
+    const test = new SceneInit("pianoHolder", "pianoCanvas");
     test.initScene();
     test.animate();
     // midiSounds.cacheInstrument(selectedInstrument);
@@ -150,7 +150,7 @@ function Player() {
     test.scene.add(p.getPianoGroup());
 
     const fontLoader = new FontLoader();
-    fontLoader.load('./fonts/Helvetica-Bold.typeface.json', (font) => {
+    fontLoader.load("./fonts/Helvetica-Bold.typeface.json", (font) => {
       console.log(font);
       p.renderText(font);
     });
@@ -160,34 +160,35 @@ function Player() {
     test.camera.position.y = 30;
 
     if (selectedInstrument) {
-      midiSounds.current.selectedInstrument = selectedInstrument;
       midiSounds.current.cacheInstrument(selectedInstrument);
+      midiSounds.current.selectedInstrument = selectedInstrument;
     }
+  }, [selectedInstrument]);
 
-  }, [selectedInstrument])
+  console.log(selectedInstrument);
 
   return (
-    <div className='player-main'>
-      {
-        timeControl
-          ?
-          <div className='player-counter'>
-            <Counter />
-          </div>
-          :
-          null
-      }
-      <div className='control-holder'>
+    <div className="player-main">
+      {timeControl ? (
+        <div className="player-counter">
+          <Counter />
+        </div>
+      ) : null}
+      <div className="control-holder">
         <button
           className={recordingStatus === true ? "start active" : "start"}
-          onClick={() => { StartRecording() }}
+          onClick={() => {
+            StartRecording();
+          }}
           disabled={recordingStatus === true ? true : false}
         >
           Start Recording
         </button>
         <button
           className={recordingStatus === null ? "stop active" : "stop"}
-          onClick={() => { StopRecording() }}
+          onClick={() => {
+            StopRecording();
+          }}
           disabled={recordingStatus === null ? true : false}
         >
           Stop Recording
@@ -196,12 +197,14 @@ function Player() {
       <div id="gui"></div>
       <div id="pianoHolder">
         <canvas id="pianoCanvas"></canvas>
-        <div style={{ display: 'none' }}>
-          <MIDISounds
-            ref={midiSounds}
-            appElementName="root"
-            instruments={[selectedInstrument]}
-          />
+        <div style={{ display: "none" }}>
+          {counter ? (
+            <MIDISounds
+              ref={midiSounds}
+              appElementName="root"
+              instruments={[selectedInstrument]}
+            />
+          ) : null}
         </div>
         <Visualizer />
       </div>
@@ -209,4 +212,4 @@ function Player() {
   );
 }
 
-export default Player
+export default Player;
