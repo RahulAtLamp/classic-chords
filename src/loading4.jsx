@@ -1,13 +1,13 @@
 import React from "react";
-import "./loading3.scss";
+import "./loading4.scss";
 
-function Loading3({ message }) {
+function Loading4({ message }) {
   return (
-    <div className="data-loading">
-      <div className="loading-inner">
+    <div className="data-load">
+      <div className="load-inner">
         <svg
           version="1.1"
-          id="Capa_1"
+          id="Capa_2"
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           x="0px"
@@ -115,16 +115,16 @@ function Loading3({ message }) {
           <g></g>
           <g></g>
         </svg>
-        <div className="message-main">
-          <div className="message">{message ? message : "Loading"}</div>
+        <div className="messages-main">
+          <div className="messages">{message ? message : "Loading"}</div>
 
-          <div className="dot1"></div>
-          <div className="dot2"></div>
-          <div className="dot3"></div>
+          <div className="dot4"></div>
+          <div className="dot5"></div>
+          <div className="dot6"></div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Loading3;
+export default Loading4;

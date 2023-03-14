@@ -1,25 +1,24 @@
-.data-loading {
+.data-load {
   width: 100%;
   height: 95vh;
   //   background: linear-gradient(130deg, #251b43 50%, #746cfe);
-  padding: 50px 50px 100px 50px;
-  // background-color: transparent;
-  background-color: #00000056;
+  //   padding: 50px 50px 100px 50px;
+  background-color: transparent;
   // overflow: hidden;
   display: flex;
   align-items: center;
   align-content: center;
   border-radius: 20px;
 
-  .loading-inner {
+  .load-inner {
     display: block;
     width: 300px;
     height: 200px;
     margin: 0 auto;
 
-    #Capa_1 {
+    #Capa_2 {
       margin: 0 auto;
-      animation-name: bounce;
+      animation-name: bouncing;
       animation-duration: 5s;
       animation-iteration-count: infinite;
       animation-timing-function: ease;
@@ -27,7 +26,7 @@
       height: 200px;
     }
 
-    .message {
+    .messages {
       margin-top: 40px;
       font-family: "FontsFree";
       color: #ffffff;
@@ -35,7 +34,7 @@
       text-align: center;
     }
 
-    .message-main {
+    .messages-main {
       width: 100%;
       display: flex;
       text-align: center;
@@ -43,7 +42,7 @@
   }
 }
 
-@keyframes bounce {
+@keyframes bouncing {
   0% {
     transform: matrix(1, 0, 0, 1, 0, 0);
   }
@@ -57,9 +56,9 @@
   }
 }
 
-.dot1,
-.dot2,
-.dot3 {
+.dot4,
+.dot5,
+.dot6 {
   background: #fff;
   width: 5px;
   height: 5px;
@@ -67,20 +66,20 @@
   margin: 10px;
 }
 
-.dot1 {
-  animation: jump 1.6s -0.32s linear infinite;
+.dot4 {
+  animation: jumping 1.6s -0.32s linear infinite;
   background: #fff;
 }
-.dot2 {
-  animation: jump 1.6s -0.16s linear infinite;
+.dot5 {
+  animation: jumping 1.6s -0.16s linear infinite;
   background: #fff;
 }
-.dot3 {
-  animation: jump 1.6s linear infinite;
+.dot6 {
+  animation: jumping 1.6s linear infinite;
   background: #fff;
 }
 
-@keyframes jump {
+@keyframes jumping {
   0%,
   80%,
   100% {
