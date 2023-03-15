@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./MintNft.scss";
 import ConfettiExplosion from "react-confetti-explosion";
 import classicChords from "../../contract/artifacts/classicChords.json";
@@ -6,6 +6,36 @@ import Loading3 from "../../loading3";
 import { ethers } from "ethers";
 // import { Web3Storage } from 'web3.storage';
 import { NFTStorage, File } from "nft.storage";
+
+const networks = {
+  mumbaiTestnet: {
+    chainId: "0x13881",
+    chainName: "Mumbai Testnet",
+    nativeCurrency: {
+      name: "BitTorrent",
+      symbol: "BTT",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+  },
+};
+
+const changeNetwork = async ({ networkName, setError }) => {
+  try {
+    if (!window.ethereum) throw new Error("No crypto wallet found");
+    await window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          ...networks[networkName],
+        },
+      ],
+    });
+  } catch (err) {
+    setError(err.message);
+  }
+};
 
 function MintNft(props) {
   // const classicChords_address = "0xA85cFB46795e47bB6D6C727964f668A0AE38935f";
@@ -91,6 +121,44 @@ function MintNft(props) {
   //     };
   // }, [props])
 
+  const [isConnected, setIsConnected] = useState(false);
+
+  const handleConnectClick = async () => {
+    // Check if MetaMask is installed
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        // Prompt user to connect their wallet
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        console.log("Connected to MetaMask!");
+        setIsConnected(true);
+        // Perform actions that require MetaMask connection
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log("MetaMask not found!");
+    }
+  };
+
+  const [error, setError] = useState();
+
+  const handleNetworkSwitch = async (networkName) => {
+    setError();
+    await changeNetwork({ networkName, setError });
+  };
+
+  const networkChanged = (chainId) => {
+    console.log({ chainId });
+  };
+
+  useEffect(() => {
+    window.ethereum.on("chainChanged", networkChanged);
+
+    return () => {
+      window.ethereum.removeListener("chainChanged", networkChanged);
+    };
+  }, []);
+
   const mint = async () => {
     setOnMint(true);
     setOnLoading(true);
@@ -123,6 +191,7 @@ function MintNft(props) {
           }, 3000);
         } else {
           alert("Please connect to the Mumbai Testnet Network!");
+          window.location.reload();
         }
       }
     } catch (error) {
@@ -182,9 +251,12 @@ function MintNft(props) {
                     className="mint-nft-b disabled"
                     disabled="disabled"
                     onClick={() => {
+                      handleConnectClick();
                       mint();
+                      handleNetworkSwitch("mumbaiTestnet");
                     }}
                   >
+                    {isConnected ? "Connected" : "Connect to MetaMask"}
                     <span className="mint-loader">
                       <Loading3 message={"Minting"} />
                     </span>
@@ -199,7 +271,9 @@ function MintNft(props) {
                   <button
                     className="mint-nft-b"
                     onClick={() => {
+                      handleConnectClick();
                       mint();
+                      handleNetworkSwitch("mumbaiTestnet");
                     }}
                   >
                     Mint

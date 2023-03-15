@@ -15,6 +15,36 @@ import Loading3 from "../../../loading3";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
+const networks = {
+  mumbaiTestnet: {
+    chainId: "0x13881",
+    chainName: "Mumbai Testnet",
+    nativeCurrency: {
+      name: "BitTorrent",
+      symbol: "BTT",
+      decimals: 18,
+    },
+    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+  },
+};
+
+const changeNetwork = async ({ networkName, setError }) => {
+  try {
+    if (!window.ethereum) throw new Error("No crypto wallet found");
+    await window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [
+        {
+          ...networks[networkName],
+        },
+      ],
+    });
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 function SellCollectionSingle() {
   const { isConnected, address } = useAccount();
   const params = useParams();
@@ -147,6 +177,25 @@ function SellCollectionSingle() {
     console.log(sellData);
   }, [sellData]);
 
+  const [error, setError] = useState();
+
+  const handleNetworkSwitch = async (networkName) => {
+    setError();
+    await changeNetwork({ networkName, setError });
+  };
+
+  const networkChanged = (chainId) => {
+    console.log({ chainId });
+  };
+
+  useEffect(() => {
+    window.ethereum.on("chainChanged", networkChanged);
+
+    return () => {
+      window.ethereum.removeListener("chainChanged", networkChanged);
+    };
+  }, []);
+
   return (
     <>
       {loading ? (
@@ -231,6 +280,7 @@ function SellCollectionSingle() {
                 className="sell-buy-button"
                 onClick={() => {
                   sell();
+                  handleNetworkSwitch("mumbaiTestnet");
                 }}
               >
                 proceed
