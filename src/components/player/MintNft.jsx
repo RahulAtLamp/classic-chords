@@ -186,7 +186,7 @@ function MintNft(props) {
                     }}
                   >
                     <span className="mint-loader">
-                      <Loading3 message={"Minting..."} />
+                      <Loading3 message={"Minting"} />
                     </span>
                     {/* <span>Minting</span>
                   <span className="dot1">.</span>

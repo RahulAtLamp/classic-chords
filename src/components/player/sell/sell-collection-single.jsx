@@ -238,7 +238,7 @@ function SellCollectionSingle() {
             </div>
             {showLoading ? (
               <div className="loading-main">
-                <Loading3 message={"Processing..."} />
+                <Loading3 message={"Processing"} />
               </div>
             ) : null}
           </div>
