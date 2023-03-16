@@ -309,3 +309,228 @@
     box-shadow: 0px 0px 20px #ffffff;
   }
 }
+
+@media screen and (min-width: 2561px) {
+  .artist-main .artist-card-holder .artist-card {
+    max-width: 50vw;
+    width: 80%;
+    height: 30vh;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-detail .artist-name {
+    font-size: 1.5vw;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .artist-main
+    .artist-card-holder
+    .artist-card
+    .artist-detail
+    .artist-description {
+    font-size: 1.5vw;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-image-container {
+    height: 15vw;
+    width: 30vw;
+  }
+
+  .artist-main .artist-creations .artist-creations-header {
+    font-size: 1.5vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg {
+    width: 20vw;
+    height: 40vh;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img {
+    width: 15vw;
+    height: 15vh;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img
+    .exp-nft {
+    height: 14vh;
+    max-width: 18vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-name {
+    font-size: 1.5vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-description {
+    font-size: 1.3vw;
+  }
+}
+
+@media screen and (min-width: 2000px) and (max-width: 2560px) {
+  .artist-main .artist-card-holder .artist-card {
+    max-width: 50vw;
+    width: 80%;
+    height: 30vh;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-detail .artist-name {
+    font-size: 1.5vw;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .artist-main
+    .artist-card-holder
+    .artist-card
+    .artist-detail
+    .artist-description {
+    font-size: 1.5vw;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-image-container {
+    height: 15vw;
+    width: 30vw;
+  }
+
+  .artist-main .artist-creations .artist-creations-header {
+    font-size: 1.5vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg {
+    width: 20vw;
+    height: 40vh;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img {
+    width: 15vw;
+    height: 15vh;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-img
+    .exp-nft {
+    height: 14vh;
+    max-width: 18vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-name {
+    font-size: 1.5vw;
+  }
+
+  .artist-main
+    .artist-creations
+    .artist-creations-list-container
+    .artist-creations-list
+    .artist-collection-pa
+    .exp-bg
+    .exp-description {
+    font-size: 1.3vw;
+  }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1999px) {
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media screen and (max-width: 767px) {
+  .artist-main .artist-card-holder .artist-card {
+    max-width: 500px;
+    width: 70%;
+    flex-direction: column;
+    height: fit-content;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-detail .artist-name {
+    font-size: 20px;
+    margin: 0 auto;
+  }
+
+  .artist-main
+    .artist-card-holder
+    .artist-card
+    .artist-detail
+    .artist-description {
+    font-size: 15px;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .artist-main .artist-card-holder .artist-card .artist-image-container {
+    height: 200px;
+    width: 200px;
+  }
+
+  .artist-main .artist-creations .artist-creations-header {
+    font-size: 30px;
+  }
+}
