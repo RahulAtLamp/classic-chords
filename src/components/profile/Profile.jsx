@@ -397,7 +397,9 @@ const Profile = () => {
       <>
         <div className="profile-main">
           {profileLoading ? (
-            <Loading3 />
+            <div className="loading-main-style">
+              <Loading3 />
+            </div>
           ) : (
             <>
               <div className="profile-images">
@@ -405,6 +407,7 @@ const Profile = () => {
                   <img
                     className="profile-background"
                     src="images/default-background.jpg"
+                    alt=""
                   />
                 </div>
                 <div className="profile-pic-move-up">
@@ -416,7 +419,7 @@ const Profile = () => {
                           ? `https://ipfs.io/ipfs/` + userDefault.profile_pic
                           : "images/profile.svg"
                       }
-                      alt="profile image"
+                      alt="profileimage"
                     />
                   </div>
                 </div>
@@ -425,6 +428,7 @@ const Profile = () => {
                 <img
                   className="edit-profile-button"
                   src="images/edit-btn.svg"
+                  alt=""
                   onClick={() => {
                     showProfileWindow(true);
                   }}

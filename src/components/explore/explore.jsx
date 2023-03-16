@@ -17,12 +17,11 @@ import Loading3 from "../../loading3";
 // const user_address = "0x036E73d74e86cC50930d78f26cf97d603c40088f";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9"
-const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/"
+const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
 const Explore = ({ temp }) => {
-
-  const [loading, setLoading] = React.useState(false)
-  const [Artists, setArtist] = React.useState([])
+  const [loading, setLoading] = React.useState(false);
+  const [Artists, setArtist] = React.useState([]);
 
   // const gui = new GUI();
   // gui.destroy()
@@ -48,33 +47,36 @@ const Explore = ({ temp }) => {
       // }
 
       const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(process.env.REACT_APP_USER_ADDRESS, market, provider);
-      return contract
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_USER_ADDRESS,
+        market,
+        provider
+      );
+      return contract;
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const getArtists = async () => {
-    const contract = await getContract()
-    const artists = await contract.getAllArtists()
+    const contract = await getContract();
+    const artists = await contract.getAllArtists();
     setArtist(artists);
-    setLoading(true)
+    setLoading(true);
     console.log(artists);
-  }
+  };
 
   useEffect(() => {
     try {
-      document.getElementById('gui').style.display = "none";
+      document.getElementById("gui").style.display = "none";
     } catch (error) {
       console.log(error);
     }
 
-    getArtists()
-  }, [])
+    getArtists();
+  }, []);
 
-
-return (
+  return (
     <>
       <div className="exp">
         <div className="exp-header">All Artists</div>
@@ -82,25 +84,33 @@ return (
         {loading ? (
           <div className="">
             <div className="exp-main">
-              {
-                Artists.map((artist, i) => (
-                  <Link key={artist.userId} to={"/artist/" + artist.userAddress}>
-                    <div className="exp-pa">
-                      <div className="exp-bg">
-                        <div className="exp-img">
-                          <img className="exp-nft" src={"https://ipfs.io/ipfs/" + artist.profileImage} />
-                        </div>
-                        <div className="exp-name" title={artist.name}>{artist.name}</div>
-                        <p className="exp-description">{artist.description}</p>
+              {Artists.map((artist, i) => (
+                <Link key={artist.userId} to={"/artist/" + artist.userAddress}>
+                  <div className="exp-pa">
+                    <div className="exp-bg">
+                      <div className="exp-img">
+                        <img
+                          className="exp-nft"
+                          src={"https://ipfs.io/ipfs/" + artist.profileImage}
+                          alt=""
+                        />
                       </div>
+                      <div className="exp-name" title={artist.name}>
+                        {artist.name}
+                      </div>
+                      <p className="exp-description">{artist.description}</p>
                     </div>
-                  </Link>
-                ))
-              }
+                  </div>
+                </Link>
+              ))}
             </div>
             <br />
           </div>
-        ) : <Loading3 />}
+        ) : (
+          <div className="loading-main-style">
+            <Loading3 />
+          </div>
+        )}
       </div>
     </>
   );

@@ -318,7 +318,11 @@ const Navbar = () => {
     <>
       <nav className="navbar">
         <Link to="/" className="nav-logo">
-          <img style={{ width: "250px", height: "80px" }} src={logo} />
+          <img
+            style={{ width: "250px", height: "80px" }}
+            src={logo}
+            alt="logo"
+          />
         </Link>
         {/* <div onClick={handleClick} className="nav-icon">
         {open ? <FiX /> : <FiMenu />}
@@ -641,6 +645,7 @@ const Navbar = () => {
                 <img
                   className="close-btn"
                   src="/images/cancel.svg"
+                  alt="close"
                   onClick={() => {
                     setToggleNotification(false);
                   }}

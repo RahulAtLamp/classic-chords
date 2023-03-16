@@ -6,46 +6,31 @@ import { Collections } from "../collection_dummy";
 import { ethers } from "ethers";
 import axios from "axios";
 // import $ from "jquery";
-import { useAccount } from "wagmi";
+// import { useAccount } from "wagmi";
 import { useParams } from "react-router-dom";
 import classicChords from "../../../contract/artifacts/classicChords.json";
 import market from "../../../contract/artifacts/market.json";
 import Loading3 from "../../../loading3";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
-const networks = {
-  mumbaiTestnet: {
-    chainId: "0x13881",
-    chainName: "Mumbai Testnet",
-    nativeCurrency: {
-      name: "BitTorrent",
-      symbol: "BTT",
-      decimals: 18,
-    },
-    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-  },
-};
-
-const changeNetwork = async ({ networkName, setError }) => {
-  try {
-    if (!window.ethereum) throw new Error("No crypto wallet found");
-    await window.ethereum.request({
-      method: "wallet_addEthereumChain",
-      params: [
-        {
-          ...networks[networkName],
-        },
-      ],
-    });
-  } catch (err) {
-    setError(err.message);
-  }
-};
-
 function SellCollectionSingle() {
+  const connectMeta = async () => {
+    connect();
+    await checkChain();
+    setAccount(address);
+    await sell();
+  };
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const [account, setAccount] = useState(null);
+  const [chain, setChainStatus] = useState(false);
+
   const { isConnected, address } = useAccount();
   const params = useParams();
 
@@ -65,6 +50,48 @@ function SellCollectionSingle() {
   const priceRef = useRef(null);
   const optionRef = useRef(null);
   const royaltyRef = useRef(null);
+
+  const addChain = () => {
+    if (window.ethereum) {
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+            chainName: "Mumbai Testnet",
+            // nativeCurrency: {
+            //     name: "BitTorrent",
+            //     symbol: "BTT",
+            //     decimals: 18
+            // },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+      setChainStatus(false);
+    } else {
+      alert("Please Install a wallet to proceed.");
+    }
+  };
+
+  const checkChain = async () => {
+    if (window.ethereum) {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const { chainId } = await provider.getNetwork();
+      if (chainId !== 80001) {
+        // setChainStatus(true);
+        addChain();
+        return true;
+      } else {
+        // setChainStatus(false);
+        return false;
+      }
+    } else {
+      alert("Please install a wallet.");
+    }
+  };
 
   const getData = async () => {
     try {
@@ -177,25 +204,6 @@ function SellCollectionSingle() {
     console.log(sellData);
   }, [sellData]);
 
-  const [error, setError] = useState();
-
-  const handleNetworkSwitch = async (networkName) => {
-    setError();
-    await changeNetwork({ networkName, setError });
-  };
-
-  const networkChanged = (chainId) => {
-    console.log({ chainId });
-  };
-
-  useEffect(() => {
-    window.ethereum.on("chainChanged", networkChanged);
-
-    return () => {
-      window.ethereum.removeListener("chainChanged", networkChanged);
-    };
-  }, []);
-
   return (
     <>
       {loading ? (
@@ -279,8 +287,7 @@ function SellCollectionSingle() {
               <button
                 className="sell-buy-button"
                 onClick={() => {
-                  sell();
-                  handleNetworkSwitch("mumbaiTestnet");
+                  connectMeta();
                 }}
               >
                 proceed
