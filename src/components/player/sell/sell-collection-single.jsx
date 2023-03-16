@@ -6,18 +6,36 @@ import { Collections } from "../collection_dummy";
 import { ethers } from "ethers";
 import axios from "axios";
 // import $ from "jquery";
-import { useAccount } from "wagmi";
+// import { useAccount } from "wagmi";
 import { useParams } from "react-router-dom";
 import classicChords from "../../../contract/artifacts/classicChords.json";
 import market from "../../../contract/artifacts/market.json";
 import Loading3 from "../../../loading3";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
 function SellCollectionSingle() {
+  const connectMeta = async () => {
+    if (address) {
+      sell();
+    } else {
+      openConnectModal();
+    }
+  };
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const [account, setAccount] = useState(null);
+  const [chain, setChainStatus] = useState(false);
+
   const { isConnected, address } = useAccount();
   const params = useParams();
+  const { openConnectModal } = useConnectModal();
 
   // const collection = Collections[3];
   const [sellData, setSellData] = useState({
@@ -35,6 +53,48 @@ function SellCollectionSingle() {
   const priceRef = useRef(null);
   const optionRef = useRef(null);
   const royaltyRef = useRef(null);
+
+  const addChain = () => {
+    if (window.ethereum) {
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+            chainName: "Mumbai Testnet",
+            // nativeCurrency: {
+            //     name: "BitTorrent",
+            //     symbol: "BTT",
+            //     decimals: 18
+            // },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+      setChainStatus(false);
+    } else {
+      alert("Please Install a wallet to proceed.");
+    }
+  };
+
+  const checkChain = async () => {
+    if (window.ethereum) {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const { chainId } = await provider.getNetwork();
+      if (chainId !== 80001) {
+        // setChainStatus(true);
+        addChain();
+        return true;
+      } else {
+        // setChainStatus(false);
+        return false;
+      }
+    } else {
+      alert("Please install a wallet.");
+    }
+  };
 
   const getData = async () => {
     try {
@@ -230,7 +290,7 @@ function SellCollectionSingle() {
               <button
                 className="sell-buy-button"
                 onClick={() => {
-                  sell();
+                  connectMeta();
                 }}
               >
                 proceed
@@ -238,7 +298,7 @@ function SellCollectionSingle() {
             </div>
             {showLoading ? (
               <div className="loading-main">
-                <Loading3 message={"Processing..."} />
+                <Loading3 message={"Processing"} />
               </div>
             ) : null}
           </div>

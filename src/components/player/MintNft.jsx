@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./MintNft.scss";
 import ConfettiExplosion from "react-confetti-explosion";
 import classicChords from "../../contract/artifacts/classicChords.json";
@@ -6,6 +6,9 @@ import Loading3 from "../../loading3";
 import { ethers } from "ethers";
 // import { Web3Storage } from 'web3.storage';
 import { NFTStorage, File } from "nft.storage";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 function MintNft(props) {
   // const classicChords_address = "0xA85cFB46795e47bB6D6C727964f668A0AE38935f";
@@ -13,12 +16,70 @@ function MintNft(props) {
   // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
   // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
+  const connectMeta = async () => {
+    if (address) {
+      mint();
+    } else {
+      openConnectModal();
+    }
+  };
+  const { address, isConnected } = useAccount();
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const [account, setAccount] = useState(null);
+  const [chain, setChainStatus] = useState(false);
+
   const [isExploding, setIsExploding] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [onMint, setOnMint] = React.useState(false);
   const [onLoading, setOnLoading] = React.useState(false);
   const mintBox = React.useRef();
   const inputRef = React.useRef();
+  const { openConnectModal } = useConnectModal();
+
+  const addChain = () => {
+    if (window.ethereum) {
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+            chainName: "Mumbai Testnet",
+            // nativeCurrency: {
+            //     name: "BitTorrent",
+            //     symbol: "BTT",
+            //     decimals: 18
+            // },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+      setChainStatus(false);
+    } else {
+      alert("Please Install a wallet to proceed.");
+    }
+  };
+
+  const checkChain = async () => {
+    if (window.ethereum) {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const { chainId } = await provider.getNetwork();
+      if (chainId !== 80001) {
+        // setChainStatus(true);
+        addChain();
+        return true;
+      } else {
+        // setChainStatus(false);
+        return false;
+      }
+    } else {
+      alert("Please install a wallet.");
+    }
+  };
 
   const getTokeUri = async () => {
     // const client = new Web3Storage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng" })
@@ -123,6 +184,7 @@ function MintNft(props) {
           }, 3000);
         } else {
           alert("Please connect to the Mumbai Testnet Network!");
+          // window.location.reload();
         }
       }
     } catch (error) {
@@ -182,11 +244,11 @@ function MintNft(props) {
                     className="mint-nft-b disabled"
                     disabled="disabled"
                     onClick={() => {
-                      mint();
+                      connectMeta();
                     }}
                   >
                     <span className="mint-loader">
-                      <Loading3 message={"Minting..."} />
+                      <Loading3 message={"Minting"} />
                     </span>
                     {/* <span>Minting</span>
                   <span className="dot1">.</span>
@@ -199,7 +261,7 @@ function MintNft(props) {
                   <button
                     className="mint-nft-b"
                     onClick={() => {
-                      mint();
+                      connectMeta();
                     }}
                   >
                     Mint

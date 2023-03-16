@@ -169,8 +169,8 @@
     position: fixed;
     height: 100vh;
     top: 0px;
-    background: #ffffff20 !important;
-    // background-color: linear-gradient(130deg, #251b43 80%, #746cfe);
+    // background: #ffffff20 !important;
+    background-color: linear-gradient(130deg, #251b43 80%, #746cfe);
   }
 }
 
@@ -196,5 +196,113 @@
 
   100% {
     background-color: #ffffff;
+  }
+}
+
+@media screen and (min-width: 2561px) {
+  .collection-main .collection-name {
+    font-size: 1.5vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-image-holder {
+    width: 25vw;
+    height: 35vh;
+    margin: 0 auto;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub {
+    width: 40vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub p.total-minted {
+    font-size: 1.5vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub .qty-to-p {
+    width: 10vw;
+    height: 2vh;
+    font-size: 1vw;
+  }
+
+  .collection-main
+    .collection-detail-holder
+    .collection-sub
+    .collection-buy-button {
+    width: 10vw;
+    height: 5vh;
+    font-size: 1vw;
+  }
+}
+
+@media screen and (min-width: 2000px) and (max-width: 2560px) {
+  .collection-main .collection-name {
+    font-size: 1.5vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-image-holder {
+    width: 25vw;
+    height: 35vh;
+    margin: 0 auto;
+    align-content: center;
+    flex-wrap: wrap;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub {
+    width: 40vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub p.total-minted {
+    font-size: 1.5vw;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub .qty-to-p {
+    width: 10vw;
+    height: 2vh;
+    font-size: 1vw;
+  }
+
+  .collection-main
+    .collection-detail-holder
+    .collection-sub
+    .collection-buy-button {
+    width: 10vw;
+    height: 5vh;
+    font-size: 1vw;
+  }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1999px) {
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .collection-main .collection-detail-holder .collection-sub {
+    width: 700px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .collection-main .collection-name {
+    font-size: 30px;
+  }
+
+  .collection-main .collection-detail-holder .collection-image-holder {
+    width: 250px;
+    height: 250px;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub {
+    width: 290px;
+  }
+
+  .collection-main .collection-detail-holder .collection-sub p.total-minted {
+    font-size: 20px;
   }
 }

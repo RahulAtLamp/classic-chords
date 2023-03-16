@@ -7,6 +7,9 @@ import classicChords from "../../../../contract/artifacts/classicChords.json";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading3 from "../../../../loading3";
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
@@ -14,6 +17,25 @@ import Loading3 from "../../../../loading3";
 const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
 function CollectionSingle() {
+  const connectMeta = async () => {
+    // connect();
+    // await checkChain();
+    if (address) {
+      buyOrRent();
+    } else {
+      openConnectModal();
+    }
+    // setAccount(address);
+  };
+
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const [account, setAccount] = useState(null);
+  const [chain, setChainStatus] = useState(false);
+  const { openConnectModal } = useConnectModal();
+
+  const { isConnected, address } = useAccount();
   // const collection = Collections[3];
   const params = useParams();
   const navigate = useNavigate();
@@ -91,6 +113,48 @@ function CollectionSingle() {
   //         console.log(error);
   //     }
   // };
+
+  const addChain = () => {
+    if (window.ethereum) {
+      window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: "0x13881",
+            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+            chainName: "Mumbai Testnet",
+            // nativeCurrency: {
+            //     name: "BitTorrent",
+            //     symbol: "BTT",
+            //     decimals: 18
+            // },
+            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+          },
+        ],
+      });
+      setChainStatus(false);
+    } else {
+      alert("Please Install a wallet to proceed.");
+    }
+  };
+
+  const checkChain = async () => {
+    if (window.ethereum) {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const { chainId } = await provider.getNetwork();
+      if (chainId !== 80001) {
+        // setChainStatus(true);
+        addChain();
+        return true;
+      } else {
+        // setChainStatus(false);
+        return false;
+      }
+    } else {
+      alert("Please install a wallet.");
+    }
+  };
 
   const getNftData = async () => {
     try {
@@ -224,7 +288,9 @@ function CollectionSingle() {
   return (
     <div className="collection-main">
       {isLoading ? (
-        <Loading3 message={"Processing..."} />
+        <div className="loading-main">
+          <Loading3 message={"Processing"} />
+        </div>
       ) : (
         <>
           {price ? (
@@ -261,7 +327,7 @@ function CollectionSingle() {
                   <button
                     className="collection-buy-button"
                     onClick={() => {
-                      buyOrRent();
+                      connectMeta();
                     }}
                   >
                     <span className="buy-button-tag">
