@@ -9,6 +9,7 @@ const ConversationRight = ({ allMessages, activeAddress, sendMessage, singleMess
     useEffect(() => {
         if (resetField > 0) {
             messageRef.current.value = "";
+            setResetField(0);
         }
     }, [resetField])
 
@@ -38,17 +39,17 @@ const ConversationRight = ({ allMessages, activeAddress, sendMessage, singleMess
                 <div className="conversation" id="conversation_selector">
                     {
                         allMessages.map((m, i) => {
-                            if (m.context.metadata.sender === activeAddress) {
+                            if (m.sender === activeAddress) {
                                 return (
                                     <div className="right" key={i}>
                                         <div className="grow"></div>
-                                        <div className="msg">{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
+                                        <div className="msg">{m.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
                                     </div>
                                 )
                             } else {
                                 return (
                                     <div className="left" key={i}>
-                                        <div>{m.context.metadata.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
+                                        <div>{m.msg}<div className="conv-time">{m.createdAt.toString().split("GMT")[0]}</div></div>
                                     </div>
                                 )
                             }

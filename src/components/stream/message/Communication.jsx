@@ -13,7 +13,13 @@ function Communication({ setShowSuper, streamId }) {
   const [activeAddress, setActiveAddress] = useState("");
   const [client, setClient] = useState(null);
   const [allConversations, setAllConversations] = useState([]);
-  const [allMessages, setAllMessages] = useState([]);
+  const [allMessages, setAllMessages] = useState([
+    {
+     'sender':address, 
+     'createdAt':new Date(),
+     'msg':"Stream is started !"
+    }
+  ]);
   const [Conversation, setConversation] = useState();
   const [singleMessage, setSingleMessage] = useState();
   // const [signer, setSigner] = useState(null);
@@ -42,36 +48,6 @@ function Communication({ setShowSuper, streamId }) {
     setShowSuper(true);
   };
 
-  // const getConversations = async () => {
-  //     for (const conversation of await client.conversations.list()) {
-  //         // All parameters are optional and can be omitted
-  //         console.log(conversation);
-  //         // const opts = {
-  //         //     // Only show messages from last 24 hours
-  //         //     startTime: new Date(new Date().setDate(new Date().getDate() - 1)),
-  //         //     endTime: new Date(),
-  //         // };false
-  //         if (conversation.peerAddress === activeAddress) {"0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce"
-
-  //             setConversation(conversation)
-  //             // setAllMessages(await conversation.messages());
-  //             // const messagesInConversation = ;
-  //             // console.log(messagesInConversation[0].senderAddress);
-  //             // console.log(messagesInConversation.senderAddress);
-  //         }
-  //         // setAllMessages(messagesInConversation);
-  //     }
-  // };
-
-  const sendMessage = async () => {
-    console.log("Inside message");
-    if (singleMessage) {
-      await Conversation.send(singleMessage);
-      setAllMessages(await Conversation.messages());
-      setSingleMessage("");
-    }
-  };
-
   const getConversation = async () => {
     // Get all the conversations
     const signer = new ethers.Wallet(
@@ -80,45 +56,49 @@ function Communication({ setShowSuper, streamId }) {
     );
 
     const ccClient = await Client.create(signer);
-    const conversations = await ccClient.conversations.list();
-    // console.log(conversations);
-    const myAppConversations = conversations.filter(
-      (convo) =>
-        convo.context?.conversationId &&
-        convo.context.conversationId.startsWith(streamId)
-    );
-    // console.log(myAppConversations);
-    setAllMessages(myAppConversations);
 
-    // for (const conversation of myAppConversations) {
-    //     const conversationId = conversation.context?.conversationId
-    //     if (conversationId === streamId) {
-    //         await conversation.send('Responce !!')
-    //     }
-    // }
+    for await (const message of await ccClient.conversations.streamAllMessages()) {
+      if (message.conversation.context.conversationId !== streamId) {
+        // This message was sent from me
+        continue
+      }
+      let newMessage = {
+     'sender':message.senderAddress, 
+     'createdAt':message.sent,
+     'msg':message.content
+    }
+    let myAppConversations= allMessages
+    myAppConversations.push(newMessage)
+    setAllMessages(myAppConversations);
+    }
   };
 
-  const sendMsg = async () => {
-    // Start a scoped conversation with ID mydomain.xyz/bar. And add some metadata
+  useEffect(() => {
+    getConversation()
+  },[])
 
+
+  const sendMsg = async () => {
+
+    
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
         conversationId: streamId,
         metadata: {
-          title: "Test Convo",
+          title:"Classic Chords -stream" + streamId,
           msg: singleMessage,
           sender: address,
         },
       }
     );
     console.log("Test conversation", conversation);
-    conversation.send("Hi !");
+    conversation.send(singleMessage);
   };
 
-  setTimeout(() => {
-    getConversation();
-  }, 1000);
+  // setTimeout(() => {
+  //   getConversation();
+  // }, 1000);
 
   useEffect(() => {
     console.log(activeAddress);
