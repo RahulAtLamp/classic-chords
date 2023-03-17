@@ -34,8 +34,6 @@ function Communication({ setShowSuper, streamId }) {
 
       return;
     }
-    console.log(data);
-    console.log(wallet);
     const xmtp = await Client.create(data);
     console.log(xmtp);
     setClient(xmtp);
@@ -70,10 +68,14 @@ function Communication({ setShowSuper, streamId }) {
     let myAppConversations= allMessages
     myAppConversations.push(newMessage)
     setAllMessages(myAppConversations);
+    setSingleMessage("");
+
     }
   };
 
   useEffect(() => {
+    console.log("in");
+    console.log(streamId);
     getConversation()
   },[])
 
