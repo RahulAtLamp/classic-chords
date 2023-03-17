@@ -11,6 +11,7 @@ import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
 import "./stream.scss";
+import Loading3 from "../../loading3";
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
 function Streaming({ account }) {
@@ -38,6 +39,7 @@ function Streaming({ account }) {
   // const [add, setAdd] = useState("");
   const [record, setRecord] = useState("");
   const [premium, setPremium] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const getContract = async () => {
     try {
@@ -67,13 +69,28 @@ function Streaming({ account }) {
   };
 
   const StartStream = async () => {
+    setLoading(true);
     if (!title) {
       alert("Please provide a title for the stream...");
+      setLoading(false);
       return;
     }
 
     if (!des) {
       alert("Please provide a description for the stream...");
+      setLoading(false);
+      return;
+    }
+
+    if (!premium) {
+      alert("Please select if you want the video to be premium...");
+      setLoading(false);
+      return;
+    }
+
+    if (!record) {
+      alert("Please select if you want to record the video...");
+      setLoading(false);
       return;
     }
 
@@ -152,6 +169,7 @@ function Streaming({ account }) {
     const session = client.cast(stream.current, streamKey);
 
     session.on("open", async () => {
+      setLoading(true);
       console.log("Stream started.");
       alert("Stream started; visit Livepeer Dashboard.");
       const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
@@ -202,6 +220,7 @@ function Streaming({ account }) {
       }
       setShowChat(true);
       setShowInfo(false);
+      setLoading(false);
     });
 
     session.on("close", () => {
@@ -216,6 +235,7 @@ function Streaming({ account }) {
     // console.log(des);
     // console.log(add);
     // console.log(record);
+    setLoading(false);
   };
 
   const closeStream = async () => {
@@ -261,98 +281,102 @@ function Streaming({ account }) {
     <>
       <section className="cs-main">
         <h1 className="stream-header">Go Live</h1>
-        <div className="cs">
-          <div className="cs-left-container">
-            <video className="cs-video" ref={videoEl} controls />
-            <div className="cs-btns">
-              <button className="cs-button" onClick={() => StartStream()}>
-                Start
-              </button>
-              <button className="cs-button" onClick={closeStream}>
-                Stop
-              </button>
+        {loading ? (
+          <div className="loading-main-style">
+            <Loading3 />
+          </div>
+        ) : (
+          <div className="cs">
+            <div className="cs-left-container">
+              <video className="cs-video" ref={videoEl} controls />
+              <div className="cs-btns">
+                <button className="cs-button" onClick={() => StartStream()}>
+                  Start
+                </button>
+                <button className="cs-button" onClick={closeStream}>
+                  Stop
+                </button>
+              </div>
+            </div>
+
+            <div className="cs-right-container">
+              {showInfo ? (
+                <form>
+                  <input
+                    className="cs-input"
+                    type="text"
+                    placeholder="Stream Title"
+                    onChange={(event) => setTitle(event.target.value)}
+                    required
+                  />
+                  <textarea
+                    className="cs-textarea"
+                    type="text"
+                    placeholder="Stream Description"
+                    rows="6"
+                    cols="50"
+                    onChange={(event) => setDes(event.target.value)}
+                  />
+                  <div>
+                    <label className="premium-label">
+                      Do you want to make strem premium?
+                    </label>
+                  </div>
+                  <label className="premium-radio">
+                    <input
+                      className="cs-input-radio"
+                      type="radio"
+                      name="streamSelector"
+                      value="true"
+                      onChange={(event) => setPremium(event.target.value)}
+                    ></input>
+                    Yes
+                  </label>
+                  <label className="premium-radio">
+                    <input
+                      className="cs-input-radio"
+                      type="radio"
+                      name="streamSelector"
+                      value="false"
+                      onChange={(event) => setPremium(event.target.value)}
+                    ></input>
+                    No
+                  </label>
+                  <div>
+                    <label className="premium-label">
+                      Do you want to save this Stream?
+                    </label>
+                  </div>
+                  <label className="premium-radio">
+                    <input
+                      className="cs-input-radio"
+                      type="radio"
+                      name="radiobutton"
+                      value="true"
+                      onChange={(event) => setRecord(event.target.value)}
+                    ></input>
+                    Yes
+                  </label>
+                  <label className="premium-radio">
+                    <input
+                      className="cs-input-radio"
+                      type="radio"
+                      name="radiobutton"
+                      value="false"
+                      onChange={(event) => setRecord(event.target.value)}
+                    ></input>
+                    No
+                  </label>
+                </form>
+              ) : null}
+              {showChat ? (
+                <div className="communication">
+                  <Communication streamId={streamId} />
+                </div>
+              ) : null}
             </div>
           </div>
-
-          <div className="cs-right-container">
-            {showInfo ? (
-              <form>
-                <input
-                  className="cs-input"
-                  type="text"
-                  placeholder="Stream Title"
-                  onChange={(event) => setTitle(event.target.value)}
-                  required
-                />
-                <textarea
-                  className="cs-textarea"
-                  type="text"
-                  placeholder="Stream Description"
-                  rows="6"
-                  cols="50"
-                  onChange={(event) => setDes(event.target.value)}
-                />
-                <div>
-                  <label className="premium-label">
-                    Do you want to make strem premium?
-                  </label>
-                </div>
-                <label>
-                  <input
-                    className="cs-input-radio"
-                    type="radio"
-                    name="streamSelector"
-                    onChange={(event) => setPremium(event.target.value)}
-                    value="true"
-                    checked
-                  ></input>
-                  Yes
-                </label>
-                <label>
-                  <input
-                    className="cs-input-radio"
-                    type="radio"
-                    name="streamSelector"
-                    onChange={(event) => setPremium(event.target.value)}
-                    value="false"
-                  ></input>
-                  No
-                </label>
-                <div>
-                  <label className="premium-label">
-                    Do you want to save this Stream?
-                  </label>
-                </div>
-                <label>
-                  <input
-                    className="cs-input-radio"
-                    type="radio"
-                    name="radiobutton"
-                    value="true"
-                    onChange={(event) => setRecord(event.target.value)}
-                    checked
-                  ></input>
-                  Yes
-                </label>
-                <label>
-                  <input
-                    className="cs-input-radio"
-                    type="radio"
-                    name="radiobutton"
-                    value="false"
-                    onChange={(event) => setRecord(event.target.value)}
-                  ></input>
-                  No
-                </label>
-              </form>
-            ) : null}
-            {showChat ? (
-              <div className="communication">
-                <Communication streamId={streamId} />
-              </div>
-            ) : null}
-          </div>
-        </div>
+        )}
 
         {/* <button onClick={() => { testEncrypt() }}>Encrypt Data</button>
         <button onClick={() => { testDecrypt() }}>Decrypt Data</button> */}

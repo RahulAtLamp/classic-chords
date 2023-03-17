@@ -109,7 +109,7 @@ function SingleStream() {
 
   if (loading) {
     return (
-      <div className="stream-single-main">
+      <div className="loading-main">
         <Loading3 />
       </div>
     );
@@ -156,7 +156,10 @@ function SingleStream() {
         ) : null} */}
         {/* {showChat ? ( */}
         <div className="chats">
-          <Communication setShowSuper={setShowSuper} streamId={params.id.replace(/-/g, "")} />
+          <Communication
+            setShowSuper={setShowSuper}
+            streamId={params.id.replace(/-/g, "")}
+          />
           {showSuper ? (
             <div className="chats-super-main">
               <div className="chats-super-headermain">

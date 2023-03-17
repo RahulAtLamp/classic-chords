@@ -143,6 +143,11 @@ $gradient-color: linear-gradient(90deg, #242132, #746cfe, #ae8cfe);
     }
   }
 }
+
+.premium-radio {
+  color: #fff;
+}
+
 @media screen and (min-width: 1600px) and (max-width: 2560px) {
   .cs-main .cs .cs-left-container {
     max-width: none;

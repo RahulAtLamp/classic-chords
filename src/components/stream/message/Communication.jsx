@@ -15,10 +15,10 @@ function Communication({ setShowSuper, streamId }) {
   const [allConversations, setAllConversations] = useState([]);
   const [allMessages, setAllMessages] = useState([
     {
-     'sender':address, 
-     'createdAt':new Date(),
-     'msg':"Stream is started !"
-    }
+      sender: address,
+      createdAt: new Date(),
+      msg: "Stream is started !",
+    },
   ]);
   const [Conversation, setConversation] = useState();
   const [singleMessage, setSingleMessage] = useState();
@@ -58,37 +58,33 @@ function Communication({ setShowSuper, streamId }) {
     for await (const message of await ccClient.conversations.streamAllMessages()) {
       if (message.conversation.context.conversationId !== streamId) {
         // This message was sent from me
-        continue
+        continue;
       }
       let newMessage = {
-     'sender':message.senderAddress, 
-     'createdAt':message.sent,
-     'msg':message.content
-    }
-    let myAppConversations= allMessages
-    myAppConversations.push(newMessage)
-    setAllMessages(myAppConversations);
-    setSingleMessage("");
-
+        sender: message.senderAddress,
+        createdAt: message.sent,
+        msg: message.content,
+      };
+      let myAppConversations = allMessages;
+      myAppConversations.push(newMessage);
+      setAllMessages(myAppConversations);
+      setSingleMessage("");
     }
   };
 
   useEffect(() => {
     console.log("in");
     console.log(streamId);
-    getConversation()
-  },[])
-
+    getConversation();
+  }, []);
 
   const sendMsg = async () => {
-
-    
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
         conversationId: streamId,
         metadata: {
-          title:"Classic Chords -stream" + streamId,
+          title: "Classic Chords -stream" + streamId,
           msg: singleMessage,
           sender: address,
         },
