@@ -69,28 +69,28 @@ function Streaming({ account }) {
   };
 
   const StartStream = async () => {
-    setLoading(true);
+    // setLoading(true);
     if (!title) {
       alert("Please provide a title for the stream...");
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
     if (!des) {
       alert("Please provide a description for the stream...");
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
     if (!premium) {
       alert("Please select if you want the video to be premium...");
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
     if (!record) {
       alert("Please select if you want to record the video...");
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
@@ -169,7 +169,7 @@ function Streaming({ account }) {
     const session = client.cast(stream.current, streamKey);
 
     session.on("open", async () => {
-      setLoading(true);
+      // setLoading(true);
       console.log("Stream started.");
       alert("Stream started; visit Livepeer Dashboard.");
       const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
@@ -220,7 +220,7 @@ function Streaming({ account }) {
       }
       setShowChat(true);
       setShowInfo(false);
-      setLoading(false);
+      // setLoading(false);
     });
 
     session.on("close", () => {
@@ -235,7 +235,7 @@ function Streaming({ account }) {
     // console.log(des);
     // console.log(add);
     // console.log(record);
-    setLoading(false);
+    // setLoading(false);
   };
 
   const closeStream = async () => {

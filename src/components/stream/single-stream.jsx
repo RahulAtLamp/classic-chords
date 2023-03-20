@@ -21,6 +21,7 @@ function SingleStream() {
   // const [showChat, setShowChat] = useState(false);
   // const [displayChat, setDisplayChat] = useState(false);
   const [showSuper, setShowSuper] = useState(false);
+  const [superChatAmount, setSuperChatAmount] = useState();
   useEffect(() => {
     console.log(showSuper);
   }, [showSuper]);
@@ -88,8 +89,23 @@ function SingleStream() {
     let userData = {};
     userData.title = streamData.title;
     userData.description = streamData.description;
+    userData.stremId = streamData.stremId;
     setStreamData(userData);
     setLoading(false);
+    console.log(streamData.stremId);
+    const convertToInt = parseInt(streamData.stremId);
+    console.log(convertToInt);
+  };
+
+  const Superchat = async () => {
+    const contract = await getContract();
+    // const streamId = params.id.replace(/-/g, "");
+    // console.log(streamId);
+    const convertToInt = parseInt(streamData.stremId);
+    const superChat = await contract.sendSuperChat(convertToInt, {
+      value: parseFloat(superChatAmount),
+    });
+    // console.log(superChat);
   };
 
   useEffect(() => {
@@ -174,8 +190,14 @@ function SingleStream() {
                   type={"number"}
                   className="chats-super-lowernum"
                   placeholder=" Please Specify the amount"
+                  onChange={(e) => setSuperChatAmount(e.target.value)}
                 />
-                <button className="chats-super-lowerbtn">Send</button>
+                <button
+                  className="chats-super-lowerbtn"
+                  onClick={() => Superchat()}
+                >
+                  Send
+                </button>
               </div>
             </div>
           ) : (
