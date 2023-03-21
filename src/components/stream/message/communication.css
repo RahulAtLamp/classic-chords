@@ -1,3 +1,7 @@
+.message-right-main {
+  width: 100%;
+}
+
 .message__main {
   display: flex;
   width: 100%;
@@ -172,6 +176,7 @@
   border-radius: 10px;
   overflow: hidden;
   background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+  margin-bottom: 50px;
 }
 
 .message__right .header {

@@ -7,7 +7,7 @@ import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
-function Communication({ setShowSuper, streamId }) {
+function Communication({ setShowSuper, streamId, notShow }) {
   const { data } = useSigner();
   const { address } = useAccount();
   const [activeAddress, setActiveAddress] = useState("");
@@ -78,20 +78,20 @@ function Communication({ setShowSuper, streamId }) {
     getConversation();
   }, []);
 
-  const sendMsg = async () => {
+  const sendMsg = async (msg) => {
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
         conversationId: streamId,
         metadata: {
           title: "Classic Chords -stream" + streamId,
-          msg: singleMessage,
+          msg: msg,
           sender: address,
         },
       }
     );
     console.log("Test conversation", conversation);
-    conversation.send(singleMessage);
+    conversation.send(msg);
   };
 
   // setTimeout(() => {
@@ -180,6 +180,7 @@ function Communication({ setShowSuper, streamId }) {
               sendMessage={sendMsg}
               singleMessage={singleMessage}
               setSingleMessage={setSingleMessage}
+              notShow={notShow}
             />
           </div>
         ) : null}

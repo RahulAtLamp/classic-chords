@@ -371,7 +371,7 @@ function Streaming({ account }) {
               ) : null}
               {showChat ? (
                 <div className="communication">
-                  <Communication streamId={streamId} />
+                  <Communication streamId={streamId} notShow={true} />
                 </div>
               ) : null}
             </div>
