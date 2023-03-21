@@ -386,6 +386,32 @@
   }
 }
 
+.req-btn-main {
+  width: 100%;
+  display: flex;
+  margin-top: 220px;
+
+  .req-btn-accept {
+    margin: 0 auto;
+    font-size: 13px;
+    font-family: "FontsFree";
+    border-radius: 20px;
+    padding: 0 10px;
+    background-color: #269241;
+    color: #ffffff;
+  }
+
+  .req-btn-decline {
+    margin: 0 auto;
+    font-size: 13px;
+    font-family: "FontsFree";
+    border-radius: 20px;
+    padding: 0 10px;
+    background-color: #a3392f;
+    color: #ffffff;
+  }
+}
+
 @media screen and (min-width: 2561px) {
 }
 

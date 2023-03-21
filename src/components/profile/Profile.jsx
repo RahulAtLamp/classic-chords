@@ -497,6 +497,7 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
+
               <div className="nfts-minted-holder">
                 <h2 className="nfts-minted-header">NFTs Owned</h2>
                 <div className="nfts-minted-container">
@@ -535,6 +536,60 @@ const Profile = () => {
                       ) : (
                         <>
                           <h4 className="profile-title">No Nfts Found...</h4>
+                        </>
+                      )
+                    ) : (
+                      <h4 className="profile-title">Loading</h4>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="nfts-minted-holder">
+                <h2 className="nfts-minted-header">Requests</h2>
+                <div className="nfts-minted-container">
+                  <div className="nfts-creations-list">
+                    {isCompLoading ? (
+                      userNfts.length > 0 ? (
+                        userNfts.map((collection, i) => (
+                          // <Link key={i} to={"/sell-nft/" + collection.id}>
+                          <div className="nfts-collection-pa">
+                            <div className="nfts-bg">
+                              {/* <div className="nfts-img">
+                                <video
+                                    className="nfts-nft"
+                                    src={collection.image}
+                                    controls
+                                  />
+                              </div> */}
+                              <div
+                                className="nfts-name"
+                                // title={collection.name}
+                              >
+                                {/* {collection.name} */}
+                                Requests
+                              </div>
+                              <p className="nfts-description">
+                                {/* {collection.description} */}
+                                Request Description
+                              </p>
+                              <div className="req-btn-main">
+                                <button className="req-btn-accept">
+                                  Accept
+                                </button>
+                                <button className="req-btn-decline">
+                                  Decline
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          // </Link>
+                        ))
+                      ) : (
+                        <>
+                          <h4 className="profile-title">
+                            No Requests Found...
+                          </h4>
                         </>
                       )
                     ) : (
