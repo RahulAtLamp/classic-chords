@@ -58,6 +58,8 @@ const ConversationRight = ({
     const superChat = await contract.sendSuperChat(convertToInt, {
       value: ethers.utils.parseEther(superChatAmount.toString()),
     });
+    await superChat.wait();
+    sendMessage(superChatAmount, "super");
     // console.log(superChat);
   };
 
@@ -203,7 +205,6 @@ const ConversationRight = ({
                   className="chats-super-lowerbtn"
                   onClick={() => {
                     Superchat();
-                    sendMessage(superChatAmount);
                   }}
                 >
                   Send

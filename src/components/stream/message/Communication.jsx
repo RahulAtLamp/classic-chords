@@ -60,12 +60,16 @@ function Communication({ setShowSuper, streamId, notShow }) {
         // This message was sent from me
         continue;
       }
+      console.log(message);
       let newMessage = {
         sender: message.senderAddress,
         createdAt: message.sent,
         msg: message.content,
+        // isSuper: message.isSuper,
       };
+      console.log(newMessage);
       let myAppConversations = allMessages;
+      console.log(allMessages);
       myAppConversations.push(newMessage);
       setAllMessages(myAppConversations);
       setSingleMessage("");
@@ -78,12 +82,13 @@ function Communication({ setShowSuper, streamId, notShow }) {
     getConversation();
   }, []);
 
-  const sendMsg = async (msg) => {
+  const sendMsg = async (msg, b) => {
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
         conversationId: streamId,
         metadata: {
+          super: b === "super" ? "super" : "",
           title: "Classic Chords -stream" + streamId,
           msg: msg,
           sender: address,
@@ -91,7 +96,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
       }
     );
     console.log("Test conversation", conversation);
-    conversation.send(msg);
+    conversation.send(msg, b);
   };
 
   // setTimeout(() => {
