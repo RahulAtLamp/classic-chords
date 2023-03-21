@@ -103,8 +103,8 @@ function SingleStream() {
     // console.log(streamId);
     const convertToInt = parseInt(streamData.stremId);
     const superChat = await contract.sendSuperChat(convertToInt, {
-      value: parseFloat(superChatAmount),
-    });
+      value: ethers.utils.parseEther(superChatAmount.toString()),
+    })
     // console.log(superChat);
   };
 
@@ -192,6 +192,7 @@ function SingleStream() {
                   placeholder=" Please Specify the amount"
                   onChange={(e) => setSuperChatAmount(e.target.value)}
                 />
+                <div>Hi</div>
                 <button
                   className="chats-super-lowerbtn"
                   onClick={() => Superchat()}
