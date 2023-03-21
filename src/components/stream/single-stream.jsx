@@ -5,6 +5,7 @@ import ReactPlayer from "react-player";
 import user from "../../contract/artifacts/userStream.json";
 import { ethers } from "ethers";
 import axios from "axios";
+import Sparkle from "react-sparkle";
 import "./single-stream.scss";
 import Loading3 from "../../loading3";
 import Communication from "./message/Communication";
@@ -97,16 +98,16 @@ function SingleStream() {
     console.log(convertToInt);
   };
 
-  const Superchat = async () => {
-    const contract = await getContract();
-    // const streamId = params.id.replace(/-/g, "");
-    // console.log(streamId);
-    const convertToInt = parseInt(streamData.stremId);
-    const superChat = await contract.sendSuperChat(convertToInt, {
-      value: ethers.utils.parseEther(superChatAmount.toString()),
-    })
-    // console.log(superChat);
-  };
+  // const Superchat = async () => {
+  //   const contract = await getContract();
+  //   // const streamId = params.id.replace(/-/g, "");
+  //   // console.log(streamId);
+  //   const convertToInt = parseInt(streamData.stremId);
+  //   const superChat = await contract.sendSuperChat(convertToInt, {
+  //     value: ethers.utils.parseEther(superChatAmount.toString()),
+  //   });
+  //   // console.log(superChat);
+  // };
 
   useEffect(() => {
     if (!isConnected) {
@@ -176,34 +177,6 @@ function SingleStream() {
             setShowSuper={setShowSuper}
             streamId={params.id.replace(/-/g, "")}
           />
-          {showSuper ? (
-            <div className="chats-super-main">
-              <div className="chats-super-headermain">
-                <input type={"checkbox"} className="chats-super-check" />
-                <div className="chats-super-header">Superchat</div>
-              </div>
-              {/* <div className="chats-super-confirm">
-                Please Specify the amount
-              </div> */}
-              <div className="chats-super-lowermain">
-                <input
-                  type={"number"}
-                  className="chats-super-lowernum"
-                  placeholder=" Please Specify the amount"
-                  onChange={(e) => setSuperChatAmount(e.target.value)}
-                />
-                <div>Hi</div>
-                <button
-                  className="chats-super-lowerbtn"
-                  onClick={() => Superchat()}
-                >
-                  Send
-                </button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
         {/* ) : displayChat ? (
          <div className="chats-no">
