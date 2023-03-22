@@ -23,18 +23,26 @@
   overflow: auto;
 }
 
+.box-inner {
+  display: flex;
+  width: 100%;
+  // gap: 10%;
+}
+
 .close-icon {
   content: "X";
   cursor: pointer;
-  position: fixed;
-  right: 38vw;
-  top: calc(113vh - 85vh - 33px);
+  // position: fixed;
+  // right: 35vw;
+  // top: calc(113vh - 85vh - 33px);
   // background: #ededed;
+  margin-left: 15%;
+  align-self: flex-end;
   width: 25px;
   height: 25px;
   border-radius: 50%;
   line-height: 20px;
-  text-align: center;
+  // text-align: end;
   // border: 1px solid #999;
   font-size: 20px;
   color: red;
@@ -55,6 +63,7 @@
 .popup-header {
   text-align: center;
   font-size: 30px;
+  margin-left: 20%;
 }
 
 .popup-title-main {
@@ -134,6 +143,10 @@
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .close-icon {
+    right: 25vw;
+    top: calc(113vh - 85vh - 33px);
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -145,13 +158,18 @@
     margin-top: calc(110vh - 85vh - 20px);
   }
 
+  // .box-inner {
+  //   gap: 40px;
+  // }
+
   .close-icon {
     content: "X";
     cursor: pointer;
-    position: fixed;
-    right: 12vw;
-    top: calc(113vh - 85vh - 33px);
+    // position: fixed;
+    // right: 12vw;
+    // top: calc(113vh - 85vh - 33px);
     // background: #ededed;
+    margin-left: 10%;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -177,6 +195,7 @@
   .popup-header {
     text-align: center;
     font-size: 20px;
+    margin-left: 5%;
   }
 
   .popup-title-main {

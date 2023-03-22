@@ -162,7 +162,7 @@ function ArtistSingle() {
         <Popup
           content={
             <>
-              <div className="popup-header">Request</div>
+              <div className="popup-header"></div>
               <div className="popup-title-main">
                 <div className="popup-title">Title</div>
                 <input

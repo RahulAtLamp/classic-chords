@@ -59,7 +59,7 @@ const ConversationRight = ({
       value: ethers.utils.parseEther(superChatAmount.toString()),
     });
     await superChat.wait();
-    sendMessage(singleMessage,superChatAmount, "super");
+    sendMessage(singleMessage, superChatAmount, "super");
     // console.log(superChat);
   };
 
@@ -97,7 +97,20 @@ const ConversationRight = ({
                     </div> */}
           <div className="conversation" id="conversation_selector">
             {allMessages.map((m, i) => {
-              if (m.sender === activeAddress) {
+              if (m.isSuper) {
+                return (
+                  <div className="right-super" key={i}>
+                    <div className="grow-super"></div>
+
+                    <div className="msg-super">
+                      {m.msg}
+                      <div className="conv-time-super">
+                        {m.createdAt.toString().split("GMT")[0]}
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else if (m.sender === activeAddress) {
                 return (
                   <div className="right" key={i}>
                     <div className="grow"></div>

@@ -252,13 +252,39 @@
   white-space: nowrap;
 }
 
+.right-super {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  flex-direction: row;
+  /* padding: 5px; */
+  border-radius: 10px;
+  margin: 1px 0;
+}
+
+.conv-time-super {
+  text-align: end;
+  display: flex;
+  flex-flow: column-reverse;
+  font-size: x-small;
+  margin-bottom: -15px;
+  margin-right: -5px;
+  margin-left: -10px;
+  white-space: nowrap;
+}
+
 .message__right .conversation .right {
   display: flex;
-  right: 0;
+  left: 0;
   width: 100%;
 }
 
 .message__right .conversation .right .grow {
+  flex-grow: 1;
+}
+
+.grow-super {
   flex-grow: 1;
 }
 
@@ -273,7 +299,21 @@
   word-wrap: break-word;
   /* border-radius: 10px 10px 0 40px; */
   border-radius: 20px;
-  display: flex;
+  /* display: flex; */
+}
+
+.msg-super {
+  background-color: #800000;
+  color: white;
+  max-width: 40%;
+  padding: 20px 20px 20px 20px;
+  margin: 10px 10px 0 0;
+  border-radius: 10px;
+  width: fit-content;
+  word-wrap: break-word;
+  /* border-radius: 10px 10px 0 40px; */
+  border-radius: 20px;
+  /* display: flex; */
 }
 
 .message__right .message {
