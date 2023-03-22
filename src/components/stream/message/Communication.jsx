@@ -105,6 +105,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
       let isSuper = false; 
       let amount = 0;
       let msg = null;
+      msg = message.content
       if (message.contentType.typeId === "superChat") {
         console.log(atob(message.content));
         isSuper = true;
@@ -112,7 +113,6 @@ function Communication({ setShowSuper, streamId, notShow }) {
         msg = msg_content.msg
         amount = msg_content.amount
       }
-      msg = message.content
 
       let newMessage = {
         sender: message.senderAddress,
