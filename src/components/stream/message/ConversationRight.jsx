@@ -59,7 +59,7 @@ const ConversationRight = ({
       value: ethers.utils.parseEther(superChatAmount.toString()),
     });
     await superChat.wait();
-    sendMessage(superChatAmount, "super");
+    sendMessage(singleMessage,superChatAmount, "super");
     // console.log(superChat);
   };
 

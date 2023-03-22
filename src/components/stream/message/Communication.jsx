@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSigner, useConnect, useAccount } from "wagmi";
-import { Client } from "@xmtp/xmtp-js";
+import { Client, ContentTypeNumber, ContentTypeId  } from "@xmtp/xmtp-js";
 import { ethers, getDefaultProvider } from "ethers";
 import "./communication.css";
 import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from "wagmi/connectors/injected";
+
+
+
 
 function Communication({ setShowSuper, streamId, notShow }) {
   const { data } = useSigner();
@@ -27,6 +30,37 @@ function Communication({ setShowSuper, streamId, notShow }) {
     connector: new InjectedConnector(),
   });
 
+  const ContentTypeAudioKey = new ContentTypeId({
+    authorityId: 'classicchords.xyz',
+    typeId: 'superChat',
+    versionMajor: 1,
+    versionMinor: 0,
+  })
+  
+  class SuperChatCodec {
+    get contentType() {
+      return ContentTypeAudioKey;
+    }
+  
+    encode(key) {
+      return {
+        type: ContentTypeAudioKey,
+        parameters: {},
+        content: new TextEncoder().encode(key)
+      };
+    }
+  
+    decode(content) {
+      const uint8Array = content.content;
+      const key = new TextDecoder().decode(uint8Array);
+      return key;
+    }
+  }
+  
+  const codec = new SuperChatCodec();  
+  
+  
+
   const getXmtp = async (wallet) => {
     if (!data) {
       connect();
@@ -34,7 +68,10 @@ function Communication({ setShowSuper, streamId, notShow }) {
 
       return;
     }
-    const xmtp = await Client.create(data);
+    const xmtp = await Client.create((data),{
+      env:'dev',
+      codecs:[codec]
+    });
     console.log(xmtp);
     setClient(xmtp);
     const allConvs = await xmtp.conversations.list();
@@ -53,7 +90,10 @@ function Communication({ setShowSuper, streamId, notShow }) {
       getDefaultProvider()
     );
 
-    const ccClient = await Client.create(signer);
+    const ccClient = await Client.create(signer,{
+      env:'dev',
+      codecs:[codec]
+    });
 
     for await (const message of await ccClient.conversations.streamAllMessages()) {
       if (message.conversation.context.conversationId !== streamId) {
@@ -61,13 +101,26 @@ function Communication({ setShowSuper, streamId, notShow }) {
         continue;
       }
       console.log(message);
+
+      let isSuper = false; 
+      let amount = 0;
+      let msg = null;
+      if (message.contentType.typeId === "superChat") {
+        console.log(atob(message.content));
+        isSuper = true;
+        const msg_content = JSON.parse(atob(message.content))
+        msg = msg_content.msg
+        amount = msg_content.amount
+      }
+      msg = message.content
+
       let newMessage = {
         sender: message.senderAddress,
         createdAt: message.sent,
-        msg: message.content,
-        // isSuper: message.isSuper,
+        msg: msg,
+        isSuper: isSuper,
+        amount: amount
       };
-      console.log(newMessage);
       let myAppConversations = allMessages;
       console.log(allMessages);
       myAppConversations.push(newMessage);
@@ -82,21 +135,32 @@ function Communication({ setShowSuper, streamId, notShow }) {
     getConversation();
   }, []);
 
-  const sendMsg = async (msg, b) => {
+  const sendMsg = async (msg, amount,type) => {
     const conversation = await client.conversations.newConversation(
       "0x2242007ae74311B7B0Bb17274C2ed9369C015227",
       {
         conversationId: streamId,
         metadata: {
-          super: b === "super" ? "super" : "",
-          title: "Classic Chords -stream" + streamId,
+          super: type === "super" ? "super" : "",
+          title: "Classic Chords stream-" + streamId,
           msg: msg,
           sender: address,
         },
       }
     );
-    console.log("Test conversation", conversation);
-    conversation.send(msg, b);
+    if(type==="super"){
+      const msg_ = {
+        'amount':amount,
+        'msg':msg
+      }
+      conversation.send(btoa(JSON.stringify(msg_)), {
+        contentType: ContentTypeAudioKey,
+        contentFallback: "This is supper chat"
+      })
+    }
+    else{
+      conversation.send(msg);
+    }    
   };
 
   // setTimeout(() => {
