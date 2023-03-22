@@ -303,8 +303,9 @@
 }
 
 .msg-super {
-  background-color: #800000;
+  background: linear-gradient(90deg, #800000, #be3f3f, #ff0000);
   color: white;
+  background-size: 600% 200%;
   max-width: 40%;
   padding: 20px 20px 20px 20px;
   margin: 10px 10px 0 0;
@@ -314,6 +315,8 @@
   /* border-radius: 10px 10px 0 40px; */
   border-radius: 20px;
   /* display: flex; */
+  animation: gradient 3s linear infinite;
+  animation-direction: alternate;
 }
 
 .message__right .message {
