@@ -106,9 +106,9 @@ const OldStream = () => {
   }
 
   return (
-    <div className="stream-single-main">
-      <div className="stream-single-heading">{streamData.title}</div>
-      <div className="stream-holder">
+    <div className="old-stream-main">
+      <div className="old-stream-heading">{streamData.title}</div>
+      <div className="old-stream-holder">
         {/* <video className="stream-player" ref={playerRef} controls>
                     <source src={playerSource} type="application/x-mpegURL" />
                 </video> */}

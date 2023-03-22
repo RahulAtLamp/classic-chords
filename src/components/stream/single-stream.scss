@@ -195,6 +195,39 @@
   }
 }
 
+.old-stream-main {
+  background: linear-gradient(130deg, #251b43 55%, #746cfe);
+  min-height: 120vh;
+  display: block;
+
+  .old-stream-heading {
+    font-size: xx-large;
+    text-align: center;
+    font-family: "FontsFree";
+    padding-top: 100px;
+    color: #ffffff;
+    padding-top: 100px;
+    text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 10px #a886fb,
+      0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+  }
+
+  .old-stream-holder {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding-top: 70px;
+    border-radius: 20px;
+    // display: inline-flex;
+    // flex-direction: row;
+    // flex-wrap: nowrap;
+    // align-items: center;
+
+    div {
+      margin: 0 auto;
+    }
+  }
+}
+
 @media screen and (min-width: 1600px) and (max-width: 2560px) {
   .stream-single-main .stream-vid {
     max-width: none;
@@ -271,6 +304,15 @@
     left: 0;
     right: 0;
   }
+
+  // .old-stream-holder {
+  //   div {
+  //     padding: 10px;
+  //     margin: 0 auto !important;
+  //     height: 560px !important;
+  //     width: 1080px !important;
+  //   }
+  // }
 }
 
 @media screen and (max-width: 767px) {
@@ -307,5 +349,13 @@
   .inactive_client_inner {
     left: 0;
     right: 0;
+  }
+
+  .old-stream-holder {
+    div {
+      margin: 0 auto !important;
+      height: 260px !important;
+      width: 300px !important;
+    }
   }
 }
