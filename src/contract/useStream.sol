@@ -1,19 +1,32 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract userStream{
+
+
+contract userStream {
 
     using Counters for Counters.Counter;
 
     Counters.Counter private _usersCount;
     Counters.Counter private _streamCount;
+
+    address platformOwner;
+
+   constructor(){
+      platformOwner = msg.sender;
+   }
+
+
     struct User{
       uint userId;
       address userAddress;
       string name;
       string description;  
       string profileImage;
+      uint superChatEarned;
+      uint superChatSpend;
     }
 
     struct Stream{
@@ -23,6 +36,7 @@ contract userStream{
       string description;
       bool premium;
       bool isLive;
+      uint superChatEarned;
     }
 
     mapping (address => User) public userMapping;
@@ -49,33 +63,41 @@ contract userStream{
       msg.sender,
       _name,
       _description,
-      _profileImage
+      _profileImage,
+      0,
+      0
     );
     userMapping[msg.sender] = User(
       userId,
       msg.sender,
       _name,
       _description,
-      _profileImage
+      _profileImage,
+      0,
+      0
     );
 
     return userId;
   }
 
 
-  function updateUser(uint userId,string memory _name, string memory _description, string memory _profileImage) public view {
-    User memory user = userIdToUser[userId];
-    if(bytes(_name).length >= 0){
-      user.name = _name;
-    }
-    if(bytes(_description).length >= 0){
-      user.description = _description;
-    }
-    if(bytes(_profileImage).length >= 0){
-      user.profileImage = _profileImage;
-    }
-  }
-
+ 
+function updateUser(uint _userId, string memory _name, string memory _description, string memory _profileImage) public {
+    require(_userId != 0, "Wrong userId");
+    User storage _user = userIdToUser[_userId];
+    _user.name = _name;
+    _user.description = _description;
+    _user.profileImage = _profileImage;
+    userMapping[msg.sender] = User(
+        _user.userId,
+        _user.userAddress,
+        _name,
+        _description,
+        _profileImage,
+        _user.superChatEarned,
+        _user.superChatSpend
+    );
+}
 
 
   function createStream(string memory _streamCode, bool _premium, string memory _title, string memory _description) public {
@@ -87,7 +109,8 @@ contract userStream{
       _title,
       _description,
       _premium,
-      true
+      true,
+      0
     );
     streamIdToUser[streamId] = msg.sender;
     streamCodeToStream[_streamCode] = Stream(
@@ -96,7 +119,8 @@ contract userStream{
       _title,
       _description,
       _premium,
-      true
+      true,
+      0
     );
     emit StreamCreated(
       streamId,
@@ -117,6 +141,33 @@ contract userStream{
     }
     return users;
   }
+
+//   function sendSuperChat(uint _streamId) public payable {
+//     uint _amount = msg.value;
+   
+//     address payable _creator = payable(streamIdToUser[_streamId]);
+//     _creator.transfer(_amount);
+//     Stream storage _stream = streamIdToStream[_streamId];
+//     _stream.superChatEarned += _amount;
+//     userMapping[msg.sender].superChatSpend += _amount;
+// }
+
+function sendSuperChat(uint _streamId) public payable {
+    uint _amount = msg.value;
+   
+    address payable _creator = payable(streamIdToUser[_streamId]);
+    uint platformFee = msg.value*5/100;
+    _creator.transfer(msg.value - platformFee);
+    Stream storage _stream = streamIdToStream[_streamId];
+    _stream.superChatEarned += _amount;
+    userMapping[msg.sender].superChatSpend += _amount;
+}
+
+
+function withdraw() public {
+  require(msg.sender==platformOwner, "Only owner can withdraw!");
+  payable(msg.sender).transfer(address(this).balance);
+}
 
 
 }

@@ -9,6 +9,11 @@ import Piano from "./lib/Piano";
 import MIDISounds from "midi-sounds-react";
 import Visualizer from "./art/visualizer";
 import "./player.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const toastInfo = () =>
+  toast.info("Select any tab and share the system audio to record piano.");
 
 function Player() {
   const [selectedInstrument, setSelectedInstrument] = useState(31);
@@ -23,11 +28,12 @@ function Player() {
 
   const StartRecording = () => {
     setRecordingStatus(true);
-    setTimeControl(true);
-    setTimeout(() => {
+    // setTimeControl(true); 
+    // setTimeout(() => {
       document.getElementById("startR").click();
-      setTimeControl(false);
-    }, 5000);
+      // setTimeControl(false);
+      toastInfo();
+    // }, 5000);
   };
 
   const StopRecording = () => {
@@ -208,6 +214,17 @@ function Player() {
         </div>
         <Visualizer />
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -213,8 +213,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
         <div className="inactive_client_main">
           <div className="inactive_client_inner">
             <div className="inactive_client_message">
-              You are not connected to the XMTP client. Please click on the
-              button below to sign and start the conversation.
+             Signin to XMTP to interact in live stream.
             </div>
             <div className="inactive_client_btn_holder">
               <button
