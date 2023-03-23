@@ -12,6 +12,7 @@
     padding-top: 100px;
     text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 10px #a886fb,
       0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    word-spacing: 10px;
   }
 
   .stream-holder {
@@ -42,6 +43,8 @@
 
       video {
         border-radius: 20px;
+        border: 1px solid #ffffff;
+        box-shadow: -1px -1px 10px 1px #ffffff;
       }
     }
   }
@@ -318,6 +321,7 @@
 @media screen and (max-width: 767px) {
   .exp-header {
     font-size: x-large;
+    word-spacing: 5px;
   }
 
   .stream-holder {

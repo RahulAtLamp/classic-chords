@@ -21,6 +21,7 @@
     padding-top: 100px;
     text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 10px #a886fb,
       0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+    word-spacing: 10px;
   }
 
   .artist-creations-list-container {
@@ -93,6 +94,7 @@
             width: 80%;
             text-overflow: ellipsis;
             overflow: hidden;
+            word-spacing: 5px;
           }
 
           .exp-album {
@@ -199,6 +201,7 @@
     .exp-bg
     .exp-name {
     font-size: 1.2vw;
+    word-spacing: 5px;
   }
   .nfts-main
     .artist-creations-list-container
@@ -253,6 +256,7 @@
     .exp-bg
     .exp-name {
     font-size: 1.2vw;
+    word-spacing: 5px;
   }
   .nfts-main
     .artist-creations-list-container

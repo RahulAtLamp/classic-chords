@@ -51,6 +51,7 @@
   width: 80%;
   text-overflow: ellipsis;
   overflow: hidden;
+  word-spacing: 5px;
 }
 .exp-bg.stream .exp-album {
   padding: 0 20px;

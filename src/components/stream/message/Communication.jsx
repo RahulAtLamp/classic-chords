@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSigner, useConnect, useAccount } from "wagmi";
 import { Client, ContentTypeNumber, ContentTypeId } from "@xmtp/xmtp-js";
 import { ethers, getDefaultProvider } from "ethers";
-import "./communication.css";
+import "./communication.scss";
 import ConversationLeft from "./ConversationLeft";
 import ConversationRight from "./ConversationRight";
 import { InjectedConnector } from "wagmi/connectors/injected";
@@ -17,7 +17,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
     {
       sender: address,
       createdAt: new Date(),
-      msg: "Stream is started !",
+      msg: null,
     },
   ]);
   const [Conversation, setConversation] = useState();
@@ -105,7 +105,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
         console.log(atob(message.content));
         isSuper = true;
         const msg_content = JSON.parse(atob(message.content));
-        msg = msg_content.amount;
+        msg = msg_content.msg;
         amount = msg_content.amount;
       }
 

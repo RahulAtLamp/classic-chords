@@ -11,6 +11,7 @@
   color: #ffffff;
   padding-top: 100px;
   text-shadow: 0 0 2px #ffff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 10px #a886fb, 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #fff;
+  word-spacing: 10px;
 }
 .cs-main .communication {
   padding-bottom: 30px;
@@ -36,6 +37,7 @@
   max-width: 1080px;
   height: 400px;
   border-radius: 20px;
+  box-shadow: -1px -1px 15px 1px #ffffff;
 }
 .cs-main .cs .cs-left-container button.cs-button {
   margin: 0.7rem 0.5rem;

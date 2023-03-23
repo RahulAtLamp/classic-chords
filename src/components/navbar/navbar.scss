@@ -58,6 +58,7 @@ ul.nav-links {
   :last-child {
     // padding: 0 10px;
     border-right: none;
+    font-size: 17px;
   }
 
   .main {
@@ -463,6 +464,10 @@ ul.nav-sub-menu {
   background: none !important;
 }
 
+.iekbcc0 {
+  font-size: 17px;
+}
+
 @media screen and (min-width: 2561px) {
   .navtextstyle {
     font-size: 1.5vw;
@@ -507,14 +512,14 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
   .navtextstyle {
-    font-size: 1.5vw;
+    font-size: 17px;
   }
   .nav-button {
-    font-size: 1.5vw;
+    font-size: 17px;
     width: fit-content;
   }
   .nav-disconnect {
-    font-size: 1.5vw;
+    font-size: 17px;
     width: fit-content;
   }
 }

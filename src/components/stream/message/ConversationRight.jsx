@@ -97,14 +97,22 @@ const ConversationRight = ({
                     </div> */}
           <div className="conversation" id="conversation_selector">
             {allMessages.map((m, i) => {
+              if (!m.msg) {
+                return;
+              }
               if (m.isSuper) {
                 return (
                   <div className="right-super" key={i}>
-                    <div className="grow-super"></div>
+                    {/* <div className="grow-super"></div> */}
 
                     <div className="msg-super">
-                      {m.msg}
-                      <div className="conv-time-super">
+                      <div className="sender">
+                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                      </div>
+                      <div className="msg">
+                        {m.msg}
+                      </div>
+                      <div className="conv-time">
                         {m.createdAt.toString().split("GMT")[0]}
                       </div>
                     </div>
@@ -114,8 +122,13 @@ const ConversationRight = ({
                 return (
                   <div className="right" key={i}>
                     <div className="grow"></div>
-                    <div className="msg">
-                      {m.msg}
+                    <div className="msg-block">
+                      <div className="sender">
+                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                      </div>
+                      <div className="msg">
+                        {m.msg}
+                      </div>
                       <div className="conv-time">
                         {m.createdAt.toString().split("GMT")[0]}
                       </div>
@@ -125,8 +138,11 @@ const ConversationRight = ({
               } else {
                 return (
                   <div className="left" key={i}>
-                    <div>
-                      {m.msg}
+                    <div className="msg-block">
+                      <div className="sender">
+                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                      </div>
+                      <div className="msg">{m.msg}</div>
                       <div className="conv-time">
                         {m.createdAt.toString().split("GMT")[0]}
                       </div>

@@ -175,7 +175,11 @@
   /* background-color: gray; */
   border-radius: 10px;
   overflow: hidden;
-  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
+  /* background: linear-gradient(-45deg, #ffffff 50%, #a886fb); */
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  box-shadow: -1px -1px 15px 1px #ffffff;
+  backdrop-filter: blur(14px);
   margin-bottom: 50px;
 }
 
@@ -211,23 +215,8 @@
   overflow: auto !important;
   margin-bottom: 15px;
   /* background: linear-gradient(130deg, #251b43 55%, #746cfe); */
-  background: linear-gradient(-45deg, #793ad8 50%, #a886fb);
-}
-
-.message__right .conversation .left {
-  left: 0;
-  padding: 20px;
-  width: fit-content;
-  /* position: absolute; */
-  display: flex;
-  background-color: #282133;
-  color: white;
-  /* border-radius: 10px 10px 40px 0px; */
-  border-radius: 20px;
-  margin: 10px 10px 0;
-  /* border-bottom-right-radius: 40px; */
-  max-width: 40%;
-  word-wrap: break-word;
+  /* background: linear-gradient(-45deg, #ffffff 50%, #a886fb); */
+  backdrop-filter: blur(20px);
 }
 
 .message__right .conversation .left .conv-time {
@@ -241,27 +230,15 @@
   white-space: nowrap;
 }
 
-.message__right .conversation .right .conv-time {
-  text-align: end;
-  display: flex;
-  flex-flow: column-reverse;
-  font-size: x-small;
-  margin-bottom: -15px;
-  margin-right: -5px;
-  margin-left: -10px;
-  white-space: nowrap;
-}
-
-.right-super {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  width: 100%;
-  flex-direction: row;
-  /* padding: 5px; */
-  border-radius: 10px;
-  margin: 1px 0;
-}
+// .message__right .conversation .right .conv-time {
+//   text-align: end;
+//   display: flex;
+//   flex-flow: column-reverse;
+//   font-size: x-small;
+//   white-space: nowrap;
+//   position: absolute;
+//   margin-bottom: -10px;
+// }
 
 .conv-time-super {
   text-align: end;
@@ -276,7 +253,6 @@
 
 .message__right .conversation .right {
   display: flex;
-  left: 0;
   width: 100%;
 }
 
@@ -288,49 +264,114 @@
   flex-grow: 1;
 }
 
-.message__right .conversation .right .msg {
+.message__right .conversation .right .msg-block {
   background-color: #746cfe;
   color: white;
   max-width: 40%;
   padding: 20px 20px 20px 20px;
   margin: 10px 10px 0 0;
-  border-radius: 10px;
-  width: fit-content;
+  width: 100%;
   word-wrap: break-word;
   /* border-radius: 10px 10px 0 40px; */
-  border-radius: 20px;
-  /* display: flex; */
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
-.msg-super {
-  background: linear-gradient(90deg, #800000, #be3f3f, #ff0000);
-  color: white;
-  background-size: 600% 200%;
-  max-width: 40%;
-  padding: 20px 20px 20px 20px;
-  margin: 10px 10px 0 0;
+.message__right .conversation .right .msg-block .sender {
+  font-size: 8px;
+  margin-left: -10px;
+  color: #ffffff;
+  width: 65px;
+  text-align: center;
+  border-radius: 2px;
+  margin-top: -37px;
+}
+
+.message__right .conversation .right .msg-block .msg {
+  font-size: 15px;
+  width: 100%;
+}
+
+.right .msg-block .conv-time {
+  position: relative;
+  display: flow-root;
+  font-size: 8px;
+  font-weight: 800;
+  margin-bottom: -30px;
+  color: #134e6f;
+  width: 120px;
+}
+
+.right-super {
+  display: grid;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  flex-direction: row;
+  /* padding: 5px; */
   border-radius: 10px;
-  width: fit-content;
-  word-wrap: break-word;
-  /* border-radius: 10px 10px 0 40px; */
-  border-radius: 20px;
-  /* display: flex; */
-  animation: gradient 3s linear infinite;
-  animation-direction: alternate;
+  margin: 1px 0;
+  .msg-super {
+    background-color: yellow;
+    background-size: 600% 200%;
+    max-width: 40%;
+    padding: 20px 20px 20px 20px;
+    margin: 10px 10px 0 0;
+    border-radius: 10px;
+    width: 100%;
+    word-wrap: break-word;
+    color: #134e6f;
+    /* border-radius: 10px 10px 0 40px; */
+    border-radius: 10px;
+    /* display: flex; */
+    animation: gradient 3s linear infinite;
+    animation-direction: alternate;
+
+    .sender {
+      font-size: 8px;
+      color: #000000;
+      width: 65px;
+      text-align: center;
+      border-radius: 2px;
+      margin-top: -38px;
+    }
+
+    .msg {
+      font-size: 15px;
+      width: 100%;
+    }
+
+    .conv-time {
+      position: relative;
+      display: flow-root;
+      font-size: 9px;
+      margin-bottom: -30px;
+      margin-left: -2px;
+      font-weight: 800;
+      color: #134e6f;
+      width: 120px;
+    }
+  }
 }
 
 .message__right .message {
   /* height: 20px; */
-  bottom: 32px;
+  bottom: 8px;
   width: 100%;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   align-content: center;
+  flex-wrap: wrap;
+  position: absolute;
 }
 
 .message__right .message .send {
-  width: 95%;
-  padding: 5px;
+  width: 80%;
+  padding: 5px 5px 5px 10px;
   border-radius: 10px;
   font-size: 17px;
   /* border: 0px !important; */
@@ -413,6 +454,63 @@
 .xmtp-logo-msg {
   width: 70px;
   padding-left: 10px;
+}
+
+.message__right {
+  .conversation {
+    .left {
+      left: 0;
+      padding: 20px;
+      width: fit-content;
+      display: flex;
+      background-color: #8359be;
+      color: white;
+      border-radius: 10px;
+      margin: 10px 10px 0;
+      max-width: 40%;
+      word-wrap: break-word;
+
+      .msg-block {
+        color: white;
+        max-width: 40%;
+        width: 100%;
+        word-wrap: break-word;
+        /* border-radius: 10px 10px 0 40px; */
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+        flex-direction: row;
+
+        .sender {
+          font-size: 8px;
+          margin-left: -10px;
+          color: #ffffff;
+          width: 65px;
+          text-align: center;
+          border-radius: 2px;
+          margin-top: -38px;
+        }
+
+        .msg {
+          font-size: 15px;
+          width: 100%;
+        }
+
+        .conv-time {
+          position: relative;
+          display: flow-root;
+          font-size: 9px;
+          margin-bottom: -30px;
+          margin-left: -2px;
+          font-weight: 800;
+          color: #134e6f;
+          width: 120px;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 1600px) and (max-width: 2560px) {
