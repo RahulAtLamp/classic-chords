@@ -12,6 +12,8 @@ import { Web3Storage } from "web3.storage";
 import { ENS } from "@ensdomains/ensjs";
 import axios from "axios";
 import Loading3 from "../../loading3";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import Loading from "../../loading";
 
 const Profile = () => {
@@ -20,7 +22,8 @@ const Profile = () => {
   const fileRef = useRef(null);
   const editUserPopup = useRef(null);
   const navigate = useNavigate();
-  const ensInstance = new ENS();
+  // const ensInstance = new ENS();
+  const [cid, setCid] = useState();
   const [userDefault, setUserDefault] = useState({
     name: null,
     bio: null,
@@ -41,6 +44,10 @@ const Profile = () => {
 
   const [ENSName, setENSName] = useState("");
   const [ENSAvatar, setENSAvatar] = useState(null);
+
+    const toastInfo = () => toast.info("Wait...IPFS is prepareing your profile image");
+    const toastSuccess = () => toast.success("Hurrrayy....stream started");
+    const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
   const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
@@ -165,11 +172,11 @@ const Profile = () => {
     }
   };
 
-  const profile = useEnsName(
-    "0x084c145f98C975a71a2fD5d3E5eAB84c0FC52fDf",
-    0,
-    5
-  );
+  // const profile = useEnsName(
+  //   "0x084c145f98C975a71a2fD5d3E5eAB84c0FC52fDf",
+  //   0,
+  //   5
+  // );
 
   // console.log(profile);
 
@@ -253,31 +260,52 @@ const Profile = () => {
         token:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng",
       });
-      const upload = await client.put([ProfileImage], {
-        name: ProfileImage.name,
-        maxRetries: 3,
-      });
+      // const upload = await client.put([ProfileImage], {
+      //   name: ProfileImage.name,
+      //   maxRetries: 3,
+      // });
 
-      // console.log(upload);
+      if (ProfileImage) {
+        const upload = document.querySelector('input[type="file"]');
+        const rootCid = await client.put(upload.files, {
+          name: ProfileImage.name,
+          maxRetries: 3,
+        });
+        const res = await client.get(rootCid); // Web3Response
+        const files = await res.files(ProfileImage); // Web3File[]
+        for (const file of files) {
+          console.log(`${file.cid}`);
+          setCid(file.cid);
+        }
+        
+        console.log(upload);
+        console.log(userDefault);
+      }
       const contract = await getContract();
       if (!userDefault.name) {
         const getData = await contract.registerUser(
           userData.name,
           userData.bio,
-          upload + "/" + ProfileImage.name
+          // upload + "/" + ProfileImage.name
+          cid
         );
+        toastInfo();
         console.log(getData);
         getProfile();
         showProfileWindow(false);
       } else {
         // console.log("i am here...");
-        console.log(upload + "/" + ProfileImage.name);
+        // console.log(upload + "/" + ProfileImage.name);
+        console.log(userDefault);
         const getData = await contract.updateUser(
           userDefault.userId,
           userData.name,
           userData.bio,
-          upload + "/" + ProfileImage.name
+          // upload + "/" + ProfileImage.name
+          await cid?cid:userDefault.profile_pic
         );
+         toastInfo();
+        // console.log("inni");
         if (getData.length > 0) {
           console.log(getData);
           // getProfile();
@@ -324,14 +352,13 @@ const Profile = () => {
     checkChain();
     setProfileLoading(true);
     getProfile();
-    checkENS();
   }, []);
 
-  useEffect(() => {
-    if (ENSName) {
-      console.log(ENSName);
-    }
-  }, [ENSName]);
+  // useEffect(() => {
+  //   if (ENSName) {
+  //     console.log(ENSName);
+  //   }
+  // }, [ENSName]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -416,7 +443,9 @@ const Profile = () => {
                       className="profile-pic"
                       src={
                         userDefault.profile_pic
-                          ? `https://ipfs.io/ipfs/` + userDefault.profile_pic
+                          ? `https://` +
+                            userDefault.profile_pic +
+                            `.ipfs.w3s.link`
                           : "images/profile.svg"
                       }
                       alt="profileimage"
@@ -682,6 +711,18 @@ const Profile = () => {
             </>
           )}
         </div>
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </>
     );
   }

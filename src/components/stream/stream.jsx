@@ -12,9 +12,14 @@ import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
 import "./stream.scss";
 import Loading3 from "../../loading3";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
 function Streaming({ account }) {
+
+  
   const { isConnected, address } = useAccount();
   const navigate = useNavigate();
 
@@ -40,6 +45,11 @@ function Streaming({ account }) {
   const [record, setRecord] = useState("");
   const [premium, setPremium] = useState("");
   const [loading, setLoading] = useState(false);
+  const toastInfo = () =>
+    toast.info("Wait till transection been complate");
+  const toastSuccess = () =>
+    toast.success("Hurrrayy....stream started");
+    const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
   const getContract = async () => {
     try {
@@ -144,6 +154,7 @@ function Streaming({ account }) {
     const encData = StreamId.replace(/-/g, "");
     console.log(premium, title, des, encData);
     const tx = await contract.createStream(encData, premium, title, des);
+    toastInfo();
     tx.wait();
     stream_.setRecord(true);
     const current_stream = await livepeerObject.Stream.get(stream_.id);
@@ -171,7 +182,9 @@ function Streaming({ account }) {
     session.on("open", async () => {
       // setLoading(true);
       console.log("Stream started.");
-      alert("Stream started; visit Livepeer Dashboard.");
+      // alert("Stream started; visit Livepeer Dashboard.");
+      toastSuccess();
+      streamMessage();
       const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
       const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
       const contract = new ethers.Contract(
@@ -386,6 +399,18 @@ function Streaming({ account }) {
           </div>
         ) : null} */}
       </section>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }

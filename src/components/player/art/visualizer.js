@@ -14,7 +14,7 @@ export default class Visualizer extends React.Component {
     width: window.innerWidth,
     height: window.innerHeight,
     fullscreen: false,
-    file_url: null,
+    file_url: null, 
     file: null,
     open: false,
     link: null
@@ -194,7 +194,7 @@ export default class Visualizer extends React.Component {
     }
     setTimeout(() => {
       return this.randomPresets(visualizer);
-    }, 50000);
+    }, 100000);
   };
   randomProperty = (obj) => {
     const key = Object.keys(obj);
