@@ -5,6 +5,7 @@ import recorder from '../react-canvas-recorder';
 import React, { useCallback } from 'react'
 // import Minting from "../minting/Minting"
 import MintNft from "../MintNft";
+import Counter from "../../Counter";
 
 export default class Visualizer extends React.Component {
   state = {
@@ -17,7 +18,8 @@ export default class Visualizer extends React.Component {
     file_url: null, 
     file: null,
     open: false,
-    link: null
+    link: null,
+    timeControl:null
   };
 
   // toggleModal = () => this.setState(state => ({ open: !state.open }))
@@ -87,10 +89,14 @@ export default class Visualizer extends React.Component {
   };
 
 
-  startRecording = () => {
+  startRecording = async () => {
     this.setState(state => ({ open: false }));
     recorder.createStream(this.selectorRef.current);
-    recorder.start();
+    await recorder.start();
+    this.timeControl = true;
+    setTimeout(() => {
+      this.timeControl = false;
+    }, 5000);
   }
 
   stopRecording = () => {
@@ -212,6 +218,14 @@ export default class Visualizer extends React.Component {
     // const recordV = this.state.canvas?  <RecordView canvasA={this.state.canvas} /> : '';
     return (
       <>
+
+      
+        {this.timeControl ? (
+        <div className="player-counter">
+          <Counter />
+        </div>
+      ) : null}
+
         <div style={{ display: 'none' }}>
 
           {this.state.visualizer && this.state.audioContext ? (

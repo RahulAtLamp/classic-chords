@@ -28,12 +28,12 @@ function Player() {
 
   const StartRecording = () => {
     setRecordingStatus(true);
-    setTimeControl(true);
-    setTimeout(() => {
+    // setTimeControl(true); 
+    // setTimeout(() => {
       document.getElementById("startR").click();
-      setTimeControl(false);
+      // setTimeControl(false);
       toastInfo();
-    }, 5000);
+    // }, 5000);
   };
 
   const StopRecording = () => {
