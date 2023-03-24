@@ -109,6 +109,9 @@ const ConversationRight = ({
                       <div className="sender">
                         {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
                       </div>
+                      <div className="amount">
+                        {m.amount}
+                      </div>
                       <div className="msg">
                         {m.msg}
                       </div>
