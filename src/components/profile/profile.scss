@@ -234,7 +234,7 @@
 
   .edit-user-popup-main {
     width: 100vw;
-    height: 100vh;
+    height: 110vh;
     position: fixed;
     top: 0;
     background-color: rgba(255, 255, 255, 0.5);
@@ -243,7 +243,7 @@
     align-content: center;
 
     .edit-user-popup {
-      height: 500px;
+      height: 600px;
       width: 100%;
       max-width: 500px;
       background-color: black;
@@ -310,14 +310,36 @@
           }
         }
 
+        .artist-selector-main {
+          .artist-selector-label {
+            font-family: "FontsFree";
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+          }
+
+          .artist-selector-fees {
+            font-size: 20px;
+            margin-top: 20px;
+            max-width: 400px;
+            width: 100%;
+            font-family: "Gilmer-Light";
+            border-radius: 10px;
+          }
+        }
+
         .user-update-btn {
-          margin-top: 30px;
           font-size: 20px;
           font-family: "FontsFree";
           border-radius: 20px;
           padding: 0 10px;
           background-color: #251b43;
           color: #ffffff;
+          position: fixed;
+          top: 650px;
+          left: 600px;
+          cursor: pointer;
         }
       }
     }

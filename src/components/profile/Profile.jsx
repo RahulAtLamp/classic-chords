@@ -41,13 +41,15 @@ const Profile = () => {
   const [userNfts, setUserNfts] = useState([]);
   const [isCompLoading, setIsLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(true);
+  const [artistSelected, setArtistSelected] = useState(false);
 
   const [ENSName, setENSName] = useState("");
   const [ENSAvatar, setENSAvatar] = useState(null);
 
-    const toastInfo = () => toast.info("Wait...IPFS is prepareing your profile image");
-    const toastSuccess = () => toast.success("Hurrrayy....stream started");
-    const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
+  const toastInfo = () =>
+    toast.info("Wait...IPFS is prepareing your profile image");
+  const toastSuccess = () => toast.success("Hurrrayy....stream started");
+  const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
   const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
@@ -277,7 +279,7 @@ const Profile = () => {
           console.log(`${file.cid}`);
           setCid(file.cid);
         }
-        
+
         console.log(upload);
         console.log(userDefault);
       }
@@ -302,9 +304,9 @@ const Profile = () => {
           userData.name,
           userData.bio,
           // upload + "/" + ProfileImage.name
-          await cid?cid:userDefault.profile_pic
+          (await cid) ? cid : userDefault.profile_pic
         );
-         toastInfo();
+        toastInfo();
         // console.log("inni");
         if (getData.length > 0) {
           console.log(getData);
@@ -677,6 +679,38 @@ const Profile = () => {
                           setUserData({ ...userData, bio: e.target.value });
                         }}
                       />
+                      <div className="artist-selector-main">
+                        <div className="artist-selector-label">
+                          Are you an Artist?
+                        </div>
+                        <label>
+                          <input
+                            type="radio"
+                            value="yes"
+                            checked={artistSelected}
+                            onChange={() => setArtistSelected(true)}
+                          />
+                          Yes
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            value="no"
+                            checked={!artistSelected}
+                            onChange={() => setArtistSelected(false)}
+                          />
+                          No
+                        </label>
+                        {artistSelected && (
+                          <div>
+                            <input
+                              className="artist-selector-fees"
+                              type="text"
+                              placeholder="Fees"
+                            />
+                          </div>
+                        )}
+                      </div>
                       <button
                         className="user-update-btn"
                         onClick={() => {
