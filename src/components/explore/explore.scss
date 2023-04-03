@@ -82,6 +82,7 @@
   font-family: "FontsFree";
   font-weight: 700;
   word-spacing: 5px;
+  overflow-wrap: break-word;
 }
 
 .exp-album {
@@ -109,6 +110,7 @@
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 .exp-bg:hover {

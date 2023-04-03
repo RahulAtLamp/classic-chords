@@ -317,43 +317,45 @@
   margin: 1px 0;
   .msg-super {
     background-color: yellow;
-    background-size: 600% 200%;
-    max-width: 40%;
-    padding: 20px 20px 20px 20px;
-    margin: 10px 10px 0 0;
-    border-radius: 10px;
-    width: 100%;
-    word-wrap: break-word;
+    margin: 10px auto;
+    min-height: 70px;
     color: #134e6f;
-    /* border-radius: 10px 10px 0 40px; */
     border-radius: 10px;
-    /* display: flex; */
-    animation: gradient 3s linear infinite;
-    animation-direction: alternate;
+    display: inline-flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    width: 95%;
 
     .sender {
-      font-size: 8px;
-      color: #000000;
+      font-size: 15px;
+      color: #134e6f;
       width: 65px;
       text-align: center;
       border-radius: 2px;
-      margin-top: -38px;
+      margin-top: -10px;
+      margin-left: 6px;
+    }
+
+    .amount {
+      font-size: 15px;
+      width: 100%;
+      font-weight: 800;
+      padding: 10px 10px;
     }
 
     .msg {
       font-size: 15px;
       width: 100%;
+      padding: 10px 10px;
     }
 
     .conv-time {
-      position: relative;
-      display: flow-root;
       font-size: 9px;
-      margin-bottom: -30px;
-      margin-left: -2px;
+      margin-bottom: 0;
+      margin-left: 14px;
       font-weight: 800;
       color: #134e6f;
-      width: 120px;
+      width: 140px;
     }
   }
 }

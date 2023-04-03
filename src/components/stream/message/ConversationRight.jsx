@@ -107,11 +107,10 @@ const ConversationRight = ({
 
                     <div className="msg-super">
                       <div className="sender">
-                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
                       </div>
-                      <div className="msg">
-                        {m.msg}
-                      </div>
+                      <div className="amount">{m.amount}</div>
+                      <div className="msg">{m.msg}</div>
                       <div className="conv-time">
                         {m.createdAt.toString().split("GMT")[0]}
                       </div>
@@ -124,11 +123,9 @@ const ConversationRight = ({
                     <div className="grow"></div>
                     <div className="msg-block">
                       <div className="sender">
-                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
                       </div>
-                      <div className="msg">
-                        {m.msg}
-                      </div>
+                      <div className="msg">{m.msg}</div>
                       <div className="conv-time">
                         {m.createdAt.toString().split("GMT")[0]}
                       </div>
@@ -140,7 +137,7 @@ const ConversationRight = ({
                   <div className="left" key={i}>
                     <div className="msg-block">
                       <div className="sender">
-                        {m.sender.substring(0,5)+"..."+m.sender.slice(-5)}
+                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
                       </div>
                       <div className="msg">{m.msg}</div>
                       <div className="conv-time">
