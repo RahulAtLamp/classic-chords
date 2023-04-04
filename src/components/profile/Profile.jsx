@@ -19,6 +19,10 @@ import "react-toastify/dist/ReactToastify.css";
 const Profile = () => {
   const { isConnected, address } = useAccount();
   const [profileWindow, showProfileWindow] = useState(false);
+  const [showMintedNFTs, setMintedNFTs] = useState(true);
+  const [showOwnedNFTs, setOwnedNFTs] = useState(false);
+  const [showRequests, setRequests] = useState(false);
+
   const fileRef = useRef(null);
   const editUserPopup = useRef(null);
   const navigate = useNavigate();
@@ -681,9 +685,19 @@ const Profile = () => {
                       />
                       <div className="artist-selector-main">
                         <div className="artist-selector-label">
-                          Are you an Artist?
+                          <input
+                            type="checkbox"
+                            id="artist"
+                            name="artist"
+                            value="1"
+                            onChange={(e) =>
+                              setArtistSelected(e.target.checked)
+                            }
+                          />
+                          <label htmlFor="artist">Are you an Artist?</label>
                         </div>
-                        <label>
+
+                        {/* <label>
                           <input
                             type="radio"
                             value="yes"
@@ -700,15 +714,17 @@ const Profile = () => {
                             onChange={() => setArtistSelected(false)}
                           />
                           No
-                        </label>
-                        {artistSelected && (
+                        </label> */}
+                        {artistSelected ? (
                           <div>
                             <input
                               className="artist-selector-fees"
                               type="text"
-                              placeholder="Fees"
+                              placeholder="Charges for 3 Mins Song"
                             />
                           </div>
+                        ) : (
+                          ""
                         )}
                       </div>
                       <button
@@ -746,6 +762,114 @@ const Profile = () => {
           )}
         </div>
 
+        {/* added tabs for three buttons */}
+        <div>
+          <button>Minted NFTs</button>
+          <button>Owned NFTs</button>
+          <button>Requests</button>
+        </div>
+        {showMintedNFTs ? (
+          <>
+            <div className="nfts-minted-holder">
+              <div className="nfts-minted-container">
+                <div className="nfts-creations-list">
+                  {isCompLoading ? (
+                    mintedNfts.length > 0 ? (
+                      mintedNfts.map((collection, i) => (
+                        <Link key={i} to={"/sell-nft/" + collection.id}>
+                          <div className="nfts-collection-pa">
+                            <div className="nfts-bg">
+                              <div className="nfts-img">
+                                <video
+                                  className="nfts-nft"
+                                  src={collection.image}
+                                  controls
+                                />
+                              </div>
+                              <div
+                                className="nfts-name"
+                                title={collection.name}
+                              >
+                                {collection.name}
+                              </div>
+                              <p className="nfts-description">
+                                {collection.description}
+                              </p>
+                              {/* <div className="buy-button-holder">
+                                                                        <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> <span className='buy-button-tag'>Put on sale </span>
+                                                                            &nbsp; <img src="/images/tl.svg" width="15px" height="15px" /><span>{collection.price}</span>
+                                                                        </button>
+                                                                    </div> */}
+                            </div>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <h4 className="profile-title">No Nfts Found...</h4>
+                    )
+                  ) : (
+                    <h4 className="profile-title">Loading</h4>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+        {showOwnedNFTs ? (
+          <>
+            {" "}
+            <div className="nfts-minted-holder">
+              <div className="nfts-minted-container">
+                <div className="nfts-creations-list">
+                  {isCompLoading ? (
+                    userNfts.length > 0 ? (
+                      userNfts.map((collection, i) => (
+                        <Link key={i} to={"/sell-nft/" + collection.id}>
+                          <div className="nfts-collection-pa">
+                            <div className="nfts-bg">
+                              <div className="nfts-img">
+                                <video
+                                  className="nfts-nft"
+                                  src={collection.image}
+                                  controls
+                                />
+                              </div>
+                              <div
+                                className="nfts-name"
+                                title={collection.name}
+                              >
+                                {collection.name}
+                              </div>
+                              <p className="nfts-description">
+                                {collection.description}
+                              </p>
+                              {/* <div className="buy-button-holder">
+                                                                        <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> <span className='buy-button-tag'>Put on sale </span>
+                                                                            &nbsp; <img src="/images/tl.svg" width="15px" height="15px" /><span>{collection.price}</span>
+                                                                        </button>
+                                                                    </div> */}
+                            </div>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <>
+                        <h4 className="profile-title">No Nfts Found...</h4>
+                      </>
+                    )
+                  ) : (
+                    <h4 className="profile-title">Loading</h4>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+        {/* till here new code  */}
         <ToastContainer
           position="bottom-right"
           autoClose={5000}

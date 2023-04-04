@@ -265,7 +265,9 @@
 
       .profile-information {
         text-align: center;
-
+        input {
+          border: 1px solid white;
+        }
         .update-profile-pic {
           width: 120px;
           height: 120px;
@@ -291,10 +293,10 @@
           max-width: 400px;
           width: 100%;
           font-family: "Gilmer-Light";
-          border-radius: 10px;
+          border-radius: 5px;
 
           &::placeholder {
-            font-size: 20px;
+            font-size: 15px;
           }
         }
 
@@ -306,10 +308,10 @@
           height: 150px;
           font-family: "Gilmer-Light";
           resize: none;
-          border-radius: 10px;
+          border-radius: 5px;
 
           &::placeholder {
-            font-size: 20px;
+            font-size: 15px;
           }
         }
 
@@ -317,18 +319,24 @@
           .artist-selector-label {
             font-family: "FontsFree";
             color: #ffffff;
-            text-align: center;
+            text-transform: capitalize;
+            text-align: left;
+            margin-left: 35px;
             padding: 10px;
-            font-size: 20px;
+            font-size: 12px;
+            letter-spacing: 1px;
           }
 
           .artist-selector-fees {
-            font-size: 20px;
-            margin-top: 20px;
+            font-size: 15px;
+            // margin-top: 20px;
             max-width: 400px;
             width: 100%;
             font-family: "Gilmer-Light";
-            border-radius: 10px;
+            border-radius: 5px;
+            &::placeholder {
+              font-size: 15px;
+            }
           }
         }
 
@@ -339,9 +347,10 @@
           padding: 0 10px;
           background-color: #251b43;
           color: #ffffff;
-          position: fixed;
-          top: 650px;
-          left: 600px;
+          margin: 20px 20px;
+          // position: fixed;
+          // top: 650px;
+          // left: 600px;
           cursor: pointer;
         }
       }
