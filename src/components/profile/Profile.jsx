@@ -46,6 +46,7 @@ const Profile = () => {
   const [isCompLoading, setIsLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(true);
   const [artistSelected, setArtistSelected] = useState(false);
+  const [showChargesOfUser, setChargesOfUser] = useState();
 
   const [ENSName, setENSName] = useState("");
   const [ENSAvatar, setENSAvatar] = useState(null);
@@ -289,18 +290,21 @@ const Profile = () => {
       }
       const contract = await getContract();
       if (!userDefault.name) {
+        console.log("inside register");
         const getData = await contract.registerUser(
           userData.name,
           userData.bio,
           // upload + "/" + ProfileImage.name
-          cid
+          cid,
+          artistSelected,
+          showChargesOfUser
         );
         toastInfo();
         console.log(getData);
         getProfile();
         showProfileWindow(false);
       } else {
-        // console.log("i am here...");
+        console.log("i am here...");
         // console.log(upload + "/" + ProfileImage.name);
         console.log(userDefault);
         const getData = await contract.updateUser(
@@ -721,6 +725,7 @@ const Profile = () => {
                               className="artist-selector-fees"
                               type="text"
                               placeholder="Charges for 3 Mins Song"
+                              onChange={(e) => setChargesOfUser(e.target.value)}
                             />
                           </div>
                         ) : (

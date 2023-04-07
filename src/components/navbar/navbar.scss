@@ -2,9 +2,9 @@
   position: relative;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   z-index: 20;
   transition: top 0.6s;
   // background: rgb(116,108,254);
@@ -20,7 +20,8 @@
 .nav-logo {
   text-decoration: none;
   color: white;
-  display: none;
+  margin-right: 20px;
+  // display: none;
 }
 
 // .nav-links {
@@ -49,19 +50,19 @@ ul.nav-links {
   display: flex;
   align-items: center;
   align-content: center;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 
   li {
     padding: 0 10px;
-    border-right: 1px solid #ffffff;
-    font-size: 5px;
+    // border-right: 1px solid #ffffff;
+    // font-size: 5px;
   }
 
-  :last-child {
-    // padding: 0 10px;
-    border-right: none;
-    font-size: 17px;
-  }
+  // :last-child {
+  //   // padding: 0 10px;
+  //   border-right: none;
+  //   font-size: 1.5rem;
+  // }
 
   .main {
     position: absolute;
@@ -123,9 +124,9 @@ ul.nav-links {
 }
 
 .navtextstyle {
-  font-family: "FontsFree";
-  font-size: 15px;
-  font-weight: 900;
+  font-family: "Neon";
+  font-size: 2rem;
+  font-weight: 500;
   color: #fefcff;
   padding: 5px 10px;
   cursor: pointer;
@@ -293,7 +294,7 @@ ul.nav-sub-menu {
     border-radius: 10px;
 
     a {
-      color: #ffffff;
+      color: #fefcff;
     }
   }
 }
@@ -472,7 +473,7 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 2561px) {
   .navtextstyle {
-    font-size: 1.5vw;
+    font-size: 2rem;
   }
   .nav-button {
     font-size: 1.5vw;
@@ -486,7 +487,7 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 2000px) and (max-width: 2560px) {
   .navtextstyle {
-    font-size: 1.3vw;
+    font-size: 2rem;
   }
   .nav-button {
     font-size: 1.3vw;
@@ -500,7 +501,7 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 1600px) and (max-width: 1999px) {
   .navtextstyle {
-    font-size: 1vw;
+    font-size: 2rem;
   }
   .nav-button {
     font-size: 1vw;
@@ -514,7 +515,7 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
   .navtextstyle {
-    font-size: 17px;
+    font-size: 2rem;
   }
   .nav-button {
     font-size: 17px;
@@ -528,7 +529,7 @@ ul.nav-sub-menu {
 
 @media screen and (min-width: 1025px) and (max-width: 1439px) {
   .navtextstyle {
-    font-size: 1.2vw;
+    font-size: 2rem;
   }
   .nav-item-ctbtn {
     font-size: 1.2vw;

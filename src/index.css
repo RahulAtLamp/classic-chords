@@ -9,7 +9,10 @@
   src: local("FontsFree"),
     url("./fonts/FontsFree-Net-Centauri.ttf") format("truetype");
 }
-
+@font-face {
+  font-family: "Neon";
+  src: local("FontsFree"), url("./fonts/Neon.ttf") format("truetype");
+}
 body {
   margin: 0;
 
@@ -18,6 +21,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(-45deg, #251b43, #251b43, #251b43, #746cfe);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
 }
 
 code {
@@ -28,3 +34,15 @@ code {
 /* #gui{
  display: none;
 } */
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

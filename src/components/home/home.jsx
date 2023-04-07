@@ -56,7 +56,7 @@ const Home = () => {
                 <div className="noot-3">&#9839; &#9834;</div>
                 <div className="noot-4">&#9834;</div>
               </div>
-              <img className="home-img" src={HomeImg} />
+              <img className="home-img" src={HomeImg} alt="" />
             </div>
           </div>
           <div className="inst-header">Instruction</div>

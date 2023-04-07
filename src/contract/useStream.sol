@@ -23,8 +23,9 @@ contract userStream {
         string description;  
         string profileImage;
         bool isArtist;
-        uint superChatEarned;
+        uint totalEarning;
         uint superChatSpend;
+        uint fees;
     }
 
     struct Stream {
@@ -34,7 +35,7 @@ contract userStream {
         string description;
         bool premium;
         bool isLive;
-        uint superChatEarned;
+        uint totalEarning;
     }
 
     struct SongRequest {
@@ -42,8 +43,9 @@ contract userStream {
       string name;
       string story;
       string cid;
-      uint amount;
+      uint budget;
       address requestTo;
+      address requestBy;
       bool isAccept;
       bool isGlobalRequest;
     }
@@ -66,7 +68,7 @@ contract userStream {
         bool premium
     );
 
-    function registerUser(string memory _name, string memory _description, string memory _profileImage, bool _isArtist) public returns(uint256) {
+    function registerUser(string memory _name, string memory _description, string memory _profileImage, bool _isArtist, uint fees) public returns(uint256) {
         _usersCount.increment();
         uint256 userId = _usersCount.current();
         userIdToUser[userId] = User(
@@ -77,7 +79,8 @@ contract userStream {
             _profileImage,
             _isArtist,
             0,
-            0
+            0,
+            fees
         );
         userMapping[msg.sender] = User(
             userId,
@@ -87,7 +90,8 @@ contract userStream {
             _profileImage,
             _isArtist,
             0,
-            0
+            0,
+            fees
         );
 
         return userId;
@@ -106,8 +110,9 @@ contract userStream {
             _description,
             _profileImage,
             _user.isArtist,
-            _user.superChatEarned,
-            _user.superChatSpend
+            _user.totalEarning,
+            _user.superChatSpend,
+            _user.fees
         );
     }
 
@@ -160,7 +165,7 @@ contract userStream {
 //     address payable _creator = payable(streamIdToUser[_streamId]);
 //     _creator.transfer(_amount);
 //     Stream storage _stream = streamIdToStream[_streamId];
-//     _stream.superChatEarned += _amount;
+//     _stream.totalEarning += _amount;
 //     userMapping[msg.sender].superChatSpend += _amount;
 // }
 
@@ -171,20 +176,20 @@ function sendSuperChat(uint _streamId) public payable {
     uint platformFee = msg.value*5/100;
     _creator.transfer(msg.value - platformFee);
     Stream storage _stream = streamIdToStream[_streamId];
-    _stream.superChatEarned += _amount;
+    _stream.totalEarning += _amount;
     userMapping[msg.sender].superChatSpend += _amount;
 }
 
-function requestSong(string memory _name, string memory _story, string memory _cid, address _requestTo, bool _isGlobalRequest) public payable {
-  require(msg.value != 0, "Please add amount.");
+function requestSong(string memory _name, string memory _story, address _requestTo, bool _isGlobalRequest, uint _budget) public payable {
   _songRequestCount.increment();
   uint256 requestId = _songRequestCount.current();
     songRequestIdToRequest[requestId] = SongRequest(
       requestId,
       _name,
       _story,
-      _cid,
-      msg.value,
+      "",
+      _budget,
+      _requestTo,
       msg.sender,
       false,
       _isGlobalRequest
@@ -193,21 +198,37 @@ function requestSong(string memory _name, string memory _story, string memory _c
     requestId,
     _name,
     _story,
-    _cid,
-    msg.value,
+    "",
+    _budget,
     _requestTo,
+    msg.sender,
     false,
     _isGlobalRequest
   ));
 }
+
 function acceptRequest(uint _requestId) public {
   require(_requestId != 0, "Wrong Request Id");
   SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
-  require(_songRequest.requestTo == msg.sender, "You are not the artist.");
+  require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
+  _songRequest.requestTo = msg.sender;
   _songRequest.isAccept = true;
-  userMapping[msg.sender].superChatEarned += _songRequest.amount;
-  address payable _requester = payable(_songRequest.requestTo);
-  _requester.transfer(_songRequest.amount);
+}
+
+function sumbitWork(uint _requestId, string memory _cid) public {
+  require(_requestId != 0, "Wrong Request Id");
+  SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
+  require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
+  _songRequest.cid = _cid;
+}
+
+function approveWork(uint _requestId) public {
+  require(_requestId != 0, "Wrong Request Id");
+  SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
+  require(_songRequest.requestBy == msg.sender , "You are not the Requester.");
+  userMapping[_songRequest.requestTo].totalEarning += _songRequest.budget;
+  address payable _requester = payable(msg.sender);
+  _requester.transfer(_songRequest.budget);
 }
 
 function getSongRequestByCreator() public view returns (SongRequest[] memory) {

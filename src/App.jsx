@@ -33,6 +33,7 @@ import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 const BTTChain = {
   id: 1029,
+  iconUrl: "https://static.bt.io/production/logo/1002000.png",
   name: "BitTorrent Chain Donau",
   network: "BitTorrent Chain Donau",
   nativeCurrency: {

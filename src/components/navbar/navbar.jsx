@@ -26,6 +26,7 @@ const Navbar = () => {
   const walletOptions = useRef();
   const menuRef = useRef();
   const exploreMenuRef = useRef();
+  const requestMenuRef = useRef();
 
   // const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -33,6 +34,7 @@ const Navbar = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [account, setAccount] = useState(null);
   const [showExploreMenu, setShowExploreMenu] = useState(false);
+  const [showRequestMenu, setShowRequestMenu] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [chain, setChainStatus] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -286,6 +288,12 @@ const Navbar = () => {
       ) {
         setShowExploreMenu(false);
       }
+      if (
+        requestMenuRef.current &&
+        !requestMenuRef.current.contains(event.target)
+      ) {
+        setShowRequestMenu(false);
+      }
     }
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
@@ -293,7 +301,7 @@ const Navbar = () => {
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [exploreMenuRef]);
+  }, [exploreMenuRef, requestMenuRef]);
 
   useEffect(() => {
     if (address) {
@@ -329,11 +337,11 @@ const Navbar = () => {
       </div> */}
         {/* <ul className={open ? "nav-links" : "nav-links active"}> */}
         <ul className="nav-links">
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/" className="nav-link">
               <div className="navtextstyle">Home</div>
             </Link>
-          </li>
+          </li> */}
           <li className="nav-item">
             <Link to="/player" className="nav-link">
               <div className="navtextstyle">Player</div>
@@ -391,6 +399,47 @@ const Navbar = () => {
                 <span
                   className="nav-link"
                   onClick={() => {
+                    setShowRequestMenu(!showMenu);
+                  }}
+                >
+                  <div className="navtextstyle">Requests</div>
+                </span>
+                {/* <span>
+              <Link className="navtextstyle" to="/all-artists">Explore</Link>
+            </span> */}
+                {showRequestMenu ? (
+                  <div className="nav-sub-menu" ref={requestMenuRef}>
+                    <ul className="nav-sub-menu">
+                      <li>
+                        <Link
+                          to="/all-nfts"
+                          onClick={() => {
+                            setShowRequestMenu(false);
+                          }}
+                          className="nav-sub-menu-link"
+                        >
+                          Send A Request
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/all-artists"
+                          onClick={() => {
+                            setShowRequestMenu(false);
+                          }}
+                          className="nav-sub-menu-link"
+                        >
+                          All Requests
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                ) : null}
+              </li>
+              <li className="nav-item">
+                <span
+                  className="nav-link"
+                  onClick={() => {
                     setShowMenu(!showMenu);
                   }}
                 >
@@ -421,6 +470,7 @@ const Navbar = () => {
                           All Streams
                         </Link>
                       </li>
+
                       {/* <li>
                             <Link to="/all-live-stream" onClick={() => { setShowMenu(false) }} className="nav-sub-menu-link">Live Streams</Link>
                           </li> */}
@@ -443,7 +493,17 @@ const Navbar = () => {
                 >
                   disconnect
                 </button> */}
-                <ConnectButton />
+                <ConnectButton
+                  chainStatus="icon"
+                  accountStatus={{
+                    smallScreen: "avatar",
+                    largeScreen: "full",
+                  }}
+                  showBalance={{
+                    smallScreen: false,
+                    largeScreen: false,
+                  }}
+                />
               </li>
               {/* {
                   chain
@@ -472,7 +532,17 @@ const Navbar = () => {
               >
                 Connect
               </button> */}
-              <ConnectButton />
+              <ConnectButton
+                chainStatus="icon"
+                accountStatus={{
+                  smallScreen: "avatar",
+                  largeScreen: "full",
+                }}
+                showBalance={{
+                  smallScreen: false,
+                  largeScreen: false,
+                }}
+              />
             </li>
           )}
         </ul>
@@ -590,12 +660,32 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li className="nav-item-ctbtn">
-                    <ConnectButton />
+                    <ConnectButton
+                      chainStatus="icon"
+                      accountStatus={{
+                        smallScreen: "avatar",
+                        largeScreen: "full",
+                      }}
+                      showBalance={{
+                        smallScreen: false,
+                        largeScreen: false,
+                      }}
+                    />
                   </li>
                 </>
               ) : (
                 <li className="mobile-menu-btn">
-                  <ConnectButton />
+                  <ConnectButton
+                    chainStatus="icon"
+                    accountStatus={{
+                      smallScreen: "avatar",
+                      largeScreen: "full",
+                    }}
+                    showBalance={{
+                      smallScreen: false,
+                      largeScreen: false,
+                    }}
+                  />
                 </li>
               )}
             </ul>

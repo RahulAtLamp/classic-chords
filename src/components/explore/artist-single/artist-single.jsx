@@ -22,9 +22,18 @@ const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 function ArtistSingle() {
   // const singleArtist = Artists[5];
   // console.log(singleArtist);
+
   const [isLoading, setIsLoading] = useState(false);
   const [singleArtist, setSingleArtist] = useState({});
   const [nfts, setNfts] = useState([]);
+  const [requestData, setRequestData] = useState({
+    name: "",
+    story: "",
+    cid: "",
+    requestTo: "",
+    isGlobalRequest: "",
+    songValue: "",
+  });
   const [isOpen, setIsOpen] = useState(false);
   const params = useParams();
 
@@ -86,6 +95,38 @@ function ArtistSingle() {
     }
   };
 
+  const requestSong = async () => {
+    try {
+      console.log("in");
+      const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      const signer = provider.getSigner();
+      if (!provider) {
+        console.log("Metamask is not installed, please install!");
+      }
+      const { chainId } = await provider.getNetwork();
+      console.log("switch case for this case is: " + chainId);
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_USER_ADDRESS,
+        user,
+        signer
+      );
+      console.log(contract);
+      console.log(requestData);
+      console.log(singleArtist.userAddress);
+      const tx = await contract.requestSong(
+        requestData.name,
+        requestData.story,
+        singleArtist.userAddress,
+        false,
+        requestData.songValue
+      );
+      await tx.wait();
+      console.log(tx);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getProfile();
   }, []);
@@ -112,7 +153,7 @@ function ArtistSingle() {
           <div className="artist-image-container">
             <img
               className="artist-image"
-              alt="artist image"
+              alt="artist"
               src={"https://ipfs.io/ipfs/" + singleArtist.profileImage}
             />
           </div>
@@ -164,30 +205,55 @@ function ArtistSingle() {
             <>
               <div className="popup-header"></div>
               <div className="popup-title-main">
-                <div className="popup-title">Title</div>
+                {/* <div className="popup-title">Title</div> */}
                 <input
                   type="text"
                   className="popup-title-text"
                   placeholder="Title"
+                  onChange={(e) => {
+                    setRequestData({ ...requestData, name: e.target.value });
+                  }}
                 />
               </div>
               <div className="popup-desc-main">
-                <div className="popup-desc">Description</div>
+                {/* <div className="popup-desc">Description</div> */}
                 <textarea
                   className="popup-desc-text"
-                  placeholder="Description"
+                  placeholder="Story"
+                  rows={5}
+                  onChange={(e) => {
+                    setRequestData({ ...requestData, story: e.target.value });
+                  }}
                 />
               </div>
               <div className="popup-amount-main">
-                <div className="popup-amount">Amount</div>
+                {/* <div className="popup-amount">Amount</div> */}
                 <input
                   type="number"
                   className="popup-amount-text"
-                  placeholder="Amount"
+                  placeholder="Budget"
+                  onChange={(e) => {
+                    setRequestData({
+                      ...requestData,
+                      songValue: e.target.value,
+                    });
+                  }}
                 />
               </div>
+              <p className="info-p">* All the fields are compulsory</p>
               <div className="popup-button-main">
-                <button className="popup-button">Send Request</button>
+                <button
+                  className={
+                    requestData.name === "" ||
+                    requestData.story === "" ||
+                    requestData.songValue === ""
+                      ? "disable popup-button"
+                      : "popup-button"
+                  }
+                  onClick={() => requestSong()}
+                >
+                  Send Request
+                </button>
               </div>
             </>
           }
