@@ -282,7 +282,7 @@ const Profile = () => {
         const files = await res.files(ProfileImage); // Web3File[]
         for (const file of files) {
           console.log(`${file.cid}`);
-          setCid(file.cid);
+          setCid((prev) => (prev = file.cid));
         }
 
         console.log(upload);
@@ -291,6 +291,7 @@ const Profile = () => {
       const contract = await getContract();
       if (!userDefault.name) {
         console.log("inside register");
+        console.log(userData, cid, artistSelected, showChargesOfUser);
         const getData = await contract.registerUser(
           userData.name,
           userData.bio,

@@ -154,38 +154,120 @@ const Home = () => {
             <div className="imgseperator-top">
               <div className="footer-img-bg">
                 <div className="footer-img-i">
-                  <img className="zora-img" src={Polygon} />
+                  <img
+                    className="poweredby-img"
+                    src={Polygon}
+                    alt="polygon"
+                    onClick={() => window.open("https://polygon.technology/")}
+                  />
+                  <p className="poweredby-info">
+                    Polygon is a Layer 2 scaling solution for Ethereum, aimed at
+                    increasing transaction throughput and reducing gas fees by
+                    offloading transactions from the main Ethereum blockchain to
+                    a sidechain.
+                  </p>
                 </div>
               </div>
               <div className="footer-img-bg">
                 <div className="footer-img-i">
-                  <img className="live-img" src={LivePeer} />
+                  <img
+                    className="poweredby-img"
+                    src={LivePeer}
+                    alt="livepeer"
+                    onClick={() => window.open("https://livepeer.org/")}
+                  />
+                  <p className="poweredby-info">
+                    Livepeer is a decentralized video streaming network built on
+                    the Ethereum blockchain that provides cheaper, more
+                    scalable, and more secure video transcoding and streaming
+                    services.
+                  </p>
                 </div>
               </div>
               <div className="footer-img-bg">
                 <div className="footer-img-i">
-                  <img className="nfts-img" src={NftStorage} />
+                  <img
+                    className="poweredby-img"
+                    src={NftStorage}
+                    alt="nft.storage"
+                    onClick={() => window.open("https://nft.storage/")}
+                  />
+                  <p className="poweredby-info">
+                    NFT.storage is a decentralized file storage and hosting
+                    service built on the InterPlanetary File System (IPFS) and
+                    Filecoin networks, aimed at providing a permanent and
+                    censorship-resistant way to store and manage NFT-related
+                    content.
+                  </p>
+                </div>
+              </div>
+
+              <div className="footer-img-bg">
+                <div className="footer-img-i">
+                  <img
+                    className="poweredby-img"
+                    src="/images/XMTP1.svg"
+                    alt="XMTP"
+                    onClick={() => window.open("https://xmtp.org/")}
+                  />
+                  <p className="poweredby-info">
+                    XMTP (Extensible Message Transport Protocol) is an open
+                    protocol, network, and standards for secure, private web3
+                    messaging.
+                  </p>
+                </div>
+              </div>
+
+              <div className="footer-img-bg">
+                <div className="footer-img-i">
+                  <img
+                    className="poweredby-img"
+                    src="/images/btt1.svg"
+                    alt="BTTC"
+                    onClick={() => window.open("https://bttc.bittorrent.com/")}
+                  />
+                  <p className="poweredby-info">
+                    As a world-leading blockchain scaling solution, BTTC
+                    provides cross-chain service between heterogeneous
+                    blockchains, providing a quicker, more cost-efficient, and
+                    more scalable platform for Web3 developers
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="imgseperator-top1">
+            {/* <div className="imgseperator-top1">
               <div className="footer-img-bg1">
                 <div className="footer-img-i">
-                  <img className="nfts-img" src="/images/XMTP1.svg" />
+                  <img
+                    className="poweredby-img"
+                    src="/images/XMTP1.svg"
+                    alt="XMTP"
+                  />
+                  <p className="poweredby-info">
+                    Polygon is a Layer 2 scaling solution for Ethereum, aimed at
+                    increasing transaction throughput and reducing gas fees by
+                    offloading transactions from the main Ethereum blockchain to
+                    a sidechain.
+                  </p>
                 </div>
               </div>
-              {/* <div className="footer-img-bg">
-                <div className="footer-img-i">
-                  <img className="nfts-img" src="/images/PUSH.svg" />
-                </div>
-              </div> */}
+
               <div className="footer-img-bg1">
                 <div className="footer-img-i">
-                  <img className="nfts-img" src="/images/btt1.svg" />
-                  {/* <img className="nfts-img" src="/images/ENS.svg" /> */}
+                  <img
+                    className="poweredby-img"
+                    src="/images/btt1.svg"
+                    alt="BTTC"
+                  />
+                  <p className="poweredby-info">
+                    Polygon is a Layer 2 scaling solution for Ethereum, aimed at
+                    increasing transaction throughput and reducing gas fees by
+                    offloading transactions from the main Ethereum blockchain to
+                    a sidechain.
+                  </p>
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* <div className="imgseperator-top">
               <section>
                 <ParallaxHover
