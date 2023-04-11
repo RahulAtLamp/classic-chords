@@ -106,11 +106,7 @@ function AllNfts() {
                     <div className="artist-collection-pa">
                       <div className="exp-bg">
                         <div className="exp-img">
-                          <video
-                            className="exp-nft"
-                            src={collection.image}
-                            controls
-                          />
+                          <video className="exp-nft" src={collection.image} />
                         </div>
                         <div className="exp-name" title={collection.name}>
                           {collection.name}
@@ -118,6 +114,7 @@ function AllNfts() {
                         <p className="exp-description">
                           {collection.description}
                         </p>
+                        <button className="watch-now">Watch Now</button>
                         {/* 
                                                             <div className="buy-button-holder">
                                                                 <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> 

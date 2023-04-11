@@ -61,14 +61,18 @@
 
     .profile-details-holder {
       .profile-username {
-        font-family: "FontsFree";
+        font-family: "Neon";
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
         color: rgba(255, 255, 255, 0.9);
         overflow-wrap: break-word;
       }
 
       .profile-address {
-        font-family: "FontsFree";
-        font-size: 12px;
+        font-family: "Gilmer-Light";
+        text-transform: uppercase;
+        font-size: 1.1rem;
         color: #ffffff;
       }
 

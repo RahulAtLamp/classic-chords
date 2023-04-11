@@ -15,7 +15,9 @@
   .nfts-header {
     font-size: xx-large;
     text-align: center;
-    font-family: "FontsFree";
+    font-family: "Neon";
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
     padding-top: 100px;
     color: #ffffff;
     padding-top: 100px;
@@ -41,55 +43,78 @@
 
       .artist-collection-pa {
         cursor: pointer;
+        color: black;
 
         .exp-bg {
           width: 300px;
           height: 350px;
           max-height: 100%;
+          border: none;
           /* background: rgb(116, 108, 254); */
-          background: linear-gradient(
-            180deg,
-            #8359be 20%,
-            #793ad8 50%,
-            #a886fb
-          );
-          border-radius: 20px;
+          // background: linear-gradient(
+          //   180deg,
+          //   #8359be 20%,
+          //   #793ad8 50%,
+          //   #a886fb
+          // );
+          background-color: white;
+          border-radius: 5px;
           align-items: center;
           margin: 0 auto;
           flex: 0 0 20%;
           flex-direction: column;
           box-shadow: rgba(0, 0, 0, 0.3) 5px 8px 12px;
-          padding: 5px 0;
+          padding: 0;
           overflow: hidden;
 
+          button.watch-now {
+            cursor: pointer;
+            display: none;
+            color: white;
+            background-color: #746cfe;
+            border: 1px solid #746cfe;
+            border-radius: 5px;
+            padding: 10px 20px;
+            pointer-events: all;
+            font-family: "Neon";
+          }
+          &:hover {
+            button.watch-now {
+              display: block;
+              margin: 10px auto;
+            }
+          }
+
           .exp-img {
-            width: 260px;
-            height: 200px;
-            margin: 10px auto auto auto;
+            // width: 260px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto auto auto;
             display: flex;
             align-items: center;
             align-content: center;
             overflow: hidden;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px #ffffff;
+            // background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 5px;
+            // box-shadow: 0px 0px 20px #ffffff;
 
             .exp-nft {
               height: fit-content;
-              max-width: 260px;
-              width: fit-content;
-              margin: 0 auto;
-              border-radius: 10px;
+              max-width: 100%;
+              width: 100%;
+              // margin: 0 auto;
+              border-radius: 5px 5px 0 0;
             }
           }
 
           .exp-name {
             margin-top: 20px;
             padding: 0 20px;
-            color: #fefcff;
+            // color: #fefcff;
+            color: black;
             font-size: 15px;
-            font-family: "FontsFree";
-            font-weight: 700;
+            font-family: "Neon";
+            font-weight: 600;
             white-space: nowrap;
             width: 80%;
             text-overflow: ellipsis;
@@ -112,11 +137,12 @@
           .exp-description {
             margin-top: 10px;
             padding: 0 20px;
-            color: #fefcff;
+            // color: #fefcff;
+            color: black;
             font-size: 15px;
             font-family: "Gilmer-Light";
             font-weight: 500;
-            height: 96px;
+            height: 50px;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 5;

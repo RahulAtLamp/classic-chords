@@ -47,6 +47,7 @@ contract userStream {
       address requestTo;
       address requestBy;
       bool isAccept;
+      bool isDecline;
       bool isGlobalRequest;
     }
 
@@ -192,6 +193,7 @@ function requestSong(string memory _name, string memory _story, address _request
       _requestTo,
       msg.sender,
       false,
+      false,
       _isGlobalRequest
     );
   addressToSongRequest[_requestTo].push(SongRequest(
@@ -203,16 +205,22 @@ function requestSong(string memory _name, string memory _story, address _request
     _requestTo,
     msg.sender,
     false,
+    false,
     _isGlobalRequest
   ));
 }
 
-function acceptRequest(uint _requestId) public {
+function songRequestResponse(uint _requestId, bool _answer) public {
   require(_requestId != 0, "Wrong Request Id");
   SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
   require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
   _songRequest.requestTo = msg.sender;
+  if(_answer){
   _songRequest.isAccept = true;
+  }
+  else{
+      _songRequest.isDecline = true;
+  }
 }
 
 function sumbitWork(uint _requestId, string memory _cid) public {
@@ -231,11 +239,11 @@ function approveWork(uint _requestId) public {
   _requester.transfer(_songRequest.budget);
 }
 
-function getSongRequestByCreator() public view returns (SongRequest[] memory) {
-  SongRequest[] memory requests = new SongRequest[](addressToSongRequest[msg.sender].length);
+function getSongRequestByCreator(address _address) public view returns (SongRequest[] memory) {
+  SongRequest[] memory requests = new SongRequest[](addressToSongRequest[_address].length);
   uint requestIndex = 0;
-  for (uint i = 0; i < addressToSongRequest[msg.sender].length; i++) {
-      SongRequest storage _songRequest = addressToSongRequest[msg.sender][i];
+  for (uint i = 0; i < addressToSongRequest[_address].length; i++) {
+      SongRequest storage _songRequest = addressToSongRequest[_address][i];
       requests[requestIndex] = _songRequest;
       requestIndex++;
   }

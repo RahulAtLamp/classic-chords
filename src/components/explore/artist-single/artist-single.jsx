@@ -98,7 +98,8 @@ function ArtistSingle() {
   const requestSong = async () => {
     try {
       console.log("in");
-      const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       if (!provider) {
         console.log("Metamask is not installed, please install!");
@@ -147,7 +148,7 @@ function ArtistSingle() {
             <p className="artist-description">{singleArtist.description}</p>
             {/* <p className="artist-instrument">{singleArtist.instrument.toLocaleUpperCase()}</p> */}
             <button onClick={togglePopup} className="popup-main">
-              Request
+              Request A Song
             </button>
           </div>
           <div className="artist-image-container">

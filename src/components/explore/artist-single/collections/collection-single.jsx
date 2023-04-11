@@ -312,7 +312,12 @@ function CollectionSingle() {
                   <p className="total-minted">Total Quantity : {nftQty}</p>
                   <p className="total-minted">
                     Price Per Unit : &nbsp; {price} &nbsp;{" "}
-                    <img src="/images/pml.png" height="28px" width="28px" />
+                    <img
+                      src="/images/pml.png"
+                      height="28px"
+                      width="28px"
+                      alt=""
+                    />
                   </p>
                   <input
                     type="number"

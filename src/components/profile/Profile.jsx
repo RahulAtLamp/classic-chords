@@ -106,6 +106,8 @@ const Profile = () => {
       // console.log(await tokenContract.mintedNfts(address));
       const ids = await tokenContract.mintedNfts(address);
       const ids2 = await marketContract.getUserNfts(address);
+      const allRequests = await contract.getSongRequestByCreator(address);
+      console.log(allRequests);
       // console.log(ids.length);
       let nfts = [];
       for (let i = 0; i < ids.length; i++) {

@@ -286,10 +286,12 @@ ul.nav-sub-menu {
   li {
     padding: 20px !important;
     border-right: none;
-    font-family: "FontsFree";
-    font-size: 15px;
+    font-family: "Neon";
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 1.2rem;
     background-color: #793ad8;
-    font-weight: 700;
+    font-weight: 600;
     margin: 10px 10px;
     border-radius: 10px;
 
@@ -323,7 +325,7 @@ ul.nav-sub-menu {
     padding: 10px;
     bottom: 0;
     color: #251843;
-    font-family: "FontsFree";
+    font-family: "Neon";
     border-radius: 20px;
     animation: notificationshowup 50ms ease;
 
@@ -599,7 +601,7 @@ ul.nav-sub-menu {
     padding: 10px 10px 10px 10px;
     z-index: 200;
     // padding: 0 !important;
-    font-family: "FontsFree";
+    font-family: "Neon";
     display: flex;
     flex-direction: column;
     gap: 20px;

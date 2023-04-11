@@ -7,7 +7,7 @@
   .collection-name {
     font-size: xx-large;
     text-align: center;
-    font-family: "FontsFree";
+    font-family: "Neon";
     padding-top: 100px;
     color: #ffffff;
     margin: 0;
@@ -92,7 +92,9 @@
         padding: 10px;
         border-radius: 10px;
         border: 0;
-        font-family: "FontsFree";
+        font-family: "Neon";
+        text-transform: uppercase;
+        font-size: 1.2rem;
         cursor: pointer;
         // background: linear-gradient(120deg, #251b43 40%, #793ad8);
         pointer-events: auto;

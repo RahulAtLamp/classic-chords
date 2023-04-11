@@ -30,6 +30,7 @@
 }
 
 .close-icon {
+  cursor: pointer;
   position: absolute;
   top: 20px;
   right: 20px;
@@ -37,19 +38,28 @@
 
 .popup-main {
   font-size: 20px;
-  font-family: "FontsFree";
-  border-radius: 20px;
-  padding: 0 10px;
+  font-family: "Neon";
+  text-transform: uppercase;
+  border-radius: 10px;
+  // padding: 0 10px;
   background-color: #251b43;
+  border: 1px solid #251b43;
+  padding: 10px 30px;
   color: #ffffff;
   width: 250px;
+  cursor: pointer;
   // margin: 0 auto;
+  &:hover {
+    border: 1px solid white;
+  }
 }
 
 .popup-header {
   margin: 0 auto;
   text-align: center;
-  // font-size: 30px;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
   // margin-left: 20%;
 }
 
@@ -114,14 +124,21 @@ p.info-p {
   margin-top: 30px;
 
   .popup-button {
+    cursor: pointer;
     // margin-top: 30px;
-    font-size: 15px;
-    font-family: "FontsFree";
-    border-radius: 20px;
+    font-size: 1.3rem;
+    font-family: "Neon";
+    border-radius: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
     padding: 10px 20px;
     border: 1px solid #251b43;
     background-color: #251b43;
     color: #ffffff;
+
+    &:hover {
+      border: 1px solid white;
+    }
   }
   button.disable {
     opacity: 0.5;
