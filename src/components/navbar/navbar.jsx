@@ -412,7 +412,7 @@ const Navbar = () => {
                     <ul className="nav-sub-menu">
                       <li>
                         <Link
-                          to="/all-nfts"
+                          to="/all-artists"
                           onClick={() => {
                             setShowRequestMenu(false);
                           }}
@@ -423,7 +423,7 @@ const Navbar = () => {
                       </li>
                       <li>
                         <Link
-                          to="/all-artists"
+                          to="/all-requests"
                           onClick={() => {
                             setShowRequestMenu(false);
                           }}

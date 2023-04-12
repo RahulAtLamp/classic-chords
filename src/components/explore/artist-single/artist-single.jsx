@@ -176,7 +176,7 @@ function ArtistSingle() {
         requestData.name,
         requestData.story,
         singleArtist.userAddress,
-        false,
+        requestData.isGlobalRequest,
         requestData.songValue
       );
       await tx.wait();
@@ -299,6 +299,19 @@ function ArtistSingle() {
                   }}
                 />
               </div>
+              <label className="global-request">
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    setRequestData({
+                      ...requestData,
+                      isGlobalRequest: e.target.checked,
+                    });
+                    console.log(e.target.checked);
+                  }}
+                />
+                Is this global request?
+              </label>
               <p className="info-p">* All the fields are compulsory</p>
               <div className="popup-button-main">
                 <button

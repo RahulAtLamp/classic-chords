@@ -30,6 +30,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { mainnet, polygon, polygonMumbai } from "wagmi/chains";
 import "@rainbow-me/rainbowkit/styles.css";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import AllRequests from "./components/explore/AllRequests";
 
 const BTTChain = {
   id: 1029,
@@ -110,6 +111,8 @@ const App = () => {
                   <Route path="/player" element={<Player />} />
                   <Route path="/all-nfts" element={<AllNfts />} />
                   <Route path="/all-artists" element={<Explore />} />
+                  <Route path="/all-requests" element={<AllRequests />} />
+
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/artist/:id" element={<ArtistSingle />} />
                   <Route
