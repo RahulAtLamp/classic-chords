@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { ethers } from "ethers";
 import user from "../../../contract/artifacts/userStream.json";
+import userBTTC from "../../../contract/artifacts/userStreamBTTC.json";
 import SendIcon from "./SendIcon";
 import { useParams } from "react-router-dom";
 
@@ -11,6 +12,7 @@ const ConversationRight = ({
   singleMessage,
   setSingleMessage,
   notShow,
+  count,
 }) => {
   const [resetField, setResetField] = useState(0);
   const [superChatAmount, setSuperChatAmount] = useState();
@@ -31,13 +33,18 @@ const ConversationRight = ({
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
           const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS,
+            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
             user,
             signer
           );
           return contract;
-        } else {
-          alert("Please connect to the Mumbai Testnet Network!");
+        } else if (chainId === 1029) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+            userBTTC,
+            signer
+          );
+          return contract;
         }
       }
     } catch (error) {
@@ -80,7 +87,7 @@ const ConversationRight = ({
       let toBottom = document.querySelector("#conversation_selector");
       toBottom.scrollTop = toBottom.scrollHeight - toBottom.clientHeight;
     }
-  }, [allMessages]);
+  }, [allMessages, allMessages.length]);
 
   // if (allMessages.length > 0) {
   return (
@@ -96,58 +103,65 @@ const ConversationRight = ({
                         </div>
                     </div> */}
           <div className="conversation" id="conversation_selector">
-            {allMessages.map((m, i) => {
-              if (!m.msg) {
-                return;
-              }
-              if (m.isSuper) {
-                return (
-                  <div className="right-super" key={i}>
-                    {/* <div className="grow-super"></div> */}
+            {count &&
+              allMessages.map((m, i) => {
+                if (!m.msg) {
+                  return;
+                }
+                if (m.isSuper) {
+                  return (
+                    <div className="right-super" key={i}>
+                      {/* <div className="grow-super"></div> */}
 
-                    <div className="msg-super">
-                      <div className="sender">
-                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
-                      </div>
-                      <div className="amount">{m.amount}</div>
-                      <div className="msg">{m.msg}</div>
-                      <div className="conv-time">
-                        {m.createdAt.toString().split("GMT")[0]}
-                      </div>
-                    </div>
-                  </div>
-                );
-              } else if (m.sender === activeAddress) {
-                return (
-                  <div className="right" key={i}>
-                    <div className="grow"></div>
-                    <div className="msg-block">
-                      <div className="sender">
-                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
-                      </div>
-                      <div className="msg">{m.msg}</div>
-                      <div className="conv-time">
-                        {m.createdAt.toString().split("GMT")[0]}
+                      <div className="msg-super">
+                        <div className="sender">
+                          {m.sender.substring(0, 5) +
+                            "..." +
+                            m.sender.slice(-5)}
+                        </div>
+                        <div className="amount">{m.amount}</div>
+                        <div className="msg">{m.msg}</div>
+                        <div className="conv-time">
+                          {m.createdAt.toString().split("GMT")[0]}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div className="left" key={i}>
-                    <div className="msg-block">
-                      <div className="sender">
-                        {m.sender.substring(0, 5) + "..." + m.sender.slice(-5)}
-                      </div>
-                      <div className="msg">{m.msg}</div>
-                      <div className="conv-time">
-                        {m.createdAt.toString().split("GMT")[0]}
+                  );
+                } else if (m.sender === activeAddress) {
+                  return (
+                    <div className="right" key={i}>
+                      <div className="grow"></div>
+                      <div className="msg-block">
+                        <div className="sender">
+                          {m.sender.substring(0, 5) +
+                            "..." +
+                            m.sender.slice(-5)}
+                        </div>
+                        <div className="msg">{m.msg}</div>
+                        <div className="conv-time">
+                          {m.createdAt.toString().split("GMT")[0]}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              }
-            })}
+                  );
+                } else {
+                  return (
+                    <div className="left" key={i}>
+                      <div className="msg-block">
+                        <div className="sender">
+                          {m.sender.substring(0, 5) +
+                            "..." +
+                            m.sender.slice(-5)}
+                        </div>
+                        <div className="msg">{m.msg}</div>
+                        <div className="conv-time">
+                          {m.createdAt.toString().split("GMT")[0]}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
             {/* <div className="left">
                             <div>Hi<div className="conv-time">3:20 PM</div></div>
                         </div>
@@ -180,12 +194,12 @@ const ConversationRight = ({
               type="text"
               ref={messageRef}
               placeholder="Please type your message here..."
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  sendMessage(singleMessage);
-                  setResetField(1);
-                }
-              }}
+              // onKeyDown={(e) => {
+              //   if (e.key === "Enter") {
+              //     sendMessage(singleMessage);
+              //     setResetField(1);
+              //   }
+              // }}
               defaultValue={singleMessage}
               className="send"
               onChange={(e) => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./MintNft.scss";
 import ConfettiExplosion from "react-confetti-explosion";
 import classicChords from "../../contract/artifacts/classicChords.json";
+import classicChordsBTTC from "../../contract/artifacts/classicChordsBTTC.json";
 import Loading3 from "../../loading3";
 import { ethers } from "ethers";
 // import { Web3Storage } from 'web3.storage';
@@ -165,27 +166,32 @@ function MintNft(props) {
         }
         const { chainId } = await provider.getNetwork();
         console.log("switch case for this case is: " + chainId);
+        let contract;
+
         if (chainId === 80001) {
-          const numToken = document.getElementById("num_token").value;
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS,
+          contract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
             classicChords,
             signer
           );
-          const uri = await getTokeUri();
-          const tx = await contract.mint(numToken, uri);
-          tx.wait();
-          setOnMint(false);
-          setOnLoading(false);
-          setIsExploding(true);
-          setTimeout(() => {
-            setOpen(false);
-            window.location.reload();
-          }, 3000);
-        } else {
-          alert("Please connect to the Mumbai Testnet Network!");
-          // window.location.reload();
+        } else if (chainId === 1029) {
+          contract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+            classicChordsBTTC,
+            signer
+          );
         }
+        const numToken = document.getElementById("num_token").value;
+        const uri = await getTokeUri();
+        const tx = await contract.mint(numToken, uri);
+        tx.wait();
+        setOnMint(false);
+        setOnLoading(false);
+        setIsExploding(true);
+        setTimeout(() => {
+          setOpen(false);
+          window.location.reload();
+        }, 3000);
       }
     } catch (error) {
       setOnMint(false);

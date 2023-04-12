@@ -4,11 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 import market from "../../contract/artifacts/market.json";
+import marketBTTC from "../../contract/artifacts/marketBTTC.json";
 import classicChords from "../../contract/artifacts/classicChords.json";
+import classicChordsBTTC from "../../contract/artifacts/classicChordsBTTC.json";
 // import user from "../../contract/artifacts/userStream.json";
 import Loading3 from "../../loading3";
 
 import "./allnfts.scss";
+import { error } from "jquery";
 
 // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
@@ -22,71 +25,98 @@ function AllNfts() {
   useEffect(() => {
     getNfts();
   }, []);
-
   const getContract = async () => {
     try {
-      // const { ethereum } = window;
-      // if (ethereum) {
-      //   const provider = new ethers.providers.Web3Provider(ethereum);
-      //   const signer = provider.getSigner();
-      //   if (!provider) {
-      //     console.log("Metamask is not installed, please install!");
-      //   }
-      //   const { chainId } = await provider.getNetwork();
-      //   console.log("switch case for this case is: " + chainId);
-      //   if (chainId === 80001) {
-      //     const contract = new ethers.Contract(market_address, market, signer);
-      //     return contract
-      //   } else {
-      //     alert("Please connect to the Mumbai Testnet Network!");
-      //   }
-      // }
-
-      const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_MARKET_ADDRESS,
-        market,
-        provider
-      );
-      return contract;
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        if (!provider) {
+          console.log("Metamask is not installed, please install!");
+        }
+        const { chainId } = await provider.getNetwork();
+        console.log("switch case for this case is: " + chainId);
+        if (chainId === 80001) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+            market,
+            signer
+          );
+          return contract;
+        } else if (chainId === 1029) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+            marketBTTC,
+            signer
+          );
+          return contract;
+        }
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
   const getNfts = async () => {
-    setLoading(true);
-    const contract = await getContract();
-    // console.log(contract);
-    const artists = await contract.getListedNfts();
-    console.log(artists);
-    const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-    const tokenContract = new ethers.Contract(
-      process.env.REACT_APP_CLASSIC_CHORDS,
-      classicChords,
-      provider
-    );
-    const tempNFT = [];
-    for (let i = 0; i < artists.length; i++) {
-      const tokenId = artists[i].tokenId.toNumber();
-      const uri = await tokenContract.tokenUriMapping(tokenId);
-      console.log(uri);
-      try {
-        await axios
-          .get("https://ipfs.io/ipfs/" + uri.split("//")[1])
-          .then((response) => {
-            let data = response.data;
-            data.image = "https://ipfs.io/ipfs/" + data.image.split("//")[1];
-            response.data.id = artists[i].itemId.toNumber();
-            tempNFT.push(response.data);
-            // console.log(response.data);
-          });
-      } catch (error) {
-        console.log(error);
+    try {
+      setLoading(true);
+      const contract = await getContract();
+      // console.log(contract);
+      const artists = await contract.getListedNfts();
+      console.log(artists);
+      const { ethereum } = window;
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+
+      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+
+      const signer = provider.getSigner();
+      if (!provider) {
+        console.log("Metamask is not installed, please install!");
       }
+      const { chainId } = await provider.getNetwork();
+      console.log("switch case for this case is: " + chainId);
+
+      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      let tokenContract;
+      if (chainId === 80001) {
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+          classicChords,
+          provider
+        );
+      } else if (chainId === 1029) {
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+          classicChordsBTTC,
+          provider
+        );
+      }
+
+      const tempNFT = [];
+      for (let i = 0; i < artists.length; i++) {
+        const tokenId = artists[i].tokenId.toNumber();
+        const uri = await tokenContract.tokenUriMapping(tokenId);
+        console.log(uri);
+        try {
+          await axios
+            .get("https://ipfs.io/ipfs/" + uri.split("//")[1])
+            .then((response) => {
+              let data = response.data;
+              data.image = "https://ipfs.io/ipfs/" + data.image.split("//")[1];
+              response.data.id = artists[i].itemId.toNumber();
+              tempNFT.push(response.data);
+              // console.log(response.data);
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      setNfts(tempNFT);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
     }
-    setNfts(tempNFT);
-    setLoading(false);
   };
 
   return (

@@ -7,6 +7,7 @@ import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import * as PushAPI from "@pushprotocol/restapi";
 import user from "../../contract/artifacts/userStream.json";
+import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
@@ -18,8 +19,6 @@ import "react-toastify/dist/ReactToastify.css";
 const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
 function Streaming({ account }) {
-
-  
   const { isConnected, address } = useAccount();
   const navigate = useNavigate();
 
@@ -45,11 +44,9 @@ function Streaming({ account }) {
   const [record, setRecord] = useState("");
   const [premium, setPremium] = useState("");
   const [loading, setLoading] = useState(false);
-  const toastInfo = () =>
-    toast.info("Wait till transection been complate");
-  const toastSuccess = () =>
-    toast.success("Hurrrayy....stream started");
-    const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
+  const toastInfo = () => toast.info("Wait till transection been complate");
+  const toastSuccess = () => toast.success("Hurrrayy....stream started");
+  const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
   const getContract = async () => {
     try {
@@ -64,13 +61,18 @@ function Streaming({ account }) {
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
           const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS,
+            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
             user,
             signer
           );
           return contract;
-        } else {
-          alert("Please connect to the MUMBAI matic Network!");
+        } else if (chainId === 1029) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+            userBTTC,
+            signer
+          );
+          return contract;
         }
       }
     } catch (error) {
@@ -186,12 +188,24 @@ function Streaming({ account }) {
       toastSuccess();
       streamMessage();
       const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
-      const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_USER_ADDRESS,
-        user,
-        RPC_provider
-      );
+      // const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const { chainId } = await provider.getNetwork();
+      let contract;
+      if (chainId === 80001) {
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+          user,
+          provider
+        );
+      } else if (chainId === 1029) {
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+          userBTTC,
+          provider
+        );
+      }
+
       const tx = await contract.userMapping(address);
 
       const allArtists = await contract.getAllArtists();

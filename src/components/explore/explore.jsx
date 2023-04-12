@@ -11,7 +11,8 @@ import "./explore.scss";
 // import NFT8 from "../../images/nft8.png";
 import { Link } from "react-router-dom";
 import { ethers } from "ethers";
-import market from "../../contract/artifacts/userStream.json";
+import user from "../../contract/artifacts/userStream.json";
+import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 import Loading3 from "../../loading3";
 
 // const user_address = "0x036E73d74e86cC50930d78f26cf97d603c40088f";
@@ -25,34 +26,35 @@ const Explore = ({ temp }) => {
 
   // const gui = new GUI();
   // gui.destroy()
-  // console.log(process.env.REACT_APP_MARKET_ADDRESS)
+  // console.log(process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET)
 
   const getContract = async () => {
     try {
-      // const { ethereum } = window;
-      // if (ethereum) {
-      //   const provider = new ethers.providers.Web3Provider(ethereum);
-      //   const signer = provider.getSigner();
-      //   if (!provider) {
-      //     console.log("Metamask is not installed, please install!");
-      //   }
-      //   const { chainId } = await provider.getNetwork();
-      //   console.log("switch case for this case is: " + chainId);
-      //   if (chainId === 80001) {
-      //     const contract = new ethers.Contract(market_address, market, signer);
-      //     return contract
-      //   } else {
-      //     alert("Please connect to the Mumbai Testnet Network!");
-      //   }
-      // }
-
-      const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_USER_ADDRESS,
-        market,
-        provider
-      );
-      return contract;
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        if (!provider) {
+          console.log("Metamask is not installed, please install!");
+        }
+        const { chainId } = await provider.getNetwork();
+        console.log("switch case for this case is: " + chainId);
+        if (chainId === 80001) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+            user,
+            signer
+          );
+          return contract;
+        } else if (chainId === 1029) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+            userBTTC,
+            signer
+          );
+          return contract;
+        }
+      }
     } catch (error) {
       console.log(error);
     }

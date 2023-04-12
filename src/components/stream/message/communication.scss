@@ -268,7 +268,7 @@
   background-color: #746cfe;
   color: white;
   max-width: 40%;
-  padding: 20px 20px 20px 20px;
+  padding: 0px 10px 0px 10px;
   margin: 10px 10px 0 0;
   width: 100%;
   word-wrap: break-word;
@@ -282,28 +282,33 @@
 }
 
 .message__right .conversation .right .msg-block .sender {
-  font-size: 8px;
-  margin-left: -10px;
+  font-size: 10px;
+  // margin-left: -10px;
   color: #ffffff;
-  width: 65px;
+  // width: 65px;
   text-align: center;
-  border-radius: 2px;
-  margin-top: -37px;
+  // border-radius: 2px;
+  // margin-top: -37px;
 }
 
 .message__right .conversation .right .msg-block .msg {
   font-size: 15px;
   width: 100%;
+  margin: 10px 0px;
 }
 
 .right .msg-block .conv-time {
-  position: relative;
-  display: flow-root;
+  // position: relative;
+  // display: flow-root;
   font-size: 8px;
   font-weight: 800;
-  margin-bottom: -30px;
+  // margin-bottom: -30px;
   color: #134e6f;
-  width: 120px;
+  // width: 120px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .right-super {

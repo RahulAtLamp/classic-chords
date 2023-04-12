@@ -9,7 +9,9 @@ import axios from "axios";
 // import { useAccount } from "wagmi";
 import { useParams } from "react-router-dom";
 import classicChords from "../../../contract/artifacts/classicChords.json";
+import classicChordsBTTC from "../../../contract/artifacts/classicChordsBTTC.json";
 import market from "../../../contract/artifacts/market.json";
+import marketBTTC from "../../../contract/artifacts/marketBTTC.json";
 import Loading3 from "../../../loading3";
 import { useAccount, useConnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
@@ -107,38 +109,41 @@ function SellCollectionSingle() {
         }
         const { chainId } = await provider.getNetwork();
         console.log("switch case for this case is: " + chainId);
+        let tokenContract;
         if (chainId === 80001) {
-          const tokenContract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS,
+          tokenContract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
             classicChords,
             signer
           );
-          let result = {};
-
-          try {
-            const uri = await tokenContract.tokenUriMapping(params.id);
-            await axios
-              .get("https://ipfs.io/ipfs/" + uri.split("//")[1])
-              .then((response) => {
-                let data = response.data;
-                data.image =
-                  "https://ipfs.io/ipfs/" + data.image.split("//")[1];
-                console.log(response.data);
-                result = response.data;
-              });
-            const balance = await tokenContract.balanceOf(address, params.id);
-            result.total_minted = balance.toNumber();
-            setCollections(result);
-          } catch (error) {
-            console.log(error);
-          }
+        } else if (chainId === 1029) {
+          tokenContract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+            classicChordsBTTC,
+            signer
+          );
         }
-        console.log();
-        setIsLoading(true);
-      } else {
-        alert("Please connect to the Mumbai Testnet Network!");
-        // setChainStatus(true);
+        let result = {};
+
+        try {
+          const uri = await tokenContract.tokenUriMapping(params.id);
+          await axios
+            .get("https://ipfs.io/ipfs/" + uri.split("//")[1])
+            .then((response) => {
+              let data = response.data;
+              data.image = "https://ipfs.io/ipfs/" + data.image.split("//")[1];
+              console.log(response.data);
+              result = response.data;
+            });
+          const balance = await tokenContract.balanceOf(address, params.id);
+          result.total_minted = balance.toNumber();
+          setCollections(result);
+        } catch (error) {
+          console.log(error);
+        }
       }
+      console.log();
+      setIsLoading(true);
     } catch (error) {
       console.log(error);
     }
@@ -150,11 +155,22 @@ function SellCollectionSingle() {
       const { ethereum } = window;
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      const marketContract = new ethers.Contract(
-        process.env.REACT_APP_MARKET_ADDRESS,
-        market,
-        signer
-      );
+      const { chainId } = await provider.getNetwork();
+      console.log("switch case for this case is: " + chainId);
+      let marketContract;
+      if (chainId === 80001) {
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+          market,
+          signer
+        );
+      } else if (chainId === 1029) {
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+          market,
+          signer
+        );
+      }
       let isAvailableForSell = null;
       let isAvailableForRent = null;
 

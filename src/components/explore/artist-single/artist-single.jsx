@@ -8,9 +8,12 @@ import { useParams } from "react-router-dom";
 import { ethers } from "ethers";
 import market from "../../../contract/artifacts/market.json";
 import user from "../../../contract/artifacts/userStream.json";
+import userBTTC from "../../../contract/artifacts/userStreamBTTC.json";
+import marketBTTC from "../../../contract/artifacts/marketBTTC.json";
 import { useAccount } from "wagmi";
 import Popup from "./artist-single-popup";
 import classicChords from "../../../contract/artifacts/classicChords.json";
+import classicChordsBTTC from "../../../contract/artifacts/classicChordsBTTC.json";
 import axios from "axios";
 import Loading3 from "../../../loading3";
 
@@ -39,23 +42,69 @@ function ArtistSingle() {
 
   const getProfile = async () => {
     try {
-      // const provider = new ethers.providers.Web3Provider(ethereum);
-      const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_USER_ADDRESS,
-        user,
-        provider
-      );
-      const marketContract = new ethers.Contract(
-        process.env.REACT_APP_MARKET_ADDRESS,
-        market,
-        provider
-      );
-      const tokenContract = new ethers.Contract(
-        process.env.REACT_APP_CLASSIC_CHORDS,
-        classicChords,
-        provider
-      );
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      const signer = provider.getSigner();
+      if (!provider) {
+        console.log("Metamask is not installed, please install!");
+      }
+      const { chainId } = await provider.getNetwork();
+      console.log("switch case for this case is: " + chainId);
+
+      let contract;
+      let tokenContract;
+      let marketContract;
+
+      if (chainId === 80001) {
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+          user,
+          provider
+        );
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+          classicChords,
+          provider
+        );
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+          market,
+          provider
+        );
+      } else if (chainId === 1029) {
+        console.log("inside the BTTC");
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+          userBTTC,
+          provider
+        );
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+          classicChordsBTTC,
+          provider
+        );
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+          marketBTTC,
+          provider
+        );
+      }
+      // const contract = new ethers.Contract(
+      //   process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+      //   user,
+      //   provider
+      // );
+      // const marketContract = new ethers.Contract(
+      //   process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+      //   market,
+      //   provider
+      // );
+      // const tokenContract = new ethers.Contract(
+      //   process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+      //   classicChords,
+      //   provider
+      // );
       const tx = await contract.userMapping(params.id);
       const listed_data = await marketContract.getUserListedNfts(params.id);
       console.log(listed_data);
@@ -106,11 +155,20 @@ function ArtistSingle() {
       }
       const { chainId } = await provider.getNetwork();
       console.log("switch case for this case is: " + chainId);
-      const contract = new ethers.Contract(
-        process.env.REACT_APP_USER_ADDRESS,
-        user,
-        signer
-      );
+      let contract;
+      if (chainId === 80001) {
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+          user,
+          signer
+        );
+      } else if (chainId === 1029) {
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+          userBTTC,
+          signer
+        );
+      }
       console.log(contract);
       console.log(requestData);
       console.log(singleArtist.userAddress);

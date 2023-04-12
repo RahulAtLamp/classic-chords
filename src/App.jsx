@@ -54,7 +54,7 @@ const BTTChain = {
 };
 
 const { provider, chains } = configureChains(
-  [polygonMumbai, BTTChain, mainnet, polygon],
+  [polygonMumbai, BTTChain],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: "https://pre-rpc.bittorrentchain.io/" }),

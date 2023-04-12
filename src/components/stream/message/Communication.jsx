@@ -13,6 +13,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
   const [activeAddress, setActiveAddress] = useState("");
   const [client, setClient] = useState(null);
   const [allConversations, setAllConversations] = useState([]);
+  const [count, setCount] = useState(2);
   const [allMessages, setAllMessages] = useState([
     {
       sender: address,
@@ -28,7 +29,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
   });
 
   const ContentTypeAudioKey = new ContentTypeId({
-    authorityId: "classicchords.xyz",
+    authorityId: "http://192.168.1.12:3000",
     typeId: "superChat",
     versionMajor: 1,
     versionMinor: 0,
@@ -119,7 +120,13 @@ function Communication({ setShowSuper, streamId, notShow }) {
       let myAppConversations = allMessages;
       console.log(allMessages);
       myAppConversations.push(newMessage);
+      console.log(myAppConversations);
+      // for (let i = 0; i < 20; i++) {
+      //   console.log(myAppConversations[i]);
+      //   allMessages.push(myAppConversations[i]);
+      // }
       setAllMessages(myAppConversations);
+      setCount((prev) => prev + 1);
       setSingleMessage("");
     }
   };
@@ -213,7 +220,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
         <div className="inactive_client_main">
           <div className="inactive_client_inner">
             <div className="inactive_client_message">
-             Signin to XMTP to interact in live stream.
+              Signin to XMTP to interact in live stream.
             </div>
             <div className="inactive_client_btn_holder">
               <button
@@ -236,6 +243,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
         {client ? (
           <div className="message__main">
             {/* <ConversationLeft allConversations={allConversations} setAllConversations={setAllConversations} client={client} activeAddress={activeAddress} setActiveAddress={setActiveAddress} /> */}
+
             <ConversationRight
               allMessages={allMessages}
               activeAddress={activeAddress}
@@ -243,6 +251,7 @@ function Communication({ setShowSuper, streamId, notShow }) {
               singleMessage={singleMessage}
               setSingleMessage={setSingleMessage}
               notShow={notShow}
+              count={count}
             />
           </div>
         ) : null}

@@ -3,6 +3,8 @@ import { useAccount } from "wagmi";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactPlayer from "react-player";
 import user from "../../contract/artifacts/userStream.json";
+import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+
 import { ethers } from "ethers";
 import axios from "axios";
 import "./single-stream.scss";
@@ -38,13 +40,18 @@ function SingleStream() {
         console.log("switch case for this case is: " + chainId);
         if (chainId === 80001) {
           const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS,
+            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
             user,
             signer
           );
           return contract;
-        } else {
-          alert("Please connect to the Mumbai Testnet Network!");
+        } else if (chainId === 1029) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+            userBTTC,
+            signer
+          );
+          return contract;
         }
       }
     } catch (error) {
