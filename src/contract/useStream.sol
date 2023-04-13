@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -57,7 +58,7 @@ contract userStream {
     mapping (uint => Stream) public streamIdToStream;
     mapping (string => Stream) public streamCodeToStream;
     mapping (uint => SongRequest) public songRequestIdToRequest;
-    mapping (address => SongRequest[]) public addressToSongRequest;
+    mapping (address => uint[]) public addressToSongRequest;
     
 
     event StreamCreated(
@@ -196,18 +197,7 @@ function requestSong(string memory _name, string memory _story, address _request
       false,
       _isGlobalRequest
     );
-  addressToSongRequest[_requestTo].push(SongRequest(
-    requestId,
-    _name,
-    _story,
-    "",
-    _budget,
-    _requestTo,
-    msg.sender,
-    false,
-    false,
-    _isGlobalRequest
-  ));
+  addressToSongRequest[_requestTo].push(requestId);
 }
 
 function songRequestResponse(uint _requestId, bool _answer) public {
@@ -216,10 +206,10 @@ function songRequestResponse(uint _requestId, bool _answer) public {
   require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
   _songRequest.requestTo = msg.sender;
   if(_answer){
-  _songRequest.isAccept = true;
+  songRequestIdToRequest[_requestId].isAccept = true;
   }
   else{
-      _songRequest.isDecline = true;
+      songRequestIdToRequest[_requestId].isDecline = true;
   }
 }
 
@@ -227,7 +217,7 @@ function sumbitWork(uint _requestId, string memory _cid) public {
   require(_requestId != 0, "Wrong Request Id");
   SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
   require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
-  _songRequest.cid = _cid;
+  songRequestIdToRequest[_requestId].cid = _cid;
 }
 
 function approveWork(uint _requestId) public {
@@ -243,7 +233,7 @@ function getSongRequestByCreator(address _address) public view returns (SongRequ
   SongRequest[] memory requests = new SongRequest[](addressToSongRequest[_address].length);
   uint requestIndex = 0;
   for (uint i = 0; i < addressToSongRequest[_address].length; i++) {
-      SongRequest storage _songRequest = addressToSongRequest[_address][i];
+      SongRequest storage _songRequest = songRequestIdToRequest[addressToSongRequest[_address][i]];
       requests[requestIndex] = _songRequest;
       requestIndex++;
   }

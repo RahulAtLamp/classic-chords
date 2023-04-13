@@ -56,6 +56,17 @@ function AllRequests() {
       console.log(error);
     }
   };
+  const songReqResponse = async (id, ans) => {
+    console.log(id, ans);
+    try {
+      const contract = await getContract();
+      console.log(contract);
+      const tx = await contract.songRequestResponse(id, ans);
+      await tx.wait();
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getAllRequests();
   }, []);
@@ -65,23 +76,34 @@ function AllRequests() {
         <div className="exp-header">All Requests</div>
         {requests.length > 0
           ? requests.map((item, key) => {
-              return (
-                <div className="requests-main" key={key}>
-                  <div className="request-details">
-                    <h3 className="request-title">{item[1]}</h3>
-                    <p className="request-story">{item[2]}</p>
-                    <h3 className="request-budget">
-                      Budget : {parseFloat(item[4], 16)} MATIC
-                    </h3>
-                  </div>
-                  <div className="request-response">
-                    <div className="request-res-buttons">
-                      <button className="accept-request">Accept</button>
-                      <button className="rejest-request">Reject</button>
+              if (!item.isAccept && !item.isDecline) {
+                return (
+                  <div className="requests-main" key={key}>
+                    <div className="request-details">
+                      <h3 className="request-title">{item[1]}</h3>
+                      <p className="request-story">{item[2]}</p>
+                      <h3 className="request-budget">
+                        Budget : {parseFloat(item[4], 16)} MATIC
+                      </h3>
+                    </div>
+                    <div className="request-response">
+                      <div className="request-res-buttons">
+                        <button
+                          className="accept-request"
+                          onClick={() =>
+                            songReqResponse(parseInt(item[0]), true)
+                          }
+                        >
+                          Accept
+                        </button>
+                        {/* <button className="rejest-request">Reject</button> */}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
+                );
+              } else {
+                return <></>;
+              }
             })
           : ""}
       </div>
