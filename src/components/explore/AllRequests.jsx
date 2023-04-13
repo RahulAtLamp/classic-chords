@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
+import "./AllRequests.scss";
 import user from "../../contract/artifacts/userStream.json";
 import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 
@@ -44,7 +45,13 @@ function AllRequests() {
     try {
       const contract = await getContract();
       const reqs = await contract.getAllGlobalRequest();
+      console.log(reqs.length);
       console.log(reqs);
+      // for (let i = 0; i < 2; i++) {
+      //   requests.push(reqs[i]);
+      //   // setRequests((prev) => prev.push(reqs[i]));
+      // }
+      setRequests(reqs);
     } catch (error) {
       console.log(error);
     }
@@ -56,8 +63,27 @@ function AllRequests() {
     <>
       <div className="exp">
         <div className="exp-header">All Requests</div>
-
-        {}
+        {requests.length > 0
+          ? requests.map((item, key) => {
+              return (
+                <div className="requests-main" key={key}>
+                  <div className="request-details">
+                    <h3 className="request-title">{item[1]}</h3>
+                    <p className="request-story">{item[2]}</p>
+                    <h3 className="request-budget">
+                      Budget : {parseFloat(item[4], 16)} MATIC
+                    </h3>
+                  </div>
+                  <div className="request-response">
+                    <div className="request-res-buttons">
+                      <button className="accept-request">Accept</button>
+                      <button className="rejest-request">Reject</button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : ""}
       </div>
     </>
   );

@@ -1,0 +1,110 @@
+/* Song Request component styles */
+
+.requests-main {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: 20px auto;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  color: #fff;
+  //   background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid white;
+  position: relative;
+
+  .request-details {
+    flex: 1 1 70%;
+    margin-right: 2rem;
+
+    .request-title {
+      font-family: "Neon";
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .request-story {
+      font-family: "Gilmer-Light";
+      font-size: 1.2rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .request-budget {
+      font-family: "Gilmer-Light";
+      display: flex;
+      flex-direction: row;
+      font-size: 1.2rem;
+    }
+  }
+  .request-response {
+    display: none;
+
+    .request-res-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      button {
+        display: inline-block;
+        margin-bottom: 1rem;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 0.25rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid black;
+        }
+      }
+      .accept-request {
+        background-color: #4caf50;
+        border: 1px solid #4caf50;
+        color: #fff;
+      }
+      .rejest-request {
+        background-color: #f44336;
+        border: 1px solid #f44336;
+        color: #fff;
+      }
+    }
+  }
+}
+@media (hover: hover) and (pointer: fine) {
+  .requests-main:hover {
+    .request-details {
+      opacity: 0.5;
+    }
+    .request-response {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.1);
+      transform: translate(-50%, -50%);
+      max-width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .requests-main {
+    .request-response {
+      position: relative;
+      max-width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
