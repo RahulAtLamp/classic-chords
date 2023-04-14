@@ -97,10 +97,14 @@
     margin-top: 100px;
 
     .nfts-minted-header {
-      font-size: 40px;
-      font-family: "FontsFree";
+      font-size: 3rem;
+      font-family: "Neon";
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
       color: #ffffff;
-      width: 495px;
+      // width: 495px;
+      text-align: center;
       margin: 0 auto;
       white-space: nowrap;
     }
@@ -346,7 +350,7 @@
 
         .user-update-btn {
           font-size: 20px;
-          font-family: "FontsFree";
+          font-family: "Neon";
           border-radius: 20px;
           padding: 0 10px;
           background-color: #251b43;
@@ -412,7 +416,7 @@
 .profile-title {
   text-align: center;
   font-size: medium;
-  font-family: "FontsFree";
+  font-family: "Gilmer-Light";
   padding-top: 100px;
   color: #ffffff;
   padding-top: 100px;
@@ -494,5 +498,74 @@
     .profile-information
     .user-update-btn {
     font-size: 15px;
+  }
+}
+
+// popup css
+.overlay {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  z-index: 100000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+#modal {
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: 0;
+  // width: 80%;
+  // height: 80vh;
+  // max-width: 900px;
+  border-radius: 20px;
+  transform: translate(-50%, -50%);
+  // text-align: center;
+  padding: 30px;
+  z-index: 200000;
+  text-align: center;
+  background: linear-gradient(180deg, #8359be 20%, #793ad8 50%, #a886fb);
+}
+
+.submit-work-popup {
+  font-family: "Gilmer";
+  .heading {
+    color: white;
+    font-family: "Neon";
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .input-outer {
+    cursor: pointer;
+    border-radius: 20px;
+    width: 50%;
+    margin: 0 auto;
+    border: 2px dashed white;
+    padding: 1rem;
+  }
+  svg {
+    margin: 10px 0px;
+  }
+  p {
+    margin: 10px 0px;
+    color: #ffffff;
+    font-weight: 700;
+    font-family: "Gilmer";
+    font-size: 1.5rem;
+  }
+  .submit-work-upload {
+    background-color: #251b43;
+    border: 1px solid #251b43;
+    color: #ffffff;
+    margin: 20px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 99999px;
   }
 }

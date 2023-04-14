@@ -17,16 +17,25 @@ import axios from "axios";
 import Loading3 from "../../loading3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { isCompositeComponentWithType } from "react-dom/test-utils";
 // import Loading from "../../loading";
 
+const client = new Web3Storage({
+  token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng",
+});
+
 const Profile = () => {
+  const fileInputRef = useRef();
   const { isConnected, address } = useAccount();
   const [profileWindow, showProfileWindow] = useState(false);
   const [showMintedNFTs, setMintedNFTs] = useState(true);
   const [showOwnedNFTs, setOwnedNFTs] = useState(false);
   const [requests, setRequests] = useState(false);
   const [allRequests, setAllRequests] = useState(true);
-  const [acceptedRequests, setAcceptedRequests] = useState(false);
+  const [requested, setRequested] = useState(false);
+  const [myRequests, setMyRequests] = useState(false);
+  const [requestIdSubmitWork, setRequestIdSubmitWork] = useState();
 
   const fileRef = useRef(null);
   const editUserPopup = useRef(null);
@@ -52,6 +61,7 @@ const Profile = () => {
   const [profileLoading, setProfileLoading] = useState(true);
   const [artistSelected, setArtistSelected] = useState(false);
   const [showChargesOfUser, setChargesOfUser] = useState();
+  const [submitWorkPopup, setSubmitWorkPopup] = useState(false);
 
   const [ENSName, setENSName] = useState("");
   const [ENSAvatar, setENSAvatar] = useState(null);
@@ -133,7 +143,7 @@ const Profile = () => {
         // console.log(await tokenContract.mintedNfts(address));
         const ids = await tokenContract.mintedNfts(address);
         const ids2 = await marketContract.getUserNfts(address);
-        const allRequests = await contract.getSongRequestByCreator(address);
+        const allRequests = await contract.getAllGlobalRequest();
         console.log(allRequests);
         setRequests(allRequests);
         // console.log(ids.length);
@@ -211,20 +221,6 @@ const Profile = () => {
     }
   };
 
-  // const profile = useEnsName(
-  //   "0x084c145f98C975a71a2fD5d3E5eAB84c0FC52fDf",
-  //   0,
-  //   5
-  // );
-
-  // console.log(profile);
-
-  const checkENS = async () => {
-    // const profile = await ensInstance.getName("0x6Ea2D65538C1eAD906bF5F7EdcfEa03B504297ce");
-    // const profile = await ensInstance.getProfile("rahulrajan.eth");
-    // console.log(profile);
-  };
-
   const addChain = () => {
     if (window.ethereum) {
       window.ethereum.request({
@@ -248,23 +244,6 @@ const Profile = () => {
       alert("Please Install a wallet to proceed.");
     }
   };
-
-  // const checkChain = async () => {
-  //   if (window.ethereum) {
-  //     const { ethereum } = window;
-  //     const provider = new ethers.providers.Web3Provider(ethereum);
-  //     const { chainId } = await provider.getNetwork();
-  //     if (chainId !== 80001) {
-  //       setChainStatus(true);
-  //       return true;
-  //     } else {
-  //       setChainStatus(false);
-  //       return false;
-  //     }
-  //   } else {
-  //     alert("Please install a wallet.");
-  //   }
-  // };
 
   const getContract = async () => {
     try {
@@ -377,32 +356,20 @@ const Profile = () => {
     }
   };
 
-  // const { data: ensName } = useEnsName({
-  //     address: address,
-  //     chainId: 5,
-  //     // onSuccess(ensName) {
-  //     //     setENSName(ensName)
-  //     //     console.log("ensName", ensName);
-  //     // }
-  // });
-
-  // console.log(ensName?.data);
-
-  // const { data, isError, isLoading } = useEnsName({
-  //     address: address
-  // });
-
-  // const { data: ensAvatar } = useEnsAvatar({
-  //     address: address,
-  //     chainId: 5,
-  //     enabled: false,
-  //     cacheTime: 2_000,
-  //     onSuccess(ensAvatar, error) {
-  //         console.log(ensAvatar);
-  //         setENSAvatar(ensAvatar);
-  //         console.log("success", { ensAvatar, error })
-  //     },
-  // });
+  const submitWork = async (request_id) => {
+    const fileInput = document.getElementById("submitwork");
+    const cid = await client.put(fileInput.files);
+    const fileCidWithName = cid + "/" + fileInput.files[0].name;
+    console.log(request_id, fileCidWithName);
+    try {
+      const contract = await getContract();
+      console.log(contract);
+      const tx = await contract.sumbitWork(request_id, fileCidWithName);
+      await tx.wait();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (!isConnected) {
@@ -613,11 +580,6 @@ const Profile = () => {
                                 <p className="nfts-description">
                                   {collection.description}
                                 </p>
-                                {/* <div className="buy-button-holder">
-                                                                        <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> <span className='buy-button-tag'>Put on sale </span>
-                                                                            &nbsp; <img src="/images/tl.svg" width="15px" height="15px" /><span>{collection.price}</span>
-                                                                        </button>
-                                                                    </div> */}
                               </div>
                             </div>
                           </Link>
@@ -641,24 +603,39 @@ const Profile = () => {
                     className={allRequests ? "active" : ""}
                     onClick={() => {
                       setAllRequests(true);
-                      setAcceptedRequests(false);
+                      setRequested(false);
+                      setMyRequests(false);
                     }}
                   >
                     All Requests
                   </button>
                   <button
-                    className={acceptedRequests ? "active" : ""}
+                    className={myRequests ? "active" : ""}
                     onClick={() => {
                       setAllRequests(false);
-                      setAcceptedRequests(true);
+                      setRequested(false);
+                      setMyRequests(true);
                     }}
                   >
-                    Accepted
+                    My Requests
+                  </button>
+                  <button
+                    className={requested ? "active" : ""}
+                    onClick={() => {
+                      setAllRequests(false);
+                      setRequested(true);
+                      setMyRequests(false);
+                    }}
+                  >
+                    Requested
                   </button>
                 </div>
                 {requests.length > 0 && allRequests
                   ? requests.map((item, key) => {
-                      if (item.requestTo === address) {
+                      if (
+                        item.requestTo === address ||
+                        item.requestBy === address
+                      ) {
                         return (
                           <div className="requests-main" key={key}>
                             <div className="request-details">
@@ -723,12 +700,73 @@ const Profile = () => {
                       }
                     })
                   : ""}
-                {requests.length > 0 && acceptedRequests
+                {requests.length > 0 && myRequests
                   ? requests.map((item, key) => {
-                      if (
-                        item.requestTo === address &&
-                        (item.isAccept || item.isDecline)
-                      ) {
+                      if (item.requestBy === address) {
+                        return (
+                          <div className="requests-main" key={key}>
+                            <div className="request-details">
+                              <h3 className="request-title">{item[1]}</h3>
+                              <p className="request-story">{item[2]}</p>
+                              <h3 className="request-budget">
+                                Budget : {parseFloat(item[4])} MATIC
+                              </h3>
+                            </div>
+                            <div className="request-response">
+                              <div className="request-res-buttons">
+                                <button
+                                  className={
+                                    item.isAccept
+                                      ? "disable accept-request"
+                                      : "accept-request"
+                                  }
+                                  onClick={() =>
+                                    songReqResponse(parseInt(item[0]), true)
+                                  }
+                                >
+                                  {item.isAccept ? (
+                                    <>
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        height="24px"
+                                        viewBox="0 0 24 24"
+                                        width="24px"
+                                        fill="#000000"
+                                      >
+                                        <path d="M0 0h24v24H0V0z" fill="none" />
+                                        <path d="M17.3 6.3c-.39-.39-1.02-.39-1.41 0l-5.64 5.64 1.41 1.41L17.3 7.7c.38-.38.38-1.02 0-1.4zm4.24-.01l-9.88 9.88-3.48-3.47c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L22.95 7.71c.39-.39.39-1.02 0-1.41h-.01c-.38-.4-1.01-.4-1.4-.01zM1.12 14.12L5.3 18.3c.39.39 1.02.39 1.41 0l.7-.7-4.88-4.9c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.03 0 1.42z" />
+                                      </svg>
+                                      Accepted
+                                    </>
+                                  ) : (
+                                    "Accept"
+                                  )}
+                                </button>
+                                {item.isAccept && item.requestBy !== address ? (
+                                  <button
+                                    className="submit-work"
+                                    onClick={() => {
+                                      setRequestIdSubmitWork(parseInt(item[0]));
+                                      setSubmitWorkPopup(!submitWorkPopup);
+                                    }}
+                                  >
+                                    Submit Work
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      } else {
+                        return "";
+                      }
+                    })
+                  : ""}
+                {requests.length > 0 && requested
+                  ? requests.map((item, key) => {
+                      if (item.requestTo === address) {
                         return (
                           <div className="requests-main" key={key}>
                             <div className="request-details">
@@ -771,9 +809,10 @@ const Profile = () => {
                                 {item.isAccept ? (
                                   <button
                                     className="submit-work"
-                                    onClick={() =>
-                                      songReqResponse(parseInt(item[0]), false)
-                                    }
+                                    onClick={() => {
+                                      setRequestIdSubmitWork(parseInt(item[0]));
+                                      setSubmitWorkPopup(!submitWorkPopup);
+                                    }}
                                   >
                                     Submit Work
                                   </button>
@@ -916,117 +955,57 @@ const Profile = () => {
                   </div>
                 </div>
               ) : null}
+
+              {submitWorkPopup ? (
+                <>
+                  <div
+                    className="overlay"
+                    onClick={() => setSubmitWorkPopup(false)}
+                  ></div>
+                  <div id="modal">
+                    <div className="submit-work-popup">
+                      <h2 className="heading">Submit Work</h2>
+                      <div
+                        className="input-outer"
+                        onClick={() => fileInputRef.current.click()}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          enableBackground="new 0 0 24 24"
+                          height="24px"
+                          viewBox="0 0 24 24"
+                          width="24px"
+                          fill="#ffffff"
+                        >
+                          <g>
+                            <rect fill="none" height="24" width="24" />
+                          </g>
+                          <g>
+                            <path d="M19.41,7.41l-4.83-4.83C14.21,2.21,13.7,2,13.17,2H6C4.9,2,4.01,2.9,4.01,4L4,20c0,1.1,0.89,2,1.99,2H18c1.1,0,2-0.9,2-2 V8.83C20,8.3,19.79,7.79,19.41,7.41z M14.8,15H13v3c0,0.55-0.45,1-1,1s-1-0.45-1-1v-3H9.21c-0.45,0-0.67-0.54-0.35-0.85l2.8-2.79 c0.2-0.19,0.51-0.19,0.71,0l2.79,2.79C15.46,14.46,15.24,15,14.8,15z M14,9c-0.55,0-1-0.45-1-1V3.5L18.5,9H14z" />
+                          </g>
+                        </svg>
+                        <p>Upload Your Work</p>
+                      </div>
+                      <input
+                        type="file"
+                        id="submitwork"
+                        hidden
+                        ref={fileInputRef}
+                      />
+                      <button
+                        className="submit-work-upload"
+                        onClick={() => submitWork(requestIdSubmitWork)}
+                      >
+                        Upload
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </>
           )}
         </div>
 
-        {/* added tabs for three buttons */}
-        <div>
-          <button>Minted NFTs</button>
-          <button>Owned NFTs</button>
-          <button>Requests</button>
-        </div>
-        {showMintedNFTs ? (
-          <>
-            <div className="nfts-minted-holder">
-              <div className="nfts-minted-container">
-                <div className="nfts-creations-list">
-                  {isCompLoading ? (
-                    mintedNfts.length > 0 ? (
-                      mintedNfts.map((collection, i) => (
-                        <Link key={i} to={"/sell-nft/" + collection.id}>
-                          <div className="nfts-collection-pa">
-                            <div className="nfts-bg">
-                              <div className="nfts-img">
-                                <video
-                                  className="nfts-nft"
-                                  src={collection.image}
-                                  controls
-                                />
-                              </div>
-                              <div
-                                className="nfts-name"
-                                title={collection.name}
-                              >
-                                {collection.name}
-                              </div>
-                              <p className="nfts-description">
-                                {collection.description}
-                              </p>
-                              {/* <div className="buy-button-holder">
-                                                                        <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> <span className='buy-button-tag'>Put on sale </span>
-                                                                            &nbsp; <img src="/images/tl.svg" width="15px" height="15px" /><span>{collection.price}</span>
-                                                                        </button>
-                                                                    </div> */}
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    ) : (
-                      <h4 className="profile-title">No Nfts Found...</h4>
-                    )
-                  ) : (
-                    <h4 className="profile-title">Loading</h4>
-                  )}
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
-        {showOwnedNFTs ? (
-          <>
-            {" "}
-            <div className="nfts-minted-holder">
-              <div className="nfts-minted-container">
-                <div className="nfts-creations-list">
-                  {isCompLoading ? (
-                    userNfts.length > 0 ? (
-                      userNfts.map((collection, i) => (
-                        <Link key={i} to={"/sell-nft/" + collection.id}>
-                          <div className="nfts-collection-pa">
-                            <div className="nfts-bg">
-                              <div className="nfts-img">
-                                <video
-                                  className="nfts-nft"
-                                  src={collection.image}
-                                  controls
-                                />
-                              </div>
-                              <div
-                                className="nfts-name"
-                                title={collection.name}
-                              >
-                                {collection.name}
-                              </div>
-                              <p className="nfts-description">
-                                {collection.description}
-                              </p>
-                              {/* <div className="buy-button-holder">
-                                                                        <button className="buy-button" onClick={(e) => { e.preventDefault(); }}> <span className='buy-button-tag'>Put on sale </span>
-                                                                            &nbsp; <img src="/images/tl.svg" width="15px" height="15px" /><span>{collection.price}</span>
-                                                                        </button>
-                                                                    </div> */}
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    ) : (
-                      <>
-                        <h4 className="profile-title">No Nfts Found...</h4>
-                      </>
-                    )
-                  ) : (
-                    <h4 className="profile-title">Loading</h4>
-                  )}
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
         {/* till here new code  */}
         <ToastContainer
           position="bottom-right"

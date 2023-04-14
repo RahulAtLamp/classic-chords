@@ -49,6 +49,7 @@ contract userStream {
       address requestBy;
       bool isAccept;
       bool isDecline;
+      bool isApproved;
       bool isGlobalRequest;
     }
 
@@ -195,6 +196,7 @@ function requestSong(string memory _name, string memory _story, address _request
       msg.sender,
       false,
       false,
+      false,
       _isGlobalRequest
     );
   addressToSongRequest[_requestTo].push(requestId);
@@ -204,6 +206,9 @@ function songRequestResponse(uint _requestId, bool _answer) public {
   require(_requestId != 0, "Wrong Request Id");
   SongRequest storage _songRequest = songRequestIdToRequest[_requestId];
   require(_songRequest.requestTo == msg.sender || _songRequest.isGlobalRequest, "You are not the artist.");
+  if(_songRequest.isGlobalRequest){
+      addressToSongRequest[msg.sender].push(_requestId);
+  }
   _songRequest.requestTo = msg.sender;
   if(_answer){
   songRequestIdToRequest[_requestId].isAccept = true;
@@ -226,6 +231,7 @@ function approveWork(uint _requestId) public {
   require(_songRequest.requestBy == msg.sender , "You are not the Requester.");
   userMapping[_songRequest.requestTo].totalEarning += _songRequest.budget;
   address payable _requester = payable(msg.sender);
+  songRequestIdToRequest[_requestId].isApproved = true;
   _requester.transfer(_songRequest.budget);
 }
 

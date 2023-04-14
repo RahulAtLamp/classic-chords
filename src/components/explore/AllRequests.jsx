@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import "./AllRequests.scss";
 import user from "../../contract/artifacts/userStream.json";
 import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+import { useAccount } from "wagmi";
 
 function AllRequests() {
+  const { address } = useAccount();
   // for creating the contract instance
 
   const [requests, setRequests] = useState([]);
@@ -76,34 +78,79 @@ function AllRequests() {
         <div className="exp-header">All Requests</div>
         {requests.length > 0
           ? requests.map((item, key) => {
-              if (!item.isAccept && !item.isDecline) {
-                return (
-                  <div className="requests-main" key={key}>
-                    <div className="request-details">
-                      <h3 className="request-title">{item[1]}</h3>
-                      <p className="request-story">{item[2]}</p>
-                      <h3 className="request-budget">
-                        Budget : {parseFloat(item[4], 16)} MATIC
-                      </h3>
-                    </div>
-                    <div className="request-response">
-                      <div className="request-res-buttons">
+              return (
+                <div className="requests-main" key={key}>
+                  <div className="request-details">
+                    <h3 className="request-title">{item[1]}</h3>
+                    <p className="request-story">{item[2]}</p>
+                    <h3 className="request-budget">
+                      Budget : {parseFloat(item[4], 16)} MATIC
+                    </h3>
+                    <span className="status">Status :</span>
+                    <span>
+                      {item[6] !== address
+                        ? item.isAccept && item.requestTo !== address
+                          ? "Accepted"
+                          : item.isAccept && item.requestTo === address
+                          ? "Submit Work"
+                          : item.isAccept &&
+                            item.requestTo === address &&
+                            item.cid.length > 0
+                          ? "Waiting for Approval"
+                          : "Paid"
+                        : !item.isAccept && !item.isDecline
+                        ? "Pending"
+                        : item.isAccept &&
+                          !item.isDecline &&
+                          item.cid.length === 0
+                        ? "Work Awaited"
+                        : item.isDecline
+                        ? "Decline"
+                        : item.isAccept && item.cid.length > 0
+                        ? "View Work"
+                        : ""}
+                      {item.isAccept ? " Accepted" : " Not Accepted Yet"}
+                    </span>
+                  </div>
+                  <div className="request-response">
+                    <div className="request-res-buttons">
+                      {item[6] !== address ? (
                         <button
-                          className="accept-request"
+                          className={
+                            item.isAccept
+                              ? "disable accept-request"
+                              : "accept-request"
+                          }
                           onClick={() =>
                             songReqResponse(parseInt(item[0]), true)
                           }
                         >
-                          Accept
+                          {item.isAccept ? (
+                            <>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24px"
+                                viewBox="0 0 24 24"
+                                width="24px"
+                                fill="#000000"
+                              >
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M17.3 6.3c-.39-.39-1.02-.39-1.41 0l-5.64 5.64 1.41 1.41L17.3 7.7c.38-.38.38-1.02 0-1.4zm4.24-.01l-9.88 9.88-3.48-3.47c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41l4.18 4.18c.39.39 1.02.39 1.41 0L22.95 7.71c.39-.39.39-1.02 0-1.41h-.01c-.38-.4-1.01-.4-1.4-.01zM1.12 14.12L5.3 18.3c.39.39 1.02.39 1.41 0l.7-.7-4.88-4.9c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.03 0 1.42z" />
+                              </svg>
+                              Accepted
+                            </>
+                          ) : (
+                            "Accept"
+                          )}
                         </button>
-                        {/* <button className="rejest-request">Reject</button> */}
-                      </div>
+                      ) : (
+                        ""
+                      )}
+                      {/* <button className="rejest-request">Reject</button> */}
                     </div>
                   </div>
-                );
-              } else {
-                return <></>;
-              }
+                </div>
+              );
             })
           : ""}
       </div>
