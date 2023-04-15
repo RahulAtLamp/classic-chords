@@ -1,30 +1,23 @@
 import { useEffect, useState, useRef } from "react";
 
-import { GUI } from "dat.gui";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import Counter from "../Counter";
 
-import SceneInit from "./lib/SceneInit";
-import Piano from "./lib/Piano";
-import MIDISounds from "midi-sounds-react";
 import Visualizer from "./art/visualizer";
 import "./player.scss";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Piano from "./3dInstruments/Piano"
+import Drums from "./3dInstruments/Drums"
 
 const toastInfo = () =>
   toast.info("Select any tab and share the system audio to record piano.");
 
 function Player() {
-  const [selectedInstrument, setSelectedInstrument] = useState(31);
-  const p = new Piano();
-  const gui = new GUI();
+  
   const [recordingStatus, setRecordingStatus] = useState(null);
   const [timeControl, setTimeControl] = useState(false);
-  const [counter, setCounter] = useState(1);
-
-  let items = null;
-  const midiSounds = useRef(null);
+  const [loadingPercentage, setLoadingPercentage] = useState();
+  const [selectPlayer , setSelectPlayer] = useState({piano: false, drums: false})
 
   const StartRecording = () => {
     setRecordingStatus(true);
@@ -41,137 +34,6 @@ function Player() {
     setRecordingStatus(null);
   };
 
-  useEffect(() => {
-    const test = new SceneInit("pianoHolder", "pianoCanvas");
-    test.initScene();
-    test.animate();
-    // midiSounds.cacheInstrument(selectedInstrument);
-    gui.domElement.id = "gui";
-
-    test.scene.add(p.getPianoGroup());
-
-    const fontLoader = new FontLoader();
-    fontLoader.load("./fonts/Helvetica-Bold.typeface.json", (font) => {
-      p.renderText(font);
-    });
-
-    test.camera.position.z = 226;
-    test.camera.position.x = -40;
-    test.camera.position.y = 30;
-
-    const cameraFolder = gui.addFolder("Camera");
-    cameraFolder.add(test.camera.position, "z", 100, 250);
-
-    // NOTE: UI bug caused by importing tailwind css.
-    const pianoFolder = gui.addFolder("Piano");
-    pianoFolder.addColor(p, "highlightColor").name("Highlight Color");
-    pianoFolder
-      .add(p, "displayText")
-      .name("Display Text")
-      .onChange((value) => {
-        if (value) {
-          p.renderText();
-        } else {
-          p.hideText();
-        }
-      });
-
-    // var obj = { Start_Recording: function () { document.getElementById('startR').click(); } };
-
-    // pianoFolder.add(obj, 'Start_Recording').name("Start Recording");
-
-    // var obj_2 = { Stop_Recording: function () { document.getElementById('stopR').click(); } };
-
-    // pianoFolder.add(obj_2, 'Stop_Recording').name("Stop Recording");
-
-    const createSelectItems = () => {
-      if (midiSounds) {
-        if (!items) {
-          let items = {};
-          for (
-            let i = 0;
-            i < midiSounds.current.player.loader.instrumentKeys().length;
-            i++
-          ) {
-            items[midiSounds.current.player.loader.instrumentInfo(i).title] = i;
-          }
-          return items;
-        }
-      }
-    };
-
-    // console.log(createSelectItems());
-
-    var config = {
-      "Select Instrument": selectedInstrument,
-    };
-
-    pianoFolder
-      .add(config, "Select Instrument", createSelectItems())
-      .onChange((value) => {
-        console.log(value);
-        if (value) {
-          setSelectedInstrument(value);
-          midiSounds.current.cacheInstrument(value);
-        }
-      });
-
-    pianoFolder.open();
-
-    const onKeyDown = (event) => {
-      if (event.key === "h" || event.key === "H") {
-        gui.__proto__.constructor.toggleHide();
-      }
-      if (event.repeat) {
-        return;
-      }
-      p.maybePlayNote(event.key, midiSounds.current, selectedInstrument);
-    };
-
-    const onKeyUp = (event) => {
-      p.maybeStopPlayingNote(event.key);
-    };
-
-    window.addEventListener("keyup", onKeyUp);
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("keyup", onKeyUp);
-      window.removeEventListener("keydown", onKeyDown);
-      // pianoFolder.destroy();
-      gui.removeFolder(pianoFolder);
-      gui.removeFolder(cameraFolder);
-      gui.destroy();
-    };
-  }, [selectedInstrument]);
-
-  useEffect(() => {
-    // document.getElementById("gui").outerHTML = "";
-    // console.log(first)
-    const test = new SceneInit("pianoHolder", "pianoCanvas");
-    test.initScene();
-    test.animate();
-    // midiSounds.cacheInstrument(selectedInstrument);
-
-    test.scene.add(p.getPianoGroup());
-
-    const fontLoader = new FontLoader();
-    fontLoader.load("./fonts/Helvetica-Bold.typeface.json", (font) => {
-      console.log(font);
-      p.renderText(font);
-    });
-
-    test.camera.position.z = 226;
-    test.camera.position.x = -40;
-    test.camera.position.y = 30;
-
-    if (selectedInstrument) {
-      midiSounds.current.cacheInstrument(selectedInstrument);
-      midiSounds.current.selectedInstrument = selectedInstrument;
-    }
-  }, [selectedInstrument]);
-
-  console.log(selectedInstrument);
 
   return (
     <div className="player-main">
@@ -200,9 +62,14 @@ function Player() {
           Stop Recording
         </button>
       </div>
+      
       <div id="gui"></div>
       <div id="pianoHolder">
-        <canvas id="pianoCanvas"></canvas>
+        {selectPlayer.piano ? <Piano onProgress={loadingPercentage => setLoadingPercentage({ loadingPercentage })} />
+        :
+        <Drums onProgress={loadingPercentage => setLoadingPercentage({ loadingPercentage })} />}
+
+        {/* <canvas id="pianoCanvas"></canvas>
         <div style={{ display: "none" }}>
           {counter ? (
             <MIDISounds
@@ -211,7 +78,7 @@ function Player() {
               instruments={[selectedInstrument]}
             />
           ) : null}
-        </div>
+        </div> */}
         <Visualizer />
       </div>
       <ToastContainer
