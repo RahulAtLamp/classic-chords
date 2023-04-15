@@ -7,7 +7,6 @@ import MIDISounds from "midi-sounds-react";
 
 const style = {
   height: 500,
-  backgroundColor: "red", // we can control scene size by setting container dimensions
 };
 
 class Piano extends Component {
@@ -286,20 +285,20 @@ class Piano extends Component {
       "Royal.obj",
       // called when resource is loaded
       (object) => {
-        this.scene.add(object);
 
-        // get the newly added object by name specified in the OBJ model (that is Elephant_4 in my case)
-        // you can always set console.log(this.scene) and check its children to know the name of a model
-        const el = this.scene.getObjectByName("Box010");
+        const root = new THREE.Group();
+        root.add(object);
 
-        // // change some custom props of the element: placement, color, rotation, anything that should be
-        // // done once the model was loaded and ready for display
-        // el.position.set(0, -150,0 );
-        // el.material.color.set(0x50C878);
-        // el.rotation.x = 23.5;
-
-        // // make this element available inside of the whole component to do any animation later
-        this.model = el;
+        root.scale.set(7, 7, 7);
+        root.position.set(0,-140,0)
+        const radians = Math.PI/2 - Math.PI/8  // 90 degrees in radians
+        root.rotation.y = radians;
+        root.rotation.x += Math.PI/4 
+        root.rotation.z += Math.PI/20 
+        this.model = root;
+        this.scene.add(root);
+      
+      
       },
       // called when loading is in progresses
       (xhr) => {
@@ -340,6 +339,8 @@ class Piano extends Component {
     // if (this.model) this.model.rotation.z += 0.005;
 
     this.renderer.render(this.scene, this.camera);
+
+    this.renderer.setClearColor(0x000000, 0); // set clear color to transparent
 
     // The window.requestAnimationFrame() method tells the browser that you wish to perform
     // an animation and requests that the browser call a specified function
