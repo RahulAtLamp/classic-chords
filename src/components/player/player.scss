@@ -7,6 +7,38 @@
 //     display: block !important;
 //   }
 // }
+.player-main {
+  min-height: 80vh;
+
+  .select-player-btn-grp {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 20px;
+
+    .select-player-btn {
+      cursor: pointer;
+      background-color: transparent;
+      border: 1px solid white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      color: white;
+      font-family: "Neon";
+      font-weight: 600;
+      text-transform: uppercase;
+      // margin: 0 auto;
+      text-align: center;
+    }
+    .active {
+      background-color: #ffffff;
+      color: #746cfe;
+    }
+  }
+}
 
 .piano-label {
   position: absolute;
