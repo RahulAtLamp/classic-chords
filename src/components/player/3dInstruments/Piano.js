@@ -285,20 +285,17 @@ class Piano extends Component {
       "Royal.obj",
       // called when resource is loaded
       (object) => {
-
         const root = new THREE.Group();
         root.add(object);
 
         root.scale.set(7, 7, 7);
-        root.position.set(0,-140,0)
-        const radians = Math.PI/2 - Math.PI/8  // 90 degrees in radians
+        root.position.set(0, -140, 0);
+        const radians = Math.PI / 2 - Math.PI / 8; // 90 degrees in radians
         root.rotation.y = radians;
-        root.rotation.x += Math.PI/4 
-        root.rotation.z += Math.PI/20 
+        root.rotation.x += Math.PI / 4;
+        root.rotation.z += Math.PI / 20;
         this.model = root;
         this.scene.add(root);
-      
-      
       },
       // called when loading is in progresses
       (xhr) => {
@@ -363,16 +360,17 @@ class Piano extends Component {
   render() {
     return (
       <>
-        <p>
+        <p></p>
+        <div style={style} ref={(ref) => (this.mount = ref)} />
+        <div className="selectDrop">
           <select
+            className=""
             value={this.state.selectedInstrument}
             onChange={this.onSelectInstrument.bind(this)}
           >
             {this.createSelectItems()}
           </select>
-        </p>
-        <div style={style} ref={(ref) => (this.mount = ref)} />
-
+        </div>
         <MIDISounds
           ref={(ref) => (this.midiSounds = ref)}
           appElementName="root"
