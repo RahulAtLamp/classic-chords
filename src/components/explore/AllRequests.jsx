@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import "./AllRequests.scss";
 import user from "../../contract/artifacts/userStream.json";
 import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 
 function AllRequests() {
   const { address } = useAccount();
   // for creating the contract instance
-
+  const { chain } = useNetwork();
+  console.log(chain.id);
   const [requests, setRequests] = useState([]);
 
   const getContract = async () => {
@@ -84,9 +85,10 @@ function AllRequests() {
                     <h3 className="request-title">{item[1]}</h3>
                     <p className="request-story">{item[2]}</p>
                     <h3 className="request-budget">
-                      Budget : {parseFloat(item[4], 16)} MATIC
+                      Budget : {parseFloat(item[4], 16)}{" "}
+                      {chain.id === 1029 ? "BTT" : "MATIC"}
                     </h3>
-                    <span className="status">Status :</span>
+                    {/* <span className="status">Status :</span>
                     <span>
                       {item[6] !== address
                         ? item.isAccept && item.requestTo !== address
@@ -97,7 +99,12 @@ function AllRequests() {
                             item.requestTo === address &&
                             item.cid.length > 0
                           ? "Waiting for Approval"
-                          : "Paid"
+                          : item.isAccept &&
+                            item.requestTo === address &&
+                            item.cid.length > 0 &&
+                            item.isApproved
+                          ? "Paid"
+                          : ""
                         : !item.isAccept && !item.isDecline
                         ? "Pending"
                         : item.isAccept &&
@@ -110,6 +117,9 @@ function AllRequests() {
                         ? "View Work"
                         : ""}
                       {item.isAccept ? " Accepted" : " Not Accepted Yet"}
+                    </span> */}
+                    <span>
+                      Request by : {item[6] !== address ? `${item[6]}` : "You"}
                     </span>
                   </div>
                   <div className="request-response">

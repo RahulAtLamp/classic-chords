@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useAccount, useEnsName, useEnsAvatar } from "wagmi";
+import { useAccount, useEnsName, useEnsAvatar, useNetwork } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import "./profile.scss";
 // import { Collections } from "../explore/artist-single/collection_dummy";
@@ -42,6 +42,7 @@ const Profile = () => {
   const navigate = useNavigate();
   // const ensInstance = new ENS();
   const [cid, setCid] = useState();
+  const { chain } = useNetwork();
   const [userDefault, setUserDefault] = useState({
     name: null,
     bio: null,
@@ -53,7 +54,7 @@ const Profile = () => {
     bio: "",
     profile_pic: null,
   });
-  const [chain, setChainStatus] = useState(false);
+  const [chains, setChainStatus] = useState(false);
   const [ProfileImage, setprofileImage] = useState(null);
   const [mintedNfts, setMintedNfts] = useState([]);
   const [userNfts, setUserNfts] = useState([]);
@@ -423,7 +424,7 @@ const Profile = () => {
     return (
       <>
         <Loading3 />
-        {chain ? (
+        {/* {chain ? (
           <div className="profile-main">
             <div className="add-chain-main">
               <div className="add-chain-box">
@@ -443,7 +444,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : null} */}
       </>
     );
   } else {
@@ -642,12 +643,107 @@ const Profile = () => {
                               <h3 className="request-title">{item[1]}</h3>
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
-                                Budget : {parseFloat(item[4])} MATIC
+                                Budget : {parseFloat(item[4])}{" "}
+                                {chain.id === 1029 ? "BTT" : "MATIC"}
                               </h3>
+                              <span>
+                                {item[6] !== address
+                                  ? `Request by : ${item[6]}`
+                                  : "Request by You"}
+                              </span>
                             </div>
                             <div className="request-response">
                               <div className="request-res-buttons">
-                                <button
+                                {item[6] !== address ? (
+                                  !item.isAccept &&
+                                  !item.isDecline &&
+                                  item.requestTo === address ? (
+                                    // Accepted the requests
+                                    <>
+                                      {" "}
+                                      <button
+                                        className={"accept-request"}
+                                        onClick={() =>
+                                          songReqResponse(
+                                            parseInt(item[0]),
+                                            true
+                                          )
+                                        }
+                                      >
+                                        Accept
+                                      </button>
+                                      <button
+                                        className={
+                                          item.isDecline
+                                            ? "disable rejest-request"
+                                            : "rejest-request"
+                                        }
+                                        onClick={() =>
+                                          songReqResponse(
+                                            parseInt(item[0]),
+                                            false
+                                          )
+                                        }
+                                      >
+                                        Reject
+                                      </button>
+                                    </>
+                                  ) : item.isAccept &&
+                                    !item.isDecline &&
+                                    item.requestTo === address &&
+                                    item.cid.length === 0 ? (
+                                    <button
+                                      className="submit-work"
+                                      onClick={() => {
+                                        setRequestIdSubmitWork(
+                                          parseInt(item[0])
+                                        );
+                                        setSubmitWorkPopup(!submitWorkPopup);
+                                      }}
+                                    >
+                                      Submit Work
+                                    </button>
+                                  ) : item.isAccept &&
+                                    item.requestTo === address &&
+                                    item.cid.length > 0 ? (
+                                    <button
+                                      className={"disable accept-request"}
+                                    >
+                                      Waiting For Approval
+                                    </button>
+                                  ) : item.isAccept &&
+                                    item.requestTo === address &&
+                                    item.cid.length > 0 &&
+                                    item.isApproved ? (
+                                    <button className={"disable paid-request"}>
+                                      Paid
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )
+                                ) : !item.isAccept && !item.isDecline ? (
+                                  <button className="disable accept-request">
+                                    Pending
+                                  </button>
+                                ) : item.isAccept &&
+                                  !item.isDecline &&
+                                  item.cid.length === 0 ? (
+                                  <button className="disable accpept-work">
+                                    Work Awaited
+                                  </button>
+                                ) : item.isDecline ? (
+                                  <button className={"disable rejest-request"}>
+                                    Declined
+                                  </button>
+                                ) : item.isAccept && item.cid.length > 0 ? (
+                                  <button className={"paid-request"}>
+                                    View Work
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+
+                                {/* <button
                                   className={
                                     item.isAccept
                                       ? "disable accept-request"
@@ -690,7 +786,7 @@ const Profile = () => {
                                   >
                                     Reject
                                   </button>
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </div>
@@ -709,12 +805,34 @@ const Profile = () => {
                               <h3 className="request-title">{item[1]}</h3>
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
-                                Budget : {parseFloat(item[4])} MATIC
+                                Budget : {parseFloat(item[4])}{" "}
+                                {chain.id === 1029 ? "BTT" : "MATIC"}
                               </h3>
                             </div>
                             <div className="request-response">
                               <div className="request-res-buttons">
-                                <button
+                                {!item.isAccept && !item.isDecline ? (
+                                  <button className="disable accept-request">
+                                    Pending
+                                  </button>
+                                ) : item.isAccept &&
+                                  !item.isDecline &&
+                                  item.cid.length === 0 ? (
+                                  <button className="disable accpept-work">
+                                    Work Awaited
+                                  </button>
+                                ) : item.isDecline ? (
+                                  <button className={"disable rejest-request"}>
+                                    Declined
+                                  </button>
+                                ) : item.isAccept && item.cid.length > 0 ? (
+                                  <button className={"paid-request"}>
+                                    View Work
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+                                {/* <button
                                   className={
                                     item.isAccept
                                       ? "disable accept-request"
@@ -754,7 +872,7 @@ const Profile = () => {
                                   </button>
                                 ) : (
                                   ""
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </div>
@@ -773,12 +891,88 @@ const Profile = () => {
                               <h3 className="request-title">{item[1]}</h3>
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
-                                Budget : {parseFloat(item[4])} MATIC
+                                Budget : {parseFloat(item[4])}{" "}
+                                {chain.id === 1029 ? "BTT" : "MATIC"}
                               </h3>
                             </div>
                             <div className="request-response">
                               <div className="request-res-buttons">
-                                <button
+                                {item[6] !== address ? (
+                                  !item.isAccept &&
+                                  !item.isDecline &&
+                                  item.requestTo === address ? (
+                                    // Accepted the requests
+                                    <>
+                                      {" "}
+                                      <button
+                                        className={"accept-request"}
+                                        onClick={() =>
+                                          songReqResponse(
+                                            parseInt(item[0]),
+                                            true
+                                          )
+                                        }
+                                      >
+                                        Accept
+                                      </button>
+                                      <button
+                                        className={
+                                          item.isDecline
+                                            ? "disable rejest-request"
+                                            : "rejest-request"
+                                        }
+                                        onClick={() =>
+                                          songReqResponse(
+                                            parseInt(item[0]),
+                                            false
+                                          )
+                                        }
+                                      >
+                                        Reject
+                                      </button>
+                                    </>
+                                  ) : item.isAccept &&
+                                    !item.isDecline &&
+                                    item.requestTo === address &&
+                                    item.cid.length === 0 ? (
+                                    <button
+                                      className="submit-work"
+                                      onClick={() => {
+                                        setRequestIdSubmitWork(
+                                          parseInt(item[0])
+                                        );
+                                        setSubmitWorkPopup(!submitWorkPopup);
+                                      }}
+                                    >
+                                      Submit Work
+                                    </button>
+                                  ) : item.isAccept &&
+                                    item.requestTo === address &&
+                                    item.cid.length > 0 ? (
+                                    <button
+                                      className={"disable accept-request"}
+                                    >
+                                      Waiting For Approval
+                                    </button>
+                                  ) : item.isAccept &&
+                                    item.requestTo === address &&
+                                    item.cid.length > 0 &&
+                                    item.isApproved ? (
+                                    <button className={"disable paid-request"}>
+                                      Paid
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )
+                                ) : item.requestTo === address &&
+                                  item.isDecline ? (
+                                  <button className={"disable rejest-request"}>
+                                    Declined
+                                  </button>
+                                ) : (
+                                  ""
+                                )}
+                                {/* <button
                                   className={
                                     item.isAccept
                                       ? "disable accept-request"
@@ -805,8 +999,8 @@ const Profile = () => {
                                   ) : (
                                     "Accept"
                                   )}
-                                </button>
-                                {item.isAccept ? (
+                                </button> */}
+                                {/* {item.isAccept ? (
                                   <button
                                     className="submit-work"
                                     onClick={() => {
@@ -818,7 +1012,7 @@ const Profile = () => {
                                   </button>
                                 ) : (
                                   ""
-                                )}
+                                )} */}
                               </div>
                             </div>
                           </div>
@@ -933,25 +1127,6 @@ const Profile = () => {
                         Update Details
                       </button>
                     </div>
-                  </div>
-                </div>
-              ) : null}
-              {chain ? (
-                <div className="add-chain-main">
-                  <div className="add-chain-box">
-                    <p className="add-chain-message">
-                      Currently our application only supports polygon MUMBAI
-                      testnet. Please add the MUMBAI testnet. If you have
-                      already added please switch to MUMBAI testnet.
-                    </p>
-                    <button
-                      className="add-chain-btn"
-                      onClick={() => {
-                        addChain();
-                      }}
-                    >
-                      add chain
-                    </button>
                   </div>
                 </div>
               ) : null}
