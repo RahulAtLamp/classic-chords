@@ -6,8 +6,7 @@ import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 import MIDISounds from 'midi-sounds-react';
 
 const style = {
-    height: 700, // we can control scene size by setting container dimensions
-    width: 1000
+    height: 700 // we can control scene size by setting container dimensions
 };
 
 class Drums extends Component {
@@ -180,7 +179,7 @@ class Drums extends Component {
                 // // change some custom props of the element: placement, color, rotation, anything that should be
                 // // done once the model was loaded and ready for display
                 // el.position.set(0, -150,0 );
-                el.material.color.set(0xff0000);
+                // el.material.color.set(0xff0000);
                 // el.rotation.x = 23.5;
 
 
@@ -227,6 +226,8 @@ class Drums extends Component {
         // if (this.model) this.model.rotation.z += 0.005;
 
         this.renderer.render( this.scene, this.camera );
+        this.renderer.setClearColor(0x000000, 0); // set clear color to transparent
+      
 
         // The window.requestAnimationFrame() method tells the browser that you wish to perform
         // an animation and requests that the browser call a specified function

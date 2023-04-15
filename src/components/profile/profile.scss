@@ -412,7 +412,12 @@
     }
   }
 }
-
+.not-found {
+  width: max-content;
+  margin: 20px auto;
+  color: #ffffff;
+  font-family: "Gilmer-Light";
+}
 .profile-title {
   text-align: center;
   font-size: medium;

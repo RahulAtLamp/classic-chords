@@ -1023,6 +1023,11 @@ const Profile = () => {
                     })
                   : ""}
               </div>
+              {requests.length > 0 ? (
+                ""
+              ) : (
+                <div className="not-found">No Requets Found</div>
+              )}
 
               {profileWindow ? (
                 <div className="edit-user-popup-main">
