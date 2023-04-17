@@ -350,9 +350,11 @@
 
         .user-update-btn {
           font-size: 20px;
+          height: 40px;
+          width: 50%;
           font-family: "Neon";
           border-radius: 20px;
-          padding: 0 10px;
+          padding: 5px 20px;
           background-color: #251b43;
           color: #ffffff;
           margin: 20px 20px;
@@ -572,5 +574,25 @@
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 99999px;
+  }
+}
+
+svg.button-spin-svg-pic {
+  height: 100%;
+  width: 100%;
+  fill: #ffffff;
+}
+
+svg.animate-spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

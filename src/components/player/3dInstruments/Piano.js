@@ -16,6 +16,7 @@ class Piano extends Component {
     this.state = {
       selectedInstrument: 192,
       status: "?",
+      isLoading: true,
     };
     this.keyMappings = {
       "@": [1 + 12 * 2, "Box074"],
@@ -305,6 +306,7 @@ class Piano extends Component {
         // update parent react component to display loading percentage
         this.props.onProgress(loadingPercentage);
       },
+
       // called when loading has errors
       (error) => {
         console.log("An error happened:" + error);
@@ -358,24 +360,32 @@ class Piano extends Component {
   };
 
   render() {
+    const { isLoading } = false;
     return (
       <>
-        <p></p>
-        <div style={style} ref={(ref) => (this.mount = ref)} />
-        <div className="selectDrop">
-          <select
-            className=""
-            value={this.state.selectedInstrument}
-            onChange={this.onSelectInstrument.bind(this)}
-          >
-            {this.createSelectItems()}
-          </select>
-        </div>
-        <MIDISounds
-          ref={(ref) => (this.midiSounds = ref)}
-          appElementName="root"
-          instruments={[this.state.selectedInstrument]}
-        />
+        {isLoading ? (
+          <div className="loader-container">
+            <div className="loader"></div>
+          </div>
+        ) : (
+          <>
+            <div style={style} ref={(ref) => (this.mount = ref)} />
+            <div className="selectDrop">
+              <select
+                className=""
+                value={this.state.selectedInstrument}
+                onChange={this.onSelectInstrument.bind(this)}
+              >
+                {this.createSelectItems()}
+              </select>
+            </div>
+            <MIDISounds
+              ref={(ref) => (this.midiSounds = ref)}
+              appElementName="root"
+              instruments={[this.state.selectedInstrument]}
+            />
+          </>
+        )}
       </>
     );
   }
