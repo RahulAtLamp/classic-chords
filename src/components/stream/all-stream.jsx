@@ -6,7 +6,6 @@ import Livepeer from "livepeer-nodejs";
 import ReactPlayer from "react-player";
 import user from "../../contract/artifacts/userStream.json";
 import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
-
 import { ethers } from "ethers";
 import Loading3 from "../../loading3";
 
@@ -164,7 +163,7 @@ function AllStream() {
                               "/index.m3u8"
                             }
                             controls={true}
-                            style={{ width: "100%" }}
+                            // style={{ width: "100%" }}
                           />
                         </div>
                         <div className="exp-name" title={stream.meta.title}>
@@ -173,6 +172,7 @@ function AllStream() {
                         <p className="exp-description">
                           {stream.meta.description}
                         </p>
+                        <button className="watch-now">Watch Now</button>
                       </div>
                     </div>
                   </Link>

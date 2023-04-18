@@ -131,11 +131,11 @@ function ArtistSingle() {
           console.log(error);
         }
       }
-      console.log(nfts);
+      // console.log(nfts);
       // setMintedNfts(nfts)
       // console.log(profilePic);
-      console.log(tx);
-      console.log(tx.description);
+      // console.log(tx);
+      // console.log(tx.description);
       setNfts(nfts);
       setSingleArtist(tx);
       setIsLoading(true);
