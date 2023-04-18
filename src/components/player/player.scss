@@ -172,3 +172,76 @@
   width: max-content;
   margin: 0 auto;
 }
+.table {
+  background-color: #ffffff;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  // max-width: 600px;
+  margin: 0 auto;
+}
+
+thead {
+  text-align: center;
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+button.key-instruction {
+  cursor: pointer;
+  background-color: #746cfe;
+  border: 1px solid #746cfe;
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+span.key {
+  background-color: #746cfe;
+  color: white;
+  padding: 5px 10px;
+  // padding-bottom: 0.3rem;
+  border-radius: 5px;
+  font-weight: 700;
+  // max-width: max-content;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+@media only screen and (max-width: 600px) {
+  th,
+  td {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    border: none;
+  }
+
+  tr {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  tr:nth-child(even) {
+    background-color: transparent;
+  }
+
+  tr:hover {
+    background-color: transparent;
+  }
+}

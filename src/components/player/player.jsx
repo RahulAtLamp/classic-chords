@@ -16,11 +16,63 @@ function Player() {
   const [recordingStatus, setRecordingStatus] = useState(null);
   const [timeControl, setTimeControl] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState();
+  const [keyPopup, setKeyPopup] = useState(false);
   const [selectPlayer, setSelectPlayer] = useState({
     piano: true,
     drums: false,
   });
 
+  const drumKeyMap = [
+    { key: "q", name: "Bass Drum 1" },
+    {
+      key: "w",
+      name: "Bass Drum 2",
+    },
+    {
+      key: "e",
+      name: "Bass Drum 2",
+    },
+    {
+      key: "r",
+      name: "Hi-Hat",
+    },
+    {
+      key: "t",
+      name: "Snare Drum",
+    },
+    {
+      key: "y",
+      name: "Snare Drum",
+    },
+    {
+      key: "u",
+      name: "Cymbal",
+    },
+    {
+      key: "a",
+      name: "Kick and Hi-Hat",
+    },
+    {
+      key: "s",
+      name: "Snare and Rimshot",
+    },
+    {
+      key: "d",
+      name: "Kick and Hi-Hat",
+    },
+    {
+      key: "f",
+      name: "Chord",
+    },
+    {
+      key: "g",
+      name: "Tom or Conga",
+    },
+    {
+      key: "h",
+      name: "Tom or Conga",
+    },
+  ];
   const StartRecording = () => {
     setRecordingStatus(true);
     // setTimeControl(true);
@@ -89,7 +141,9 @@ function Player() {
           Stop Recording
         </button>
       </div>
-
+      <button className="key-instruction" onClick={() => setKeyPopup(true)}>
+        Keys
+      </button>
       <div id="gui"></div>
       <div id="pianoHolder">
         {selectPlayer.piano ? (
@@ -108,6 +162,43 @@ function Player() {
           ""
         )}
 
+        {keyPopup ? (
+          <>
+            <div className="overlay" onClick={() => setKeyPopup(false)}></div>
+            <div id="modal">
+              <div className="table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Key</th>
+                      <th>Instrument</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectPlayer.piano ? (
+                      <></>
+                    ) : selectPlayer.drums ? (
+                      drumKeyMap.map((item, key) => {
+                        return (
+                          <tr key={key}>
+                            <td>
+                              <span className="key">{item.key}</span>
+                            </td>
+                            <td>{item.name}</td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      ""
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         {/* <canvas id="pianoCanvas"></canvas>
         <div style={{ display: "none" }}>
           {counter ? (

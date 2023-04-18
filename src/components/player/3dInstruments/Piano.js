@@ -379,6 +379,7 @@ class Piano extends Component {
                 {this.createSelectItems()}
               </select>
             </div>
+
             <MIDISounds
               ref={(ref) => (this.midiSounds = ref)}
               appElementName="root"
