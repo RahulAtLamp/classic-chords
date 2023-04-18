@@ -194,7 +194,19 @@ td {
   padding: 10px;
   border: 1px solid #ddd;
 }
+#wrapTable {
+  width: auto;
+
+  border: 0px solid;
+  display: inline;
+  margin: 0 5px;
+}
+.key-list-btn {
+  width: max-content;
+  margin: 10px auto;
+}
 button.key-instruction {
+  text-align: center;
   cursor: pointer;
   background-color: #746cfe;
   border: 1px solid #746cfe;
