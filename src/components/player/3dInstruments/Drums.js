@@ -165,24 +165,29 @@ class Drums extends Component {
       const clonedMesh = el.clone();
       const clonedMaterial = el.material.clone();
 
+      const meshColor = el.material.color.clone();
+
+      console.log(meshColor);
       // modify the cloned material's color
-      clonedMaterial.color.set(0x50c878);
+      clonedMaterial.color.set(0xff0000);
 
       // replace the original material with the cloned material on the cloned mesh
       clonedMesh.material = clonedMaterial;
+          clonedMesh.scale.set(0.4, 0.4, 0.4);
+          clonedMesh.position.set(0,-50,0)
+          const radians = Math.PI - Math.PI/9; // 90 degrees in radians
+          clonedMesh.rotation.y -= radians;
+          clonedMesh.rotation.x += Math.PI/9 
+        //   el = clonedMesh;
+          // add the cloned mesh to the scene and remove the original mesh
+          this.scene.add(clonedMesh);
 
-      // add the cloned mesh to the scene and remove the original mesh
-      this.scene.add(clonedMesh);
-      this.scene.remove(el);
 
       // set a timeout to revert the changes after one second
       setTimeout(() => {
         // replace the cloned material with the original material on the cloned mesh
-        clonedMesh.material = el.material;
+      clonedMaterial.color.set(meshColor);
 
-        // add the original mesh back to the scene and remove the cloned mesh
-        this.scene.add(el);
-        this.scene.remove(clonedMesh);
       }, 500);
     }
   };
