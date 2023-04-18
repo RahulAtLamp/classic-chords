@@ -8,6 +8,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Piano from "./3dInstruments/Piano";
 import Drums from "./3dInstruments/Drums";
+import {
+  drumKeyMap,
+  pianoKeyMap1,
+  pianoKeyMap2,
+  pianoKeyMap3,
+  pianoKeyMap4,
+} from "./playerKeys";
 
 const toastInfo = () =>
   toast.info("Select any tab and share the system audio to record piano.");
@@ -16,6 +23,7 @@ function Player() {
   const [recordingStatus, setRecordingStatus] = useState(null);
   const [timeControl, setTimeControl] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState();
+  const [keyPopup, setKeyPopup] = useState(false);
   const [selectPlayer, setSelectPlayer] = useState({
     piano: true,
     drums: false,
@@ -64,6 +72,11 @@ function Player() {
           Drums
         </button>
       </div>
+      <div className="key-list-btn">
+        <button className="key-instruction" onClick={() => setKeyPopup(true)}>
+          Keys
+        </button>
+      </div>
       {timeControl ? (
         <div className="player-counter">
           <Counter />
@@ -108,6 +121,124 @@ function Player() {
           ""
         )}
 
+        {keyPopup ? (
+          <>
+            <div className="overlay" onClick={() => setKeyPopup(false)}></div>
+            <div id="modal">
+              <div className="table">
+                {selectPlayer.drums ? (
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Key</th>
+                        <th>Instrument</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {drumKeyMap.map((item, key) => {
+                        return (
+                          <tr key={key}>
+                            <td>
+                              <span className="key">{item.key}</span>
+                            </td>
+                            <td>{item.name}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                ) : selectPlayer.piano ? (
+                  <>
+                    <table id="wrapTable">
+                      <thead>
+                        <tr>
+                          <th>Key</th>
+                          <th>Instrument</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pianoKeyMap1.map((item, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>
+                                <span className="key">{item.key}</span>
+                              </td>
+                              <td>{item.name}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <table id="wrapTable">
+                      <thead>
+                        <tr>
+                          <th>Key</th>
+                          <th>Instrument</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pianoKeyMap2.map((item, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>
+                                <span className="key">{item.key}</span>
+                              </td>
+                              <td>{item.name}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <table id="wrapTable">
+                      <thead>
+                        <tr>
+                          <th>Key</th>
+                          <th>Instrument</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pianoKeyMap3.map((item, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>
+                                <span className="key">{item.key}</span>
+                              </td>
+                              <td>{item.name}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <table id="wrapTable">
+                      <thead>
+                        <tr>
+                          <th>Key</th>
+                          <th>Instrument</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pianoKeyMap4.map((item, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>
+                                <span className="key">{item.key}</span>
+                              </td>
+                              <td>{item.name}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         {/* <canvas id="pianoCanvas"></canvas>
         <div style={{ display: "none" }}>
           {counter ? (

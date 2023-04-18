@@ -36,6 +36,7 @@ const Profile = () => {
   const [requested, setRequested] = useState(false);
   const [myRequests, setMyRequests] = useState(false);
   const [requestIdSubmitWork, setRequestIdSubmitWork] = useState();
+  const [btnLoading, setbtnLoading] = useState(false);
 
   const fileRef = useRef(null);
   const editUserPopup = useRef(null);
@@ -69,7 +70,8 @@ const Profile = () => {
 
   const toastInfo = () =>
     toast.info("Wait...IPFS is prepareing your profile image");
-  const toastSuccess = () => toast.success("Hurrrayy....stream started");
+  const toastSuccess = (e) => toast.success(e);
+  const toastError = (e) => toast.error(e);
   const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
   const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
@@ -222,29 +224,29 @@ const Profile = () => {
     }
   };
 
-  const addChain = () => {
-    if (window.ethereum) {
-      window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: "0x13881",
-            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-            chainName: "Mumbai Testnet",
-            // nativeCurrency: {
-            //     name: "BitTorrent",
-            //     symbol: "BTT",
-            //     decimals: 18
-            // },
-            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-          },
-        ],
-      });
-      setChainStatus(false);
-    } else {
-      alert("Please Install a wallet to proceed.");
-    }
-  };
+  // const addChain = () => {
+  //   if (window.ethereum) {
+  //     window.ethereum.request({
+  //       method: "wallet_addEthereumChain",
+  //       params: [
+  //         {
+  //           chainId: "0x13881",
+  //           rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+  //           chainName: "Mumbai Testnet",
+  //           // nativeCurrency: {
+  //           //     name: "BitTorrent",
+  //           //     symbol: "BTT",
+  //           //     decimals: 18
+  //           // },
+  //           blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+  //         },
+  //       ],
+  //     });
+  //     setChainStatus(false);
+  //   } else {
+  //     alert("Please Install a wallet to proceed.");
+  //   }
+  // };
 
   const getContract = async () => {
     try {
@@ -280,6 +282,8 @@ const Profile = () => {
 
   const addUserData = async () => {
     try {
+      setbtnLoading(true);
+      let profilecid;
       const client = new Web3Storage({
         token:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng",
@@ -290,6 +294,7 @@ const Profile = () => {
       // });
 
       if (ProfileImage) {
+        toastInfo();
         const upload = document.querySelector('input[type="file"]');
         const rootCid = await client.put(upload.files, {
           name: ProfileImage.name,
@@ -297,11 +302,17 @@ const Profile = () => {
         });
         const res = await client.get(rootCid); // Web3Response
         const files = await res.files(ProfileImage); // Web3File[]
-        for (const file of files) {
-          console.log(`${file.cid}`);
-          setCid((prev) => (prev = file.cid));
+        console.log(files);
+        setCid(files[0].cid);
+        profilecid = files[0].cid;
+        // for (const file of files) {
+        //   console.log(`${file.cid}`);
+        //   setCid((prev) => (prev = file.cid));
+        // }
+        if (profilecid) {
+          toastSuccess("Your image successfully uploaded on the IPFS");
         }
-
+        console.log(profilecid);
         console.log(upload);
         console.log(userDefault);
       }
@@ -313,11 +324,15 @@ const Profile = () => {
           userData.name,
           userData.bio,
           // upload + "/" + ProfileImage.name
-          cid,
+          profilecid,
           artistSelected,
           showChargesOfUser
         );
-        toastInfo();
+
+        // toastSuccess();
+        if (getData) {
+          toastSuccess("You have successfully signed up");
+        }
         console.log(getData);
         getProfile();
         showProfileWindow(false);
@@ -330,18 +345,23 @@ const Profile = () => {
           userData.name,
           userData.bio,
           // upload + "/" + ProfileImage.name
-          (await cid) ? cid : userDefault.profile_pic
+          profilecid ? profilecid : userDefault.profile_pic
         );
-        toastInfo();
+        await getData.wait();
+        // toastInfo();
         // console.log("inni");
-        if (getData.length > 0) {
+        if (getData) {
+          showProfileWindow(false);
+          toastSuccess("You have successfully updated your profile");
           console.log(getData);
-          // getProfile();
-          // showProfileWindow(false);
+          setbtnLoading(false);
+          getProfile();
         }
       }
     } catch (error) {
+      toastError("Error");
       console.log(error);
+      setbtnLoading(false);
     }
   };
 
@@ -1127,9 +1147,24 @@ const Profile = () => {
                         className="user-update-btn"
                         onClick={() => {
                           addUserData();
+                          // testing();
                         }}
                       >
-                        Update Details
+                        {btnLoading ? (
+                          <svg
+                            className="animate-spin button-spin-svg-pic"
+                            version="1.1"
+                            id="L9"
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0px"
+                            y="0px"
+                            viewBox="0 0 100 100"
+                          >
+                            <path d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50"></path>
+                          </svg>
+                        ) : (
+                          "Update Details"
+                        )}
                       </button>
                     </div>
                   </div>
