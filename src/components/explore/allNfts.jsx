@@ -157,7 +157,7 @@ function AllNfts() {
                   </Link>
                 ))
               ) : (
-                <h4>No Nfts</h4>
+                <h4>No Nfts Found</h4>
               )}
             </div>
           </div>
