@@ -14,19 +14,28 @@ var CanvasRecorder = function CanvasRecorder() {
     canvas_track= stream.getVideoTracks()[0];
       };
   
+    
 
   async function startRecording() {
     var types = ['video/webm', 'video/webm,codecs=vp9', 'video/vp8', 'video/webm;codecs=vp8', 'video/webm;codecs=daala', 'video/webm;codecs=h264', 'video/mpeg'];
 
     console.log("in modern !");
 
-    mic_track = await navigator.mediaDevices.getDisplayMedia({audio: { mediaSource: 'audio' }, video: true})
+    // mic_track = await navigator.mediaDevices.getDisplayMedia({audio: { mediaSource: 'audio' }, video: true})
+    // .then((mediaStream) => {
+    //   document.querySelector('video').srcObject = mediaStream;
+    //     const tracks = mediaStream.getAudioTracks()
+    //     return tracks[0]
+    // })
+  
+    mic_track = await navigator.mediaDevices.getUserMedia({audio: true, video: false})
     .then((mediaStream) => {
       document.querySelector('video').srcObject = mediaStream;
         const tracks = mediaStream.getAudioTracks()
         return tracks[0]
     })
   
+
     console.log(mic_track);
   
     for (var i in types) {
