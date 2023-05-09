@@ -15,6 +15,7 @@ import {
   pianoKeyMap3,
   pianoKeyMap4,
 } from "./playerKeys";
+import RecordingTime from "./RecordingTime";
 
 const toastInfo = () =>
   toast.info("Select any tab and share the system audio to record piano.");
@@ -28,19 +29,25 @@ function Player() {
     piano: true,
     drums: false,
   });
+  const [showTimer, setShowTimer] = useState(false);
 
+  const handleStartRecordingTimer = () => {
+    setShowTimer(true);
+  };
   const StartRecording = () => {
     setRecordingStatus(true);
-    // setTimeControl(true);
-    // setTimeout(() => {
-    document.getElementById("startR").click();
-    // setTimeControl(false);
+    setTimeControl(true);
     toastInfo();
-    // }, 5000);
+    setTimeout(() => {
+      setTimeControl(false);
+      document.getElementById("startR").click();
+      handleStartRecordingTimer();
+    }, 6000);
   };
 
   const StopRecording = () => {
     document.getElementById("stopR").click();
+    setShowTimer(false);
     setRecordingStatus(null);
   };
 
@@ -71,37 +78,16 @@ function Player() {
         >
           Drums
         </button>
-      </div>
-      <div className="key-list-btn">
         <button className="key-instruction" onClick={() => setKeyPopup(true)}>
           Keys
         </button>
       </div>
+      <div className="key-list-btn"></div>
       {timeControl ? (
         <div className="player-counter">
           <Counter />
         </div>
       ) : null}
-      <div className="control-holder">
-        <button
-          className={recordingStatus === true ? "start active" : "start"}
-          onClick={() => {
-            StartRecording();
-          }}
-          disabled={recordingStatus === true ? true : false}
-        >
-          Start Recording
-        </button>
-        <button
-          className={recordingStatus === null ? "stop active" : "stop"}
-          onClick={() => {
-            StopRecording();
-          }}
-          disabled={recordingStatus === null ? true : false}
-        >
-          Stop Recording
-        </button>
-      </div>
 
       <div id="gui"></div>
       <div id="pianoHolder">
@@ -250,6 +236,37 @@ function Player() {
           ) : null}
         </div> */}
         <Visualizer />
+      </div>
+      <div className="control-holder">
+        {recordingStatus ? (
+          ""
+        ) : (
+          <button
+            className={recordingStatus === true ? "start active" : "start"}
+            onClick={() => {
+              StartRecording();
+            }}
+            disabled={recordingStatus === true ? true : false}
+          >
+            Start Recording
+          </button>
+        )}
+
+        {showTimer && <RecordingTime />}
+
+        {recordingStatus ? (
+          <button
+            className={recordingStatus === null ? "stop active" : "stop"}
+            onClick={() => {
+              StopRecording();
+            }}
+            disabled={recordingStatus === null ? true : false}
+          >
+            Stop Recording
+          </button>
+        ) : (
+          ""
+        )}
       </div>
       <ToastContainer
         position="bottom-right"

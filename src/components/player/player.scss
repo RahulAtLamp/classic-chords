@@ -16,7 +16,8 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 
     .select-player-btn {
       cursor: pointer;
@@ -95,18 +96,23 @@
 }
 
 .control-holder {
-  position: absolute;
+  // position: absolute;
   text-align: center;
   width: 100%;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
-
+#pianoHolder {
+  margin: 20px 0px;
+}
 .control-holder .start {
   padding: 10px;
   border-radius: 20px;
-  border: 0;
+  border: 1px solid white;
   margin-right: 10px;
-  font-family: "FontsFree";
+  font-family: "Neon";
+  font-size: medium;
+  letter-spacing: 2px;
   color: #ffffff;
   background-color: #251843;
   cursor: pointer;
@@ -124,15 +130,15 @@
     background-color: green;
   }
 }
-
 .control-holder .stop {
   padding: 10px;
   border-radius: 20px;
   border: 0;
   margin-left: 10px;
-  font-family: "FontsFree";
+  font-family: "Neon";
   color: #ffffff;
   background-color: #251843;
+  border: 1px solid white;
   cursor: pointer;
 
   &.active {
@@ -146,6 +152,7 @@
 
   &:hover {
     background-color: #ffff00;
+    color: #251843;
   }
 }
 
@@ -206,15 +213,20 @@ td {
   margin: 10px auto;
 }
 button.key-instruction {
-  text-align: center;
   cursor: pointer;
+
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  font-family: "Neon";
+  font-weight: 600;
+  text-transform: uppercase;
+  // margin: 0 auto;
+  text-align: center;
   background-color: #746cfe;
   border: 1px solid #746cfe;
   color: #ffffff;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 10px;
-  padding: 10px 20px;
 }
 span.key {
   background-color: #746cfe;
@@ -233,6 +245,14 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #ddd;
+}
+
+.recording-timer {
+  color: white;
+  font-family: "Neon";
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
 }
 
 @media only screen and (max-width: 600px) {
