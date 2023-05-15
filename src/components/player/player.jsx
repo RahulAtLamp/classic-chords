@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 
 import Counter from "../Counter";
+import Loading3 from "../../loading3";
 
 import Visualizer from "./art/visualizer";
 import "./player.scss";
@@ -18,13 +19,14 @@ import {
 import RecordingTime from "./RecordingTime";
 
 const toastInfo = () =>
-  toast.info("Select any tab and share the system audio to record piano.");
+  toast.info("Kindly Give mic access if not given !");
 
 function Player() {
   const [recordingStatus, setRecordingStatus] = useState(null);
   const [timeControl, setTimeControl] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState();
   const [keyPopup, setKeyPopup] = useState(false);
+  const [instrumentLoading, setInstrumentLoading] = useState(true)
   const [selectPlayer, setSelectPlayer] = useState({
     piano: true,
     drums: false,
@@ -51,6 +53,12 @@ function Player() {
     setRecordingStatus(null);
   };
 
+  useEffect(() =>{
+    setTimeout(() => {
+  setInstrumentLoading(false)
+    }, 5000);
+  },[instrumentLoading])
+
   return (
     <div className="player-main">
       <div className="select-player-btn-grp">
@@ -62,6 +70,7 @@ function Player() {
           }
           onClick={() => {
             setSelectPlayer({ piano: true, drums: false });
+            setInstrumentLoading(true)
           }}
         >
           Piano
@@ -74,6 +83,8 @@ function Player() {
           }
           onClick={() => {
             setSelectPlayer({ piano: false, drums: true });
+            setInstrumentLoading(true)
+
           }}
         >
           Drums
@@ -92,17 +103,33 @@ function Player() {
       <div id="gui"></div>
       <div id="pianoHolder">
         {selectPlayer.piano ? (
+          <>
           <Piano
             onProgress={(loadingPercentage) =>
               setLoadingPercentage({ loadingPercentage })
             }
           />
+            { instrumentLoading ? <>
+            
+            <div className="loading-instruments-div">
+              Loading Instrument.......
+            </div>
+            </>: ""}
+            </>
         ) : selectPlayer.drums ? (
+          <>
           <Drums
             onProgress={(loadingPercentage) =>
               setLoadingPercentage({ loadingPercentage })
             }
           />
+           { instrumentLoading ? <>
+            
+            <div className="loading-instruments-div">
+              Loading Instrument.......
+            </div>
+            </>: ""}
+          </>
         ) : (
           ""
         )}

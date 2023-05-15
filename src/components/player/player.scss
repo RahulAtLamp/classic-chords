@@ -103,6 +103,7 @@
   margin-bottom: 50px;
 }
 #pianoHolder {
+  position: relative;
   margin: 20px 0px;
 }
 .control-holder .start {
@@ -276,4 +277,18 @@ tr:hover {
   tr:hover {
     background-color: transparent;
   }
+}
+
+
+.loading-instruments-div{
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  position: absolute;
+  color: white;
+  top: 50%;
+  left: 35%;
+  transform: translate(50%,50%);
+  font-family: "Neon";
+
+  
 }
