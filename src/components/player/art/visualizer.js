@@ -56,6 +56,41 @@ export default class Visualizer extends React.Component {
 
   init = () => {
 
+    // this.setState({ presets: butterchurnPresets.getPresets() });
+    // //get width of screen we will make this auto adjust later.
+    // const width = window.innerWidth;
+    // const height = window.innerHeight;
+
+    // //get state of canvas visualizer and audio context
+    // let { canvas, visualizer, audioContext } = this.state;
+    // // const ctx = canvas.getContext('2d');
+
+    // //get canvas
+    // canvas = document.getElementById("canvas");
+
+    // //set width and height of canvas
+    // canvas.width = 700;
+    // canvas.height = 400;
+
+    // //create a new audio context
+    // audioContext = new AudioContext();
+
+    // //create visualizer with butterchurn
+    // visualizer = butterchurn.createVisualizer(audioContext, canvas, {
+    //   width: width,
+    //   height: height
+    // });
+
+    // //intialize with default values
+    // this.visualizerIntializer(visualizer, audioContext, canvas, width, height);
+    // this.resize();
+    // this.stream = canvas.captureStream();
+ 
+  };
+
+
+  startRecording = async () => {
+
     this.setState({ presets: butterchurnPresets.getPresets() });
     //get width of screen we will make this auto adjust later.
     const width = window.innerWidth;
@@ -85,11 +120,7 @@ export default class Visualizer extends React.Component {
     this.visualizerIntializer(visualizer, audioContext, canvas, width, height);
     this.resize();
     this.stream = canvas.captureStream();
- 
-  };
 
-
-  startRecording = async () => {
     this.setState(state => ({ open: false }));
     recorder.createStream(this.selectorRef.current);
     await recorder.start();
@@ -118,8 +149,8 @@ export default class Visualizer extends React.Component {
     this.state.file = file;
     this.state.file_url = URL.createObjectURL(file);
     this.state.link = link;
-    // this.setState(state => ({ open: !this.state.open }));
-    this.setState(state => ({ open: true }));
+    this.setState(state => ({ open: !this.state.open }));
+    // this.setState(state => ({ open: true }));
   }
 
   resize = () => {
@@ -167,7 +198,7 @@ export default class Visualizer extends React.Component {
       height
     });
     this.renderFrames();
-    await setTimeout(() => { }, 5000);
+    await setTimeout(() => { }, 10000);
 
     this.randomPresets(visualizer);
   };
@@ -222,7 +253,7 @@ export default class Visualizer extends React.Component {
       
         {this.timeControl ? (
         <div className="player-counter">
-          <Counter />
+          {/* <Counter /> */}
         </div>
       ) : null}
 
