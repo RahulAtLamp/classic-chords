@@ -135,8 +135,27 @@ const Profile = () => {
             marketBTTC,
             provider
           );
+        }else if (chainId === 199) {
+          console.log("inside the BTTC");
+          contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+            userBTTC,
+            provider
+          );
+          tokenContract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+            classicChordsBTTC,
+            provider
+          );
+          marketContract = new ethers.Contract(
+            process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+            marketBTTC,
+            provider
+          );
         }
-        const tx = await contract.userMapping(address);
+        const Id = await contract.userAddressToIdMapping(address);
+        console.log(Id);
+        const tx = await contract.userIdToUser(Id)
         const client = new Web3Storage({
           token:
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng",
@@ -273,6 +292,14 @@ const Profile = () => {
             signer
           );
           return contract;
+        }else if (chainId === 199) {
+          console.log("inside the BTTC");
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+            userBTTC,
+            signer
+          );
+          return contract
         }
       }
     } catch (error) {
@@ -664,7 +691,7 @@ const Profile = () => {
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
                                 Budget : {parseFloat(item[4])}{" "}
-                                {chain.id === 1029 ? "BTT" : "MATIC"}
+                                {chain.id === 1029 || 199 ? "BTT" : "MATIC"}
                               </h3>
                               <span>
                                 {item[6] !== address
@@ -826,7 +853,7 @@ const Profile = () => {
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
                                 Budget : {parseFloat(item[4])}{" "}
-                                {chain.id === 1029 ? "BTT" : "MATIC"}
+                                {chain.id === 1029 || 199 ? "BTT" : "MATIC"}
                               </h3>
                             </div>
                             <div className="request-response">
@@ -912,7 +939,7 @@ const Profile = () => {
                               <p className="request-story">{item[2]}</p>
                               <h3 className="request-budget">
                                 Budget : {parseFloat(item[4])}{" "}
-                                {chain.id === 1029 ? "BTT" : "MATIC"}
+                                {chain.id === 1029 || 199 ? "BTT" : "MATIC"}
                               </h3>
                             </div>
                             <div className="request-response">

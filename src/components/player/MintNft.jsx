@@ -182,9 +182,17 @@ function MintNft(props) {
             classicChordsBTTC,
             signer
           );
+        }else if (chainId === 199) {
+          console.log("inside the BTTC");  
+          contract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+            classicChordsBTTC,
+            provider
+          );
         }
         const numToken = document.getElementById("num_token").value;
         const uri = await getTokeUri();
+        console.log(uri);
         const tx = await contract.mint(numToken, uri);
         tx.wait();
         setOnMint(false);

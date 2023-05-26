@@ -25,8 +25,6 @@ import {
   RainbowKitProvider,
   darkTheme,
 } from "@rainbow-me/rainbowkit";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
 import { mainnet, polygon, polygonMumbai } from "wagmi/chains";
 import "@rainbow-me/rainbowkit/styles.css";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -54,8 +52,31 @@ const BTTChain = {
   testnet: true,
 };
 
+const BTTChainMain = {
+  id: 199,
+  iconUrl: "https://static.bt.io/production/logo/1002000.png",
+  name: "BitTorrent Mainnet",
+  network: "BitTorrent Mainnet",
+  nativeCurrency: {
+    decimals: 18,
+    name: "BitTorrent",
+    symbol: "BTT",
+  },
+  rpcUrls: {
+    default: "https://rpc.bittorrentchain.io",
+  },
+  blockExplorers: {
+    default: {
+      name: "BitTorrent Chain Mainnet",
+      url: "https://bttcscan.com/",
+    },
+  },
+  testnet: true,
+};
+
+
 const { provider, chains } = configureChains(
-  [polygonMumbai, BTTChain],
+  [polygonMumbai, BTTChain, BTTChainMain],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: "https://pre-rpc.bittorrentchain.io/" }),

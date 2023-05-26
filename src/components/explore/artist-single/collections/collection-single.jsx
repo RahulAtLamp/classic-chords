@@ -197,7 +197,18 @@ function CollectionSingle() {
             marketBTTC,
             provider
           );
-        }
+        }else if (chainId === 199) {
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+          classicChordsBTTC,
+          provider
+        );
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+          marketBTTC,
+          provider
+        );
+      }
         // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
 
         let result = {};
@@ -281,6 +292,12 @@ function CollectionSingle() {
             process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
             marketBTTC,
             signer
+          );
+        }else if (chainId === 199) {
+          marketContract = new ethers.Contract(
+            process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+            marketBTTC,
+            provider
           );
         }
         try {

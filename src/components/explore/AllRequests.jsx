@@ -37,6 +37,13 @@ function AllRequests() {
             signer
           );
           return contract;
+        }else if (chainId === 199) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+            userBTTC,
+            signer
+          );
+          return contract;
         }
       }
     } catch (error) {

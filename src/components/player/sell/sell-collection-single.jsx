@@ -122,6 +122,13 @@ function SellCollectionSingle() {
             classicChordsBTTC,
             signer
           );
+        }else if (chainId === 199) {
+          console.log("inside the BTTC");  
+          tokenContract = new ethers.Contract(
+            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+            classicChordsBTTC,
+            provider
+          );
         }
         let result = {};
 
@@ -169,6 +176,13 @@ function SellCollectionSingle() {
           process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
           market,
           signer
+        );
+      }else if (chainId === 199) {
+        console.log("inside the BTTC");  
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+          classicChordsBTTC,
+          provider
         );
       }
       let isAvailableForSell = null;

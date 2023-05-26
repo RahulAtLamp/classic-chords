@@ -50,6 +50,13 @@ function AllNfts() {
             signer
           );
           return contract;
+        }else if (chainId === 199) {
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+            marketBTTC,
+            signer
+          );
+          return contract;
         }
       }
     } catch (error) {
@@ -91,6 +98,13 @@ function AllNfts() {
           classicChordsBTTC,
           provider
         );
+      }else if (chainId === 199) {
+        const contract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+          marketBTTC,
+          signer
+        );
+        return contract;
       }
 
       const tempNFT = [];

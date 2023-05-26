@@ -73,6 +73,14 @@ function Streaming({ account }) {
             signer
           );
           return contract;
+        }else if (chainId === 199) {
+          console.log("inside the BTTC");
+          const contract = new ethers.Contract(
+            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+            userBTTC,
+            provider
+          );
+          return contract
         }
       }
     } catch (error) {
@@ -204,6 +212,14 @@ function Streaming({ account }) {
           userBTTC,
           provider
         );
+      }else if (chainId === 199) {
+        console.log("inside the BTTC");
+        const contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+          userBTTC,
+          provider
+        );
+        return contract
       }
 
       const tx = await contract.userMapping(address);

@@ -74,6 +74,25 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "addressToWithroableAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "_requestId",
         "type": "uint256"
@@ -243,6 +262,66 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getAllUsers",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "userId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "userAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "profileImage",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "isArtist",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "totalEarning",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "superChatSpend",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "fees",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct userStream.User[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -342,7 +421,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "fees",
+        "name": "_fees",
         "type": "uint256"
       }
     ],
@@ -547,42 +626,12 @@
         "type": "uint256"
       }
     ],
-    "name": "streamIdToStream",
+    "name": "streamIdToStreamCode",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "stremId",
-        "type": "uint256"
-      },
-      {
         "internalType": "string",
-        "name": "stramCode",
+        "name": "",
         "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "title",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      },
-      {
-        "internalType": "bool",
-        "name": "premium",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "isLive",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalEarning",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -656,56 +705,16 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
-    "name": "userIdToUser",
+    "name": "userAddressToIdMapping",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "userId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "userAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "profileImage",
-        "type": "string"
-      },
-      {
-        "internalType": "bool",
-        "name": "isArtist",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalEarning",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "superChatSpend",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "fees",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -715,12 +724,12 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
-    "name": "userMapping",
+    "name": "userIdToUser",
     "outputs": [
       {
         "internalType": "uint256",

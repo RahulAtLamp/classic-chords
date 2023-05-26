@@ -88,7 +88,6 @@ export default class Visualizer extends React.Component {
  
   };
 
-
   startRecording = async () => {
     this.setState(state => ({ open: false }));
     recorder.createStream(this.selectorRef.current);

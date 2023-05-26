@@ -89,6 +89,23 @@ function ArtistSingle() {
           marketBTTC,
           provider
         );
+      }else if (chainId === 199) {
+        console.log("inside the BTTC");
+        contract = new ethers.Contract(
+          process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+          userBTTC,
+          provider
+        );
+        tokenContract = new ethers.Contract(
+          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+          classicChordsBTTC,
+          provider
+        );
+        marketContract = new ethers.Contract(
+          process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+          marketBTTC,
+          provider
+        );
       }
       // const contract = new ethers.Contract(
       //   process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,

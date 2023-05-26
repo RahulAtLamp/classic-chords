@@ -76,16 +76,6 @@ contract Market is Ownable,ReentrancyGuard, ERC1155Holder{
     uint256 indexed itemId
   );
 
-  event StreamCreated(
-      uint indexed stremId,
-      address indexed creator,
-      string stramCode,
-      string title,
-      string description,
-      bool premium
-  );
-
-
     /* Returns the listing price of the contract */
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
