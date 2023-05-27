@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import "./artist-single.scss";
 import { Link } from "react-router-dom";
-import { Artists } from "../artist-dummy";
-import { Collections } from "./collection_dummy";
-import { getRoles } from "@testing-library/react";
 import { useParams } from "react-router-dom";
-import { ethers } from "ethers";
-import market from "../../../contract/artifacts/market.json";
-import user from "../../../contract/artifacts/userStream.json";
-import userBTTC from "../../../contract/artifacts/userStreamBTTC.json";
-import marketBTTC from "../../../contract/artifacts/marketBTTC.json";
-import { useAccount } from "wagmi";
+// import { ethers } from "ethers";
+// import market from "../../../contract/artifacts/market.json";
+// import user from "../../../contract/artifacts/userStream.json";
+// import userBTTC from "../../../contract/artifacts/userStreamBTTC.json";
+// import marketBTTC from "../../../contract/artifacts/marketBTTC.json";
+// import { useAccount } from "wagmi";
 import Popup from "./artist-single-popup";
-import classicChords from "../../../contract/artifacts/classicChords.json";
-import classicChordsBTTC from "../../../contract/artifacts/classicChordsBTTC.json";
+// import classicChords from "../../../contract/artifacts/classicChords.json";
+// import classicChordsBTTC from "../../../contract/artifacts/classicChordsBTTC.json";
 import axios from "axios";
 import Loading3 from "../../../loading3";
+import {
+  getClassicChordsContract,
+  getMarketContract,
+  getUserStreamContract,
+} from "../../Contract";
 
 // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
-const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
+// const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
 function ArtistSingle() {
   // const singleArtist = Artists[5];
@@ -42,71 +44,75 @@ function ArtistSingle() {
 
   const getProfile = async () => {
     try {
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const signer = provider.getSigner();
-      if (!provider) {
-        console.log("Metamask is not installed, please install!");
-      }
-      const { chainId } = await provider.getNetwork();
-      console.log("switch case for this case is: " + chainId);
+      // const { ethereum } = window;
+      // const provider = new ethers.providers.Web3Provider(ethereum);
+      // // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      // const signer = provider.getSigner();
+      // if (!provider) {
+      //   console.log("Metamask is not installed, please install!");
+      // }
+      // const { chainId } = await provider.getNetwork();
+      // console.log("switch case for this case is: " + chainId);
 
-      let contract;
-      let tokenContract;
-      let marketContract;
+      // let contract;
+      // let tokenContract;
+      // let marketContract;
 
-      if (chainId === 80001) {
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-          user,
-          provider
-        );
-        tokenContract = new ethers.Contract(
-          process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-          classicChords,
-          provider
-        );
-        marketContract = new ethers.Contract(
-          process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
-          market,
-          provider
-        );
-      } else if (chainId === 1029) {
-        console.log("inside the BTTC");
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-          userBTTC,
-          provider
-        );
-        tokenContract = new ethers.Contract(
-          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-          classicChordsBTTC,
-          provider
-        );
-        marketContract = new ethers.Contract(
-          process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
-          marketBTTC,
-          provider
-        );
-      }else if (chainId === 199) {
-        console.log("inside the BTTC");
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-          userBTTC,
-          provider
-        );
-        tokenContract = new ethers.Contract(
-          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
-          classicChordsBTTC,
-          provider
-        );
-        marketContract = new ethers.Contract(
-          process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
-          marketBTTC,
-          provider
-        );
-      }
+      const contract = await getUserStreamContract();
+      const tokenContract = await getClassicChordsContract();
+      const marketContract = await getMarketContract();
+
+      // if (chainId === 80001) {
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+      //     user,
+      //     provider
+      //   );
+      //   tokenContract = new ethers.Contract(
+      //     process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+      //     classicChords,
+      //     provider
+      //   );
+      //   marketContract = new ethers.Contract(
+      //     process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+      //     market,
+      //     provider
+      //   );
+      // } else if (chainId === 1029) {
+      //   console.log("inside the BTTC");
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+      //     userBTTC,
+      //     provider
+      //   );
+      //   tokenContract = new ethers.Contract(
+      //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+      //     classicChordsBTTC,
+      //     provider
+      //   );
+      //   marketContract = new ethers.Contract(
+      //     process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+      //     marketBTTC,
+      //     provider
+      //   );
+      // } else if (chainId === 199) {
+      //   console.log("inside the BTTC");
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+      //     userBTTC,
+      //     provider
+      //   );
+      //   tokenContract = new ethers.Contract(
+      //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+      //     classicChordsBTTC,
+      //     provider
+      //   );
+      //   marketContract = new ethers.Contract(
+      //     process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+      //     marketBTTC,
+      //     provider
+      //   );
+      // }
       // const contract = new ethers.Contract(
       //   process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
       //   user,
@@ -163,32 +169,34 @@ function ArtistSingle() {
 
   const requestSong = async () => {
     try {
-      console.log("in");
+      // console.log("in");
       // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-      if (!provider) {
-        console.log("Metamask is not installed, please install!");
-      }
-      const { chainId } = await provider.getNetwork();
-      console.log("switch case for this case is: " + chainId);
-      let contract;
-      if (chainId === 80001) {
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-          user,
-          signer
-        );
-      } else if (chainId === 1029) {
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-          userBTTC,
-          signer
-        );
-      }
-      console.log(contract);
-      console.log(requestData);
-      console.log(singleArtist.userAddress);
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const signer = provider.getSigner();
+      // if (!provider) {
+      //   console.log("Metamask is not installed, please install!");
+      // }
+      // const { chainId } = await provider.getNetwork();
+      // console.log("switch case for this case is: " + chainId);
+      // let contract;
+      // if (chainId === 80001) {
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+      //     user,
+      //     signer
+      //   );
+      // } else if (chainId === 1029) {
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+      //     userBTTC,
+      //     signer
+      //   );
+      // }
+      const contract = await getUserStreamContract();
+
+      // console.log(contract);
+      // console.log(requestData);
+      // console.log(singleArtist.userAddress);
       const tx = await contract.requestSong(
         requestData.name,
         requestData.story,

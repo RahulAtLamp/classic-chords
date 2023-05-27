@@ -1,9 +1,10 @@
-import { ethers } from "ethers";
+// import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import "./AllRequests.scss";
-import user from "../../contract/artifacts/userStream.json";
-import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+// import user from "../../contract/artifacts/userStream.json";
+// import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 import { useAccount, useNetwork } from "wagmi";
+import { getUserStreamContract } from "../Contract";
 
 function AllRequests() {
   const { address } = useAccount();
@@ -12,48 +13,49 @@ function AllRequests() {
   console.log(chain.id);
   const [requests, setRequests] = useState([]);
 
-  const getContract = async () => {
-    try {
-      const { ethereum } = window;
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        if (chainId === 80001) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-            user,
-            signer
-          );
-          return contract;
-        } else if (chainId === 1029) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }else if (chainId === 199) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getContract = async () => {
+  //   try {
+  //     const { ethereum } = window;
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       if (!provider) {
+  //         console.log("Metamask is not installed, please install!");
+  //       }
+  //       const { chainId } = await provider.getNetwork();
+  //       console.log("switch case for this case is: " + chainId);
+  //       if (chainId === 80001) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+  //           user,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 1029) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 199) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getAllRequests = async () => {
     try {
-      const contract = await getContract();
+      // const contract = await getContract();
+      const contract = await getUserStreamContract();
       const reqs = await contract.getAllGlobalRequest();
       console.log(reqs.length);
       console.log(reqs);
@@ -69,7 +71,8 @@ function AllRequests() {
   const songReqResponse = async (id, ans) => {
     console.log(id, ans);
     try {
-      const contract = await getContract();
+      // const contract = await getContract();
+      const contract = await getUserStreamContract();
       console.log(contract);
       const tx = await contract.songRequestResponse(id, ans);
       await tx.wait();

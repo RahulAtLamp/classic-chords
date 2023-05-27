@@ -10,6 +10,7 @@ import axios from "axios";
 import "./single-stream.scss";
 import Loading3 from "../../loading3";
 import Communication from "./message/Communication";
+import { getUserStreamContract } from "../Contract";
 
 function SingleStream() {
   const { isConnected } = useAccount();
@@ -27,45 +28,45 @@ function SingleStream() {
   useEffect(() => {
     console.log(showSuper);
   }, [showSuper]);
-  const getContract = async () => {
-    try {
-      const { ethereum } = window;
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        if (chainId === 80001) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-            user,
-            signer
-          );
-          return contract;
-        } else if (chainId === 1029) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }else if (chainId === 199) {
-          console.log("inside the BTTC");
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-            userBTTC,
-            provider
-          );
-          return contract
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getContract = async () => {
+  //   try {
+  //     const { ethereum } = window;
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       if (!provider) {
+  //         console.log("Metamask is not installed, please install!");
+  //       }
+  //       const { chainId } = await provider.getNetwork();
+  //       console.log("switch case for this case is: " + chainId);
+  //       if (chainId === 80001) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+  //           user,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 1029) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       }else if (chainId === 199) {
+  //         console.log("inside the BTTC");
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+  //           userBTTC,
+  //           provider
+  //         );
+  //         return contract
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const fetchPlaybackId = async () => {
     const headers = {
@@ -96,7 +97,9 @@ function SingleStream() {
   };
 
   const fetchUserData = async () => {
-    const contract = await getContract();
+    // const contract = await getContract();
+    const contract = await getUserStreamContract();
+
     const streamId = params.id.replace(/-/g, "");
     const streamData = await contract.streamCodeToStream(streamId);
     console.log(streamData);

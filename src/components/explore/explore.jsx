@@ -10,15 +10,16 @@ import "./explore.scss";
 // import NFT7 from "../../images/nft7.png";
 // import NFT8 from "../../images/nft8.png";
 import { Link } from "react-router-dom";
-import { ethers } from "ethers";
-import user from "../../contract/artifacts/userStream.json";
-import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+// import { ethers } from "ethers";
+// import user from "../../contract/artifacts/userStream.json";
+// import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 import Loading3 from "../../loading3";
+import { getUserStreamContract } from "../Contract";
 
 // const user_address = "0x036E73d74e86cC50930d78f26cf97d603c40088f";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9"
-const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
+// const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
 const Explore = ({ temp }) => {
   const [loading, setLoading] = React.useState(false);
@@ -28,47 +29,48 @@ const Explore = ({ temp }) => {
   // gui.destroy()
   // console.log(process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET)
 
-  const getContract = async () => {
-    try {
-      const { ethereum } = window;
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        if (chainId === 80001) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-            user,
-            signer
-          );
-          return contract;
-        } else if (chainId === 1029) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }else if (chainId === 199) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getContract = async () => {
+  //   try {
+  //     const { ethereum } = window;
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       if (!provider) {
+  //         console.log("Metamask is not installed, please install!");
+  //       }
+  //       const { chainId } = await provider.getNetwork();
+  //       console.log("switch case for this case is: " + chainId);
+  //       if (chainId === 80001) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+  //           user,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 1029) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 199) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getArtists = async () => {
-    const contract = await getContract();
+    // const contract = await getContract();
+    const contract = await getUserStreamContract();
     const artists = await contract.getAllArtists();
     setArtist(artists);
     setLoading(true);

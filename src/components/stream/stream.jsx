@@ -2,12 +2,12 @@ import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Client } from "@livepeer/webrtmp-sdk";
 import Livepeer from "livepeer-nodejs";
-import { create, CID } from "ipfs-http-client";
+// import { create, CID } from "ipfs-http-client";
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import * as PushAPI from "@pushprotocol/restapi";
-import user from "../../contract/artifacts/userStream.json";
-import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+// import user from "../../contract/artifacts/userStream.json";
+// import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
 import { ethers } from "ethers";
 import CryptoJS from "crypto-js";
 import Communication from "./message/Communication";
@@ -15,8 +15,9 @@ import "./stream.scss";
 import Loading3 from "../../loading3";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getUserStreamContract } from "../Contract";
 
-const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
+// const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
 function Streaming({ account }) {
   const { isConnected, address } = useAccount();
@@ -48,45 +49,45 @@ function Streaming({ account }) {
   const toastSuccess = () => toast.success("Hurrrayy....stream started");
   const streamMessage = () => toast.info("Sign with XMTP for Live Chat");
 
-  const getContract = async () => {
-    try {
-      const { ethereum } = window;
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        if (chainId === 80001) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-            user,
-            signer
-          );
-          return contract;
-        } else if (chainId === 1029) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }else if (chainId === 199) {
-          console.log("inside the BTTC");
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-            userBTTC,
-            provider
-          );
-          return contract
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getContract = async () => {
+  //   try {
+  //     const { ethereum } = window;
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       if (!provider) {
+  //         console.log("Metamask is not installed, please install!");
+  //       }
+  //       const { chainId } = await provider.getNetwork();
+  //       console.log("switch case for this case is: " + chainId);
+  //       if (chainId === 80001) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+  //           user,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 1029) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 199) {
+  //         console.log("inside the BTTC");
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+  //           userBTTC,
+  //           provider
+  //         );
+  //         return contract;
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const StartStream = async () => {
     // setLoading(true);
@@ -156,7 +157,9 @@ function Streaming({ account }) {
     const withoutDash = stream_.id.replace(/-/g, "");
     setStreamId(withoutDash);
     // console.log(stream_.streamKey);
-    const contract = await getContract();
+    // const contract = await getContract();
+    const contract = await getUserStreamContract();
+
     console.log(contract);
 
     // const encData = testEncrypt(stream_.id);
@@ -195,32 +198,33 @@ function Streaming({ account }) {
       // alert("Stream started; visit Livepeer Dashboard.");
       toastSuccess();
       streamMessage();
-      const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
-      // const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const { chainId } = await provider.getNetwork();
-      let contract;
-      if (chainId === 80001) {
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-          user,
-          provider
-        );
-      } else if (chainId === 1029) {
-        contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-          userBTTC,
-          provider
-        );
-      }else if (chainId === 199) {
-        console.log("inside the BTTC");
-        const contract = new ethers.Contract(
-          process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-          userBTTC,
-          provider
-        );
-        return contract
-      }
+      // const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
+      // // const RPC_provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const { chainId } = await provider.getNetwork();
+      // let contract;
+      const contract = await getUserStreamContract();
+      // if (chainId === 80001) {
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+      //     user,
+      //     provider
+      //   );
+      // } else if (chainId === 1029) {
+      //   contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+      //     userBTTC,
+      //     provider
+      //   );
+      // } else if (chainId === 199) {
+      //   console.log("inside the BTTC");
+      //   const contract = new ethers.Contract(
+      //     process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+      //     userBTTC,
+      //     provider
+      //   );
+      //   return contract;
+      // }
 
       const tx = await contract.userMapping(address);
 

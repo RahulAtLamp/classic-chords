@@ -1,22 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./collection-single.scss";
 // import { Collections } from '../collection_dummy';
-import market from "../../../../contract/artifacts/market.json";
-import marketBTTC from "../../../../contract/artifacts/marketBTTC.json";
-import { ethers } from "ethers";
-import classicChords from "../../../../contract/artifacts/classicChords.json";
-import classicChordsBTTC from "../../../../contract/artifacts/classicChordsBTTC.json";
+// import market from "../../../../contract/artifacts/market.json";
+// import marketBTTC from "../../../../contract/artifacts/marketBTTC.json";
+// import { ethers } from "ethers";
+// import classicChords from "../../../../contract/artifacts/classicChords.json";
+// import classicChordsBTTC from "../../../../contract/artifacts/classicChordsBTTC.json";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading3 from "../../../../loading3";
-import { useAccount, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount } from "wagmi";
+
 import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { getClassicChordsContract, getMarketContract } from "../../../Contract";
 
 // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
 // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
-const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
+// const RPC_ENDPOINT = "https://rpc-mumbai.maticvigil.com/";
 
 function CollectionSingle() {
   const connectMeta = async () => {
@@ -30,14 +31,9 @@ function CollectionSingle() {
     // setAccount(address);
   };
 
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
-  const [account, setAccount] = useState(null);
-  const [chain, setChainStatus] = useState(false);
   const { openConnectModal } = useConnectModal();
 
-  const { isConnected, address } = useAccount();
+  const { address } = useAccount();
   // const collection = Collections[3];
   const params = useParams();
   const navigate = useNavigate();
@@ -116,99 +112,59 @@ function CollectionSingle() {
   //     }
   // };
 
-  const addChain = () => {
-    if (window.ethereum) {
-      window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: "0x13881",
-            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-            chainName: "Mumbai Testnet",
-            // nativeCurrency: {
-            //     name: "BitTorrent",
-            //     symbol: "BTT",
-            //     decimals: 18
-            // },
-            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-          },
-        ],
-      });
-      setChainStatus(false);
-    } else {
-      alert("Please Install a wallet to proceed.");
-    }
-  };
-
-  const checkChain = async () => {
-    if (window.ethereum) {
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const { chainId } = await provider.getNetwork();
-      if (chainId !== 80001) {
-        // setChainStatus(true);
-        addChain();
-        return true;
-      } else {
-        // setChainStatus(false);
-        return false;
-      }
-    } else {
-      alert("Please install a wallet.");
-    }
-  };
-
   const getNftData = async () => {
     try {
       const { ethereum } = window;
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
+        //   const provider = new ethers.providers.Web3Provider(ethereum);
 
-        // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
+        //   // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
 
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
+        //   const signer = provider.getSigner();
+        //   if (!provider) {
+        //     console.log("Metamask is not installed, please install!");
+        //   }
+        //   const { chainId } = await provider.getNetwork();
+        //   console.log("switch case for this case is: " + chainId);
 
-        let tokenContract;
-        let marketContract;
-        if (chainId === 80001) {
-          tokenContract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-            classicChords,
-            provider
-          );
-          marketContract = new ethers.Contract(
-            process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
-            market,
-            provider
-          );
-        } else if (chainId === 1029) {
-          tokenContract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-            classicChordsBTTC,
-            provider
-          );
-          marketContract = new ethers.Contract(
-            process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
-            marketBTTC,
-            provider
-          );
-        }else if (chainId === 199) {
-        tokenContract = new ethers.Contract(
-          process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
-          classicChordsBTTC,
-          provider
-        );
-        marketContract = new ethers.Contract(
-          process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
-          marketBTTC,
-          provider
-        );
-      }
+        //   let tokenContract;
+        //   let marketContract;
+        //   if (chainId === 80001) {
+        //     tokenContract = new ethers.Contract(
+        //       process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+        //       classicChords,
+        //       provider
+        //     );
+        //     marketContract = new ethers.Contract(
+        //       process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+        //       market,
+        //       provider
+        //     );
+        //   } else if (chainId === 1029) {
+        //     tokenContract = new ethers.Contract(
+        //       process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+        //       classicChordsBTTC,
+        //       provider
+        //     );
+        //     marketContract = new ethers.Contract(
+        //       process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+        //       marketBTTC,
+        //       provider
+        //     );
+        //   }else if (chainId === 199) {
+        //   tokenContract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+        //     classicChordsBTTC,
+        //     provider
+        //   );
+        //   marketContract = new ethers.Contract(
+        //     process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+        //     marketBTTC,
+        //     provider
+        //   );
+        // }
+        const tokenContract = await getClassicChordsContract();
+        const marketContract = await getMarketContract();
         // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
 
         let result = {};
@@ -262,44 +218,47 @@ function CollectionSingle() {
     try {
       const { ethereum } = window;
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        let tokenContract;
-        let marketContract;
-        if (chainId === 80001) {
-          tokenContract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-            classicChords,
-            signer
-          );
-          marketContract = new ethers.Contract(
-            process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
-            market,
-            signer
-          );
-        } else if (chainId === 1029) {
-          tokenContract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-            classicChordsBTTC,
-            signer
-          );
-          marketContract = new ethers.Contract(
-            process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
-            marketBTTC,
-            signer
-          );
-        }else if (chainId === 199) {
-          marketContract = new ethers.Contract(
-            process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
-            marketBTTC,
-            provider
-          );
-        }
+        // const provider = new ethers.providers.Web3Provider(ethereum);
+        // const signer = provider.getSigner();
+        // if (!provider) {
+        //   console.log("Metamask is not installed, please install!");
+        // }
+        // const { chainId } = await provider.getNetwork();
+        // console.log("switch case for this case is: " + chainId);
+        // let tokenContract;
+        // let marketContract;
+
+        const marketContract = await getMarketContract();
+
+        // if (chainId === 80001) {
+        //   tokenContract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+        //     classicChords,
+        //     signer
+        //   );
+        //   marketContract = new ethers.Contract(
+        //     process.env.REACT_APP_MARKET_ADDRESS_POLYGON_TESTNET,
+        //     market,
+        //     signer
+        //   );
+        // } else if (chainId === 1029) {
+        //   tokenContract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+        //     classicChordsBTTC,
+        //     signer
+        //   );
+        //   marketContract = new ethers.Contract(
+        //     process.env.REACT_APP_MARKET_ADDRESS_BTTC_TESTNET,
+        //     marketBTTC,
+        //     signer
+        //   );
+        // } else if (chainId === 199) {
+        //   marketContract = new ethers.Contract(
+        //     process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
+        //     marketBTTC,
+        //     provider
+        //   );
+        // }
         try {
           console.log(userData);
 

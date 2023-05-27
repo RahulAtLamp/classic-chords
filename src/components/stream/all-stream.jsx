@@ -4,10 +4,11 @@ import "./all-stream.scss";
 import { Link } from "react-router-dom";
 import Livepeer from "livepeer-nodejs";
 import ReactPlayer from "react-player";
-import user from "../../contract/artifacts/userStream.json";
-import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
-import { ethers } from "ethers";
+// import user from "../../contract/artifacts/userStream.json";
+// import userBTTC from "../../contract/artifacts/userStreamBTTC.json";
+// import { ethers } from "ethers";
 import Loading3 from "../../loading3";
+import { getUserStreamContract } from "../Contract";
 
 // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
 
@@ -23,7 +24,8 @@ function AllStream() {
   const getStreams = async () => {
     setLoading(true);
     const fetchStreams = await livepeerObject.Stream.getAll(1, true, true);
-    const contract = await getContract();
+    // const contract = await getContract();
+    const contract = await getUserStreamContract();
     console.log(fetchStreams[0]);
     let counter = 0;
     const streams = [];
@@ -45,14 +47,14 @@ function AllStream() {
     const allRecordedFetchedStreams = await livepeerObject.Session.getAll(true);
     console.log(allRecordedFetchedStreams);
     // console.log(allRecordedFetchedStreams.length);
-    const contract1 = await getContract();
-
+    // const contract1 = await getContract();
+    // const contract1 = await getUserStreamContract();
     const allRecordedStreams = [];
     for (let i = 0; i < allRecordedFetchedStreams.length; i++) {
       let data = {};
       data.id = allRecordedFetchedStreams[i].id;
       const allRec = allRecordedFetchedStreams[i].parentId.replace(/-/g, "");
-      const recStreamData = await contract1.streamCodeToStream(allRec);
+      const recStreamData = await contract.streamCodeToStream(allRec);
       // recStreamData.wait();
       // console.log(recStreamData);
       data.meta = recStreamData;
@@ -67,45 +69,45 @@ function AllStream() {
     }
   };
 
-  const getContract = async () => {
-    try {
-      const { ethereum } = window;
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        if (chainId === 80001) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
-            user,
-            signer
-          );
-          return contract;
-        } else if (chainId === 1029) {
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
-            userBTTC,
-            signer
-          );
-          return contract;
-        }else if (chainId === 199) {
-          console.log("inside the BTTC");
-          const contract = new ethers.Contract(
-            process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
-            userBTTC,
-            provider
-          );
-          return contract
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getContract = async () => {
+  //   try {
+  //     const { ethereum } = window;
+  //     if (ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(ethereum);
+  //       const signer = provider.getSigner();
+  //       if (!provider) {
+  //         console.log("Metamask is not installed, please install!");
+  //       }
+  //       const { chainId } = await provider.getNetwork();
+  //       console.log("switch case for this case is: " + chainId);
+  //       if (chainId === 80001) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_POLYGON_TESTNET,
+  //           user,
+  //           signer
+  //         );
+  //         return contract;
+  //       } else if (chainId === 1029) {
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_TESTNET,
+  //           userBTTC,
+  //           signer
+  //         );
+  //         return contract;
+  //       }else if (chainId === 199) {
+  //         console.log("inside the BTTC");
+  //         const contract = new ethers.Contract(
+  //           process.env.REACT_APP_USER_ADDRESS_BTTC_MAINNET,
+  //           userBTTC,
+  //           provider
+  //         );
+  //         return contract
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     getStreams();

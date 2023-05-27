@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./MintNft.scss";
 import ConfettiExplosion from "react-confetti-explosion";
-import classicChords from "../../contract/artifacts/classicChords.json";
-import classicChordsBTTC from "../../contract/artifacts/classicChordsBTTC.json";
+// import classicChords from "../../contract/artifacts/classicChords.json";
+// import classicChordsBTTC from "../../contract/artifacts/classicChordsBTTC.json";
 import Loading3 from "../../loading3";
-import { ethers } from "ethers";
+// import { ethers } from "ethers";
 // import { Web3Storage } from 'web3.storage';
 import { NFTStorage, File } from "nft.storage";
-import { useAccount, useConnect } from "wagmi";
-import { InjectedConnector } from "wagmi/connectors/injected";
+import { useAccount } from "wagmi";
+// import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useNavigate } from "react-router-dom";
+import { getClassicChordsContract } from "../Contract";
 
 function MintNft(props) {
   // const classicChords_address = "0xA85cFB46795e47bB6D6C727964f668A0AE38935f";
@@ -25,14 +26,7 @@ function MintNft(props) {
       openConnectModal();
     }
   };
-  const { address, isConnected } = useAccount();
-
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  });
-  const [account, setAccount] = useState(null);
-  const [chain, setChainStatus] = useState(false);
-
+  const { address } = useAccount();
   const [isExploding, setIsExploding] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [onMint, setOnMint] = React.useState(false);
@@ -41,48 +35,6 @@ function MintNft(props) {
   const inputRef = React.useRef();
   const { openConnectModal } = useConnectModal();
   const navigate = useNavigate();
-
-  const addChain = () => {
-    if (window.ethereum) {
-      window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            chainId: "0x13881",
-            rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-            chainName: "Mumbai Testnet",
-            // nativeCurrency: {
-            //     name: "BitTorrent",
-            //     symbol: "BTT",
-            //     decimals: 18
-            // },
-            blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-          },
-        ],
-      });
-      setChainStatus(false);
-    } else {
-      alert("Please Install a wallet to proceed.");
-    }
-  };
-
-  const checkChain = async () => {
-    if (window.ethereum) {
-      const { ethereum } = window;
-      const provider = new ethers.providers.Web3Provider(ethereum);
-      const { chainId } = await provider.getNetwork();
-      if (chainId !== 80001) {
-        // setChainStatus(true);
-        addChain();
-        return true;
-      } else {
-        // setChainStatus(false);
-        return false;
-      }
-    } else {
-      alert("Please install a wallet.");
-    }
-  };
 
   const getTokeUri = async () => {
     // const client = new Web3Storage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDllOTgwOTYxRDc1M0QwNUEzODlDZUU1RThCRjA5NjI3QzkwYzQ2RTIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjgxOTEzODY1MzksIm5hbWUiOiJjbGFzc2ljX2Nob3JkcyJ9.TKUEsNlcVJQvImOVlnZqCYEQPsjZb3RmXgSAR5D9vng" })
@@ -109,9 +61,6 @@ function MintNft(props) {
     console.log(metadata_cid);
     return metadata_cid.url;
   };
-
-  useEffect(() => {}, []);
-
   useEffect(() => {
     // console.log(open);
     // console.log(props.opened);
@@ -161,35 +110,35 @@ function MintNft(props) {
     try {
       const { ethereum } = window;
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        if (!provider) {
-          console.log("Metamask is not installed, please install!");
-        }
-        const { chainId } = await provider.getNetwork();
-        console.log("switch case for this case is: " + chainId);
-        let contract;
-
-        if (chainId === 80001) {
-          contract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-            classicChords,
-            signer
-          );
-        } else if (chainId === 1029) {
-          contract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-            classicChordsBTTC,
-            signer
-          );
-        }else if (chainId === 199) {
-          console.log("inside the BTTC");  
-          contract = new ethers.Contract(
-            process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
-            classicChordsBTTC,
-            provider
-          );
-        }
+        // const provider = new ethers.providers.Web3Provider(ethereum);
+        // const signer = provider.getSigner();
+        // if (!provider) {
+        //   console.log("Metamask is not installed, please install!");
+        // }
+        // const { chainId } = await provider.getNetwork();
+        // console.log("switch case for this case is: " + chainId);
+        // let contract;
+        const contract = await getClassicChordsContract();
+        // if (chainId === 80001) {
+        //   contract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
+        //     classicChords,
+        //     signer
+        //   );
+        // } else if (chainId === 1029) {
+        //   contract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
+        //     classicChordsBTTC,
+        //     signer
+        //   );
+        // } else if (chainId === 199) {
+        //   console.log("inside the BTTC");
+        //   contract = new ethers.Contract(
+        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
+        //     classicChordsBTTC,
+        //     provider
+        //   );
+        // }
         const numToken = document.getElementById("num_token").value;
         const uri = await getTokeUri();
         console.log(uri);
