@@ -57,7 +57,7 @@ var CanvasRecorder = function CanvasRecorder() {
     recordedBlobs = [];
 
     try {
-      const merged_stream = new MediaStream([ canvas_track, mic_track ]);
+      const merged_stream = new MediaStream([ canvas_track ]);
       mediaRecorder = new MediaRecorder(merged_stream, options);
     } catch (e) {
       console.error('Exception while creating MediaRecorder:', e);
@@ -105,3 +105,4 @@ var index = CanvasRecorder();
 
 export default index;
 //# sourceMappingURL=index.modern.js.map
+

@@ -181,8 +181,8 @@ function SellCollectionSingle() {
         console.log("inside the BTTC");  
         marketContract = new ethers.Contract(
           process.env.REACT_APP_MARKET_ADDRESS_BTTC_MAINNET,
-          classicChordsBTTC,
-          provider
+          market,
+          signer
         );
       }
       let isAvailableForSell = null;
