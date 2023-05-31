@@ -55,7 +55,7 @@ export const getUserStreamContract = async () => {
         const contract = new ethers.Contract(
           USER_ADDRESS_BTTC_MAINNET,
           userStreamABI,
-          provider
+          signer
         );
         return contract;
       }
@@ -94,7 +94,7 @@ export const getClassicChordsContract = async () => {
         const contract = new ethers.Contract(
           CLASSIC_CHORDS_BTTC_MAINNET,
           classicChordsABI,
-          provider
+          signer
         );
         return contract;
       }
@@ -133,7 +133,7 @@ export const getMarketContract = async () => {
         const contract = new ethers.Contract(
           MARKET_ADDRESS_BTTC_MAINNET,
           marketABI,
-          provider
+          signer
         );
         return contract;
       }
