@@ -35,25 +35,6 @@ export default class Visualizer extends React.Component {
   }
 
 
-  // RecordView = () => {
-
-  //     return (
-  //         <div>
-  //         <ReactMediaRecorder
-  //             {...this.stream}
-  //             render={({ status, startRecording, stopRecording, mediaBlobUrl }) => (
-  //             <div>
-  //                 <p>{status}</p>
-  //                 <button onClick={startRecording}>Start Recording</button>
-  //                 <button onClick={stopRecording}>Stop Recording</button>
-  //                 <video src={mediaBlobUrl} controls autoPlay loop />
-  //             </div>
-  //             )}
-  //         />
-  //         </div>
-  //     );
-  // }
-
   init = () => {
 
     this.setState({ presets: butterchurnPresets.getPresets() });
@@ -85,6 +66,10 @@ export default class Visualizer extends React.Component {
     this.visualizerIntializer(visualizer, audioContext, canvas, width, height);
     this.resize();
     this.stream = canvas.captureStream();
+
+    if(this.state.open === false){
+      recorder.addEventListener()
+    }
  
   };
 
@@ -101,8 +86,6 @@ export default class Visualizer extends React.Component {
   stopRecording = () => {
     recorder.stop();
     delete this.canvas;
-    // this.state.visualizer;
-    // this.state.audioContext;
     const file = recorder.save();
 
     const link = document.createElement("a");
@@ -112,12 +95,11 @@ export default class Visualizer extends React.Component {
     // Append to html link element page
     document.body.appendChild(link);
 
-    // // Start download
-    // link.click();
     this.state.file = file;
     this.state.file_url = URL.createObjectURL(file);
     this.state.link = link;
     this.setState(state => ({ open: !this.state.open }));
+    recorder.deleteEventListener()
     // this.setState(state => ({ open: true }));
   }
 
@@ -210,6 +192,7 @@ export default class Visualizer extends React.Component {
     this.setState({
       open: false
     })
+    recorder.addEventListener()
   }
 
   render() {

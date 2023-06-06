@@ -82,8 +82,8 @@ class Piano extends Component {
     this.addLights();
     this.loadTheModel();
     this.startAnimationLoop();
-    document.addEventListener("keydown", this.handleKeyPress);
-    document.addEventListener("keyup", this.handleKeyUp);
+    // document.addEventListener("keydown", this.handleKeyPress);
+    // document.addEventListener("keyup", this.handleKeyUp);
     this.envelopes = [];
     this.startListening();
   }

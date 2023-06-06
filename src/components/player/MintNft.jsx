@@ -1,23 +1,14 @@
 import React, { useEffect } from "react";
 import "./MintNft.scss";
 import ConfettiExplosion from "react-confetti-explosion";
-// import classicChords from "../../contract/artifacts/classicChords.json";
-// import classicChordsBTTC from "../../contract/artifacts/classicChordsBTTC.json";
 import Loading3 from "../../loading3";
-// import { ethers } from "ethers";
-// import { Web3Storage } from 'web3.storage';
 import { NFTStorage, File } from "nft.storage";
 import { useAccount } from "wagmi";
-// import { InjectedConnector } from "wagmi/connectors/injected";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useNavigate } from "react-router-dom";
 import { getClassicChordsContract } from "../Contract";
 
 function MintNft(props) {
-  // const classicChords_address = "0xA85cFB46795e47bB6D6C727964f668A0AE38935f";
-  // const user_address = "0xb14bd4448Db2fe9b4DBb1D7b8097D28cA57A8DE9";
-  // const classicChords_address = "0x01daa94030dBd0a666066483D89E7927BE0904Ed";
-  // const market_address = "0x086E4fDFb8CEb2c21bD1491a6B86Ce8eB4C01970"
 
   const connectMeta = async () => {
     if (address) {
@@ -90,55 +81,13 @@ function MintNft(props) {
     };
   }, [mintBox]);
 
-  // useEffect(() => {
-  //     function handleClickOutside(event) {
-  //         if (props.current && !props.current.contains(event.target)) {
-  //             setOpen(true);
-  //         }
-  //     }
-  //     // Bind the event listener
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //         // Unbind the event listener on clean up
-  //         document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  // }, [props])
-
   const mint = async () => {
     setOnMint(true);
     setOnLoading(true);
     try {
       const { ethereum } = window;
       if (ethereum) {
-        // const provider = new ethers.providers.Web3Provider(ethereum);
-        // const signer = provider.getSigner();
-        // if (!provider) {
-        //   console.log("Metamask is not installed, please install!");
-        // }
-        // const { chainId } = await provider.getNetwork();
-        // console.log("switch case for this case is: " + chainId);
-        // let contract;
         const contract = await getClassicChordsContract();
-        // if (chainId === 80001) {
-        //   contract = new ethers.Contract(
-        //     process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-        //     classicChords,
-        //     signer
-        //   );
-        // } else if (chainId === 1029) {
-        //   contract = new ethers.Contract(
-        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-        //     classicChordsBTTC,
-        //     signer
-        //   );
-        // } else if (chainId === 199) {
-        //   console.log("inside the BTTC");
-        //   contract = new ethers.Contract(
-        //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
-        //     classicChordsBTTC,
-        //     provider
-        //   );
-        // }
         const numToken = document.getElementById("num_token").value;
         const uri = await getTokeUri();
         console.log(uri);

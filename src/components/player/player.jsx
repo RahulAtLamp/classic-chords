@@ -252,16 +252,7 @@ function Player() {
         ) : (
           ""
         )}
-        {/* <canvas id="pianoCanvas"></canvas>
-        <div style={{ display: "none" }}>
-          {counter ? (
-            <MIDISounds
-              ref={midiSounds}
-              appElementName="root"
-              instruments={[selectedInstrument]}
-            />
-          ) : null}
-        </div> */}
+        
         <Visualizer />
       </div>
       <div className="control-holder">
