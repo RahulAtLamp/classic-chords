@@ -82,8 +82,8 @@ class Piano extends Component {
     this.addLights();
     this.loadTheModel();
     this.startAnimationLoop();
-    // document.addEventListener("keydown", this.handleKeyPress);
-    // document.addEventListener("keyup", this.handleKeyUp);
+    document.addEventListener("keydown", this.handleKeyPress);
+    document.addEventListener("keyup", this.handleKeyUp);
     this.envelopes = [];
     this.startListening();
   }
@@ -250,7 +250,7 @@ class Piano extends Component {
       const note = this.keyMappings[key];
       console.log(note);
       const el = this.scene.getObjectByName(note[1]);
-      this.keyDown(note[0]);
+      // this.keyDown(note[0]);
       // // change some custom props of the element: placement, color, rotation, anything that should be
       // // done once the model was loaded and ready for display
       //   el.position.set(0, -150,0 );
@@ -370,15 +370,6 @@ class Piano extends Component {
         ) : (
           <>
             <div style={style} ref={(ref) => (this.mount = ref)} />
-            <div className="selectDrop">
-              <select
-                className=""
-                value={this.state.selectedInstrument}
-                onChange={this.onSelectInstrument.bind(this)}
-              >
-                {this.createSelectItems()}
-              </select>
-            </div>
 
             <MIDISounds
               ref={(ref) => (this.midiSounds = ref)}

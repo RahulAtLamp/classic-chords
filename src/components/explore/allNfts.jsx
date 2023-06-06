@@ -74,42 +74,6 @@ function AllNfts() {
       // console.log(contract);
       const artists = await marketContract.getListedNfts();
       console.log(artists);
-      // const { ethereum } = window;
-
-      // const provider = new ethers.providers.Web3Provider(ethereum);
-
-      // // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-
-      // const signer = provider.getSigner();
-      // if (!provider) {
-      //   console.log("Metamask is not installed, please install!");
-      // }
-      // const { chainId } = await provider.getNetwork();
-      // console.log("switch case for this case is: " + chainId);
-
-      // const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINT);
-      // let tokenContract;
-      // if (chainId === 80001) {
-      //   tokenContract = new ethers.Contract(
-      //     process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-      //     classicChords,
-      //     provider
-      //   );
-      // } else if (chainId === 1029) {
-      //   tokenContract = new ethers.Contract(
-      //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_TESTNET,
-      //     classicChordsBTTC,
-      //     provider
-      //   );
-      // } else if (chainId === 199) {
-      //   const contract = new ethers.Contract(
-      //     process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
-      //     marketBTTC,
-      //     signer
-      //   );
-      //   return contract;
-      // }
-
       const tokenContract = await getClassicChordsContract();
 
       const tempNFT = [];

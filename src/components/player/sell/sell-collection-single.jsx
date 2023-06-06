@@ -113,7 +113,7 @@ function SellCollectionSingle() {
         if (chainId === 80001) {
           tokenContract = new ethers.Contract(
             process.env.REACT_APP_CLASSIC_CHORDS_POLYGON_TESTNET,
-            classicChords,
+            classicChordsBTTC,
             signer
           );
         } else if (chainId === 1029) {
@@ -127,13 +127,14 @@ function SellCollectionSingle() {
           tokenContract = new ethers.Contract(
             process.env.REACT_APP_CLASSIC_CHORDS_BTTC_MAINNET,
             classicChordsBTTC,
-            provider
+            signer
           );
         }
         let result = {};
 
         try {
           const uri = await tokenContract.tokenUriMapping(params.id);
+          console.log(uri);
           await axios
             .get("https://ipfs.io/ipfs/" + uri.split("//")[1])
             .then((response) => {
