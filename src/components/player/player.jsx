@@ -260,11 +260,11 @@ function Player() {
           ""
         ) : (
           <button
-            className={recordingStatus === true ? "start active" : "start"}
+            className={recordingStatus === true || selectPlayer.drums ? "start active" : "start"}
             onClick={() => {
               StartRecording();
             }}
-            disabled={recordingStatus === true ? true : false}
+            disabled={recordingStatus === true || selectPlayer.drums ? true : false}
           >
             Start Recording
           </button>
